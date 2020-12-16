@@ -1,11 +1,11 @@
 # Dragon Boat Racing 2021
 
-![Dragon Boat Racing 2021 Logo](https://github.com/hardgforgifs/game/raw/master/core/assets/Title.png)
+![Dragon Boat Racing 2021 Logo](https://github.com/ENG1-Team-8/Dragon-Race-2/raw/master/core/assets/Title.png)
 <h1 align="center">
-<img src="https://img.shields.io/github/issues/hardgforgifs/Game?color=green&style=flat-square">
-<img src="https://img.shields.io/github/issues-pr/hardgforgifs/Game?color=yellow&style=flat-square">
-<img src="https://img.shields.io/github/stars/hardgforgifs/Game?color=red&style=flat-square">
-<img src="https://img.shields.io/github/forks/hardgforgifs/Game?color=blue&style=flat-square">
+<img src="https://img.shields.io/github/issues/ENG1-Team-8/Dragon-Race-2?color=green&style=flat-square">
+<img src="https://img.shields.io/github/issues-pr/ENG1-Team-8/Dragon-Race-2?color=yellow&style=flat-square">
+<img src="https://img.shields.io/github/stars/ENG1-Team-8/Dragon-Race-2?color=red&style=flat-square">
+<img src="https://img.shields.io/github/forks/ENG1-Team-8/Dragon-Race-2?color=blue&style=flat-square">
 </h1>
 
 The latest and greatest racing game!
@@ -13,7 +13,7 @@ The latest and greatest racing game!
 ## Instructions for cloning repository
 1. Download git at https://git-scm.com/downloads
 2. Open cmd and go to the folder in which you want to clone the project
-3. Type git clone https://github.com/hardgforgifs/Game.git
+3. Type git clone https://github.com/ENG1-Team-8/Dragon-Race-2.git
 
 
 ## Instructions for branching (this only needs to be done once, after you cloned the repository)
