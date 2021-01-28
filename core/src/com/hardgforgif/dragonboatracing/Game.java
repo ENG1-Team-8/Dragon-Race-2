@@ -60,10 +60,10 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			map[i].createMapCollisions("CollisionLayerRight", world[i]);
 
 			// Create the lanes, and the obstacles in the physics game world
-			map[i].createLanes(world[i]);
+			//map[i].createLanes(world[i]);
 
 			// Create the finish line
-			map[i].createFinishLine("finishLine.png");
+			//map[i].createFinishLine("finishLine.png");
 
 			// Create a new collision handler for the world
 			createContactListener(world[i]);
@@ -250,6 +250,13 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			// Draw the UI and wait for the input
 			GameData.currentUI.drawUI(UIbatch, mousePosition, Gdx.graphics.getWidth(), Gdx.graphics.getDeltaTime());
 			GameData.currentUI.getInput(Gdx.graphics.getWidth(), clickPosition);
+			if (GameData.choosingBoatState && !(GameData.obstaclesGenerated)) {
+				for (int i = 0; i < 3; i++) {
+					map[i].createLanes(world[i]);
+					map[i].createFinishLine("finishLine.png");
+				}
+				GameData.obstaclesGenerated = true;
+			}
 
 		}
 

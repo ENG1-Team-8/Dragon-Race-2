@@ -24,6 +24,10 @@ public class MenuUI extends UI {
 
     Texture playButtonActive;
     Texture playButtonInactive;
+    Texture playButtonActive1;
+    Texture playButtonInactive1;
+    Texture playButtonActive2;
+    Texture playButtonInactive2;
     Texture exitButtonActive;
     Texture exitButtonInactive;
     Texture logo;
@@ -37,6 +41,10 @@ public class MenuUI extends UI {
 
         playButtonActive = new Texture("PlaySelected.png");
         playButtonInactive = new Texture("PlayUnselected.png");
+        playButtonActive1 = new Texture("PlaySelected1.png");
+        playButtonInactive1 = new Texture("PlayUnselected1.png");
+        playButtonActive2 = new Texture("PlaySelected2.png");
+        playButtonInactive2 = new Texture("PlayUnselected2.png");
         exitButtonActive = new Texture("ExitSelected.png");
         exitButtonInactive = new Texture("ExitUnselected.png");
         logo = new Texture("Title.png");
@@ -53,9 +61,27 @@ public class MenuUI extends UI {
         if (mousePos.x < x + PLAY_BUTTON_WIDTH && mousePos.x > x &&
         // cur pos < top_height
                 mousePos.y < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && mousePos.y > PLAY_BUTTON_Y) {
+            batch.draw(playButtonActive1, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+        } else {
+            batch.draw(playButtonInactive1, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+        }
+
+        x = screenWidth / 2 - (3 * PLAY_BUTTON_WIDTH + 10)  / 2;
+        if (mousePos.x < x + PLAY_BUTTON_WIDTH && mousePos.x > x &&
+        // cur pos < top_height
+                mousePos.y < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && mousePos.y > PLAY_BUTTON_Y) {
             batch.draw(playButtonActive, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         } else {
             batch.draw(playButtonInactive, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+        }
+
+        x = screenWidth / 2 + (PLAY_BUTTON_WIDTH + 10) / 2;
+        if (mousePos.x < x + PLAY_BUTTON_WIDTH && mousePos.x > x &&
+        // cur pos < top_height
+                mousePos.y < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && mousePos.y > PLAY_BUTTON_Y) {
+            batch.draw(playButtonActive2, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+        } else {
+            batch.draw(playButtonInactive2, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         }
 
         // Otherwise draw the selected buttons
@@ -86,6 +112,29 @@ public class MenuUI extends UI {
             // Switch to the choosing state
             GameData.mainMenuState = false;
             GameData.choosingBoatState = true;
+            GameData.difficulty = new float[] { 0.9f, 0.9f, 0.9f };
+            GameData.currentUI = new ChoosingUI();
+        }
+
+        x = screenWidth / 2 - (3 * PLAY_BUTTON_WIDTH + 10)  / 2;
+        if (clickPos.x < x + PLAY_BUTTON_WIDTH && clickPos.x > x &&
+        // cur pos < top_height
+                clickPos.y < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && clickPos.y > PLAY_BUTTON_Y) {
+            // Switch to the choosing state
+            GameData.mainMenuState = false;
+            GameData.choosingBoatState = true;
+            GameData.difficulty = new float[] { 0.8f, 0.8f, 0.8f };
+            GameData.currentUI = new ChoosingUI();
+        }
+
+        x = screenWidth / 2 + (PLAY_BUTTON_WIDTH + 10) / 2;
+        if (clickPos.x < x + PLAY_BUTTON_WIDTH && clickPos.x > x &&
+        // cur pos < top_height
+                clickPos.y < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && clickPos.y > PLAY_BUTTON_Y) {
+            // Switch to the choosing state
+            GameData.mainMenuState = false;
+            GameData.choosingBoatState = true;
+            GameData.difficulty = new float[] { 1f, 1f, 1f };
             GameData.currentUI = new ChoosingUI();
         }
 

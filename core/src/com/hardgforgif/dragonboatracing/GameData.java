@@ -16,6 +16,7 @@ public class GameData {
     public static boolean showResultsState = false;
     public static boolean resetGameState = false;
     public static boolean GameOverState = false;
+    public static boolean obstaclesGenerated = false;
 
     // Create the game UI and the game music
     public static UI currentUI = new MenuUI();
@@ -48,5 +49,5 @@ public class GameData {
     public static float currentTimer = 0f;
 
     // Difficulty constants for the AI
-    public static float[] difficulty = new float[] { 0.92f, 0.97f, 1f };
+    public static float[] difficulty;
 }

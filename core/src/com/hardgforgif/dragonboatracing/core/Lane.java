@@ -26,7 +26,7 @@ public class Lane {
         leftLayer = left;
         rightLayer = right;
 
-        obstacles = new Obstacle[nrObstacles];
+        obstacles = new Obstacle[Math.round(GameData.difficulty[0] * nrObstacles)];
 
     }
 
