@@ -1,6 +1,5 @@
 package com.hardgforgif.dragonboatracing.UI;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -9,8 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.hardgforgif.dragonboatracing.GameData;
 import com.hardgforgif.dragonboatracing.core.Player;
 
-
-public class GameOverUI extends UI{
+public class GameOverUI extends UI {
     private Texture gameOverTexture;
     private Sprite gameOverSprite;
     private Texture victoryTexture;
@@ -18,8 +16,7 @@ public class GameOverUI extends UI{
 
     private ScrollingBackground scrollingBackground = new ScrollingBackground();
 
-
-    public GameOverUI(){
+    public GameOverUI() {
         scrollingBackground.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         scrollingBackground.setSpeedFixed(true);
         scrollingBackground.setSpeed(ScrollingBackground.DEFAULT_SPEED);
@@ -60,7 +57,7 @@ public class GameOverUI extends UI{
     @Override
     public void getInput(float screenWidth, Vector2 mousePos) {
         // When the user clicks on the screen
-        if(mousePos.x != 0f && mousePos.y != 0f) {
+        if (mousePos.x != 0f && mousePos.y != 0f) {
             // Reset the game, after which the game will return to the main menu state
             GameData.GameOverState = false;
             GameData.resetGameState = true;

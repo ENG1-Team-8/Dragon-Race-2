@@ -26,15 +26,14 @@ public class GameData {
     public static float TILES_TO_METERS;
     public static float PIXELS_TO_TILES;
 
-
     // Create a list of possible boat stats
     // Ordered by: robustness, speed, acceleration, maneuverability
-    public static float[][] boatsStats = new float[][] {{120, 110, 100, 80}, {55, 110, 130, 60},
-                                                        {90, 110, 100, 130}, {65, 120, 90, 55}};
+    public static float[][] boatsStats = new float[][] { { 120, 110, 100, 80 }, { 55, 110, 130, 60 },
+            { 90, 110, 100, 130 }, { 65, 120, 90, 55 } };
 
     // Store information about each lane's boat
     // Boat's starting location
-    public static float[][] startingPoints = new float[][]{{2.3f, 4f}, {4f, 4f}, {7f, 4f},{10f, 4f}};
+    public static float[][] startingPoints = new float[][] { { 2.3f, 4f }, { 4f, 4f }, { 7f, 4f }, { 10f, 4f } };
     // Boat's type
     public static int[] boatTypes = new int[4];
     // Boat's standing
@@ -49,5 +48,5 @@ public class GameData {
     public static float currentTimer = 0f;
 
     // Difficulty constants for the AI
-    public static float[] difficulty = new float[]{0.92f, 0.97f, 1f};
+    public static float[] difficulty = new float[] { 0.92f, 0.97f, 1f };
 }

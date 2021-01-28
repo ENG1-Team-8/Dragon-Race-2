@@ -31,21 +31,24 @@ public class ScrollingBackground {
 
     /**
      * Updates and renders the Scrolling background object on a batch
+     * 
      * @param deltaTime The time passes since the last frame
-     * @param batch The batch to render to
+     * @param batch     The batch to render to
      */
-    public void updateAndRender (float deltaTime, Batch batch) {
+    public void updateAndRender(float deltaTime, Batch batch) {
         // speed adjustment to reach goal
         if (speed < targetSpeed) {
             speed += TARGET_ACQUIRED_ACCELERATION * deltaTime;
-            if (speed > targetSpeed) speed = targetSpeed;
-        }
-        else if (speed > targetSpeed) {
+            if (speed > targetSpeed)
+                speed = targetSpeed;
+        } else if (speed > targetSpeed) {
             speed -= TARGET_ACQUIRED_ACCELERATION * deltaTime;
-            if (speed < targetSpeed) speed = targetSpeed;
+            if (speed < targetSpeed)
+                speed = targetSpeed;
         }
 
-        if (!speedFixed) speed += ACCELERATION * deltaTime;
+        if (!speedFixed)
+            speed += ACCELERATION * deltaTime;
 
         y1 -= speed * deltaTime;
         y2 -= speed * deltaTime;
@@ -55,8 +58,10 @@ public class ScrollingBackground {
 
         scaledHeight = image.getHeight() * imageScale;
 
-        if (y1 + scaledHeight <= 0) y1 = y2 + scaledHeight;
-        if (y2 + scaledHeight <= 0) y2 = y1 + scaledHeight;
+        if (y1 + scaledHeight <= 0)
+            y1 = y2 + scaledHeight;
+        if (y2 + scaledHeight <= 0)
+            y2 = y1 + scaledHeight;
 
         // render
         batch.draw(image, 0, y1, Gdx.graphics.getWidth(), scaledHeight);
@@ -65,7 +70,8 @@ public class ScrollingBackground {
 
     /**
      * Resize the object to a given size
-     * @param width Width of the object
+     * 
+     * @param width  Width of the object
      * @param height Height of the object
      */
     public void resize(int width, int height) {
@@ -74,6 +80,7 @@ public class ScrollingBackground {
 
     /**
      * Set the scrolling speed in pixels/sec
+     * 
      * @param targetSpeed
      */
     public void setSpeed(int targetSpeed) {

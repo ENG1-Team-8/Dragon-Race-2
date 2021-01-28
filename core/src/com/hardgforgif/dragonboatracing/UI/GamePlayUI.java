@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.hardgforgif.dragonboatracing.GameData;
 import com.hardgforgif.dragonboatracing.core.Player;
 
-public class GamePlayUI extends UI{
+public class GamePlayUI extends UI {
     private BitmapFont positionLabel;
     private BitmapFont robustnessLabel;
     private BitmapFont staminaLabel;
@@ -38,11 +38,11 @@ public class GamePlayUI extends UI{
         legLabel.setColor(Color.BLACK);
 
         stamina = new Texture(Gdx.files.internal("Stamina_bar.png"));
-        robustness  = new Texture(Gdx.files.internal("Robustness_bar.png"));
+        robustness = new Texture(Gdx.files.internal("Robustness_bar.png"));
         rBar = new Sprite(robustness);
         sBar = new Sprite(stamina);
-        sBar.setPosition(10 ,120);
-        rBar.setPosition(10,60);
+        sBar.setPosition(10, 120);
+        rBar.setPosition(10, 60);
 
     }
 
@@ -55,14 +55,14 @@ public class GamePlayUI extends UI{
     public void drawPlayerUI(Batch batch, Player playerBoat) {
         // Set the robustness and stamina bars size based on the player boat
         sBar.setSize(playerBoat.stamina, 30);
-        rBar.setSize(playerBoat.robustness,30);
+        rBar.setSize(playerBoat.robustness, 30);
 
         batch.begin();
         // Draw the robustness and stamina bars
         sBar.draw(batch);
         rBar.draw(batch);
         robustnessLabel.draw(batch, "Robustness", 10, 110);
-        staminaLabel.draw(batch, "Stamina", 10,170);
+        staminaLabel.draw(batch, "Stamina", 10, 170);
 
         // Draw the position label, the timer and the leg label
         positionLabel.draw(batch, GameData.standings[0] + "/4", 1225, 700);
@@ -72,6 +72,7 @@ public class GamePlayUI extends UI{
 
         playMusic();
     }
+
     @Override
     public void getInput(float screenWidth, Vector2 mousePos) {
 

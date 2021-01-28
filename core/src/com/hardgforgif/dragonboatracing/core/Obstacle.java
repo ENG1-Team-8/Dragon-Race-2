@@ -16,18 +16,19 @@ public class Obstacle {
     private Texture obstacleTexture;
     public Body obstacleBody;
 
-    public Obstacle(String textureName){
+    public Obstacle(String textureName) {
         obstacleTexture = new Texture(textureName);
     }
 
     /**
      * Creates a new obstacle body
-     * @param world World to create the body in
-     * @param posX x location of the body, in meters
-     * @param posY y location of the body, in meters
+     * 
+     * @param world    World to create the body in
+     * @param posX     x location of the body, in meters
+     * @param posY     y location of the body, in meters
      * @param bodyFile the name of the box2D editor json file for the body fixture
      */
-    public void createObstacleBody(World world, float posX, float posY, String bodyFile, float scale){
+    public void createObstacleBody(World world, float posX, float posY, String bodyFile, float scale) {
         obstacleSprite = new Sprite(obstacleTexture);
         obstacleSprite.scale(scale);
 
@@ -49,22 +50,24 @@ public class Obstacle {
         scale = obstacleSprite.getWidth() / GameData.METERS_TO_PIXELS * obstacleSprite.getScaleX();
         loader.attachFixture(obstacleBody, "Name", fixtureDef, scale);
 
-        obstacleSprite.setPosition((obstacleBody.getPosition().x * GameData.METERS_TO_PIXELS) - obstacleSprite.getWidth() / 2,
+        obstacleSprite.setPosition(
+                (obstacleBody.getPosition().x * GameData.METERS_TO_PIXELS) - obstacleSprite.getWidth() / 2,
                 (obstacleBody.getPosition().y * GameData.METERS_TO_PIXELS) - obstacleSprite.getHeight() / 2);
     }
 
     /**
      * Draw the obstacle
+     * 
      * @param batch Batch to draw on
      */
-    public void drawObstacle(Batch batch){
-        obstacleSprite.setPosition((obstacleBody.getPosition().x * GameData.METERS_TO_PIXELS) - obstacleSprite.getWidth() / 2,
+    public void drawObstacle(Batch batch) {
+        obstacleSprite.setPosition(
+                (obstacleBody.getPosition().x * GameData.METERS_TO_PIXELS) - obstacleSprite.getWidth() / 2,
                 (obstacleBody.getPosition().y * GameData.METERS_TO_PIXELS) - obstacleSprite.getHeight() / 2);
         batch.begin();
         batch.draw(obstacleSprite, obstacleSprite.getX(), obstacleSprite.getY(), obstacleSprite.getOriginX(),
-                obstacleSprite.getOriginY(),
-                obstacleSprite.getWidth(), obstacleSprite.getHeight(), obstacleSprite.getScaleX(),
-                obstacleSprite.getScaleY(), obstacleSprite.getRotation());
+                obstacleSprite.getOriginY(), obstacleSprite.getWidth(), obstacleSprite.getHeight(),
+                obstacleSprite.getScaleX(), obstacleSprite.getScaleY(), obstacleSprite.getRotation());
         batch.end();
     }
 }
