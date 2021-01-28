@@ -18,11 +18,11 @@ import java.util.ArrayList;
 public class Game extends ApplicationAdapter implements InputProcessor {
 	private Player player;
 	private AI[] opponents = new AI[3];
-	private Map[] map;
+	private Map map;
 	private Batch batch;
 	private Batch UIbatch;
 	private OrthographicCamera camera;
-	private World[] world;
+	private World world;
 
 	private Vector2 mousePosition = new Vector2();
 	private Vector2 clickPosition = new Vector2();
@@ -42,32 +42,28 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		float h = Gdx.graphics.getHeight();
 
 		// Initialise the world and the map arrays
-		world = new World[3];
-		map = new Map[3];
-		for (int i = 0; i < 3; i++) {
-			// Initialize the physics game World
-			world[i] = new World(new Vector2(0f, 0f), true);
+		// Initialize the physics game World
+		world = new World(new Vector2(0f, 0f), true);
 
-			// Initialize the map
-			map[i] = new Map("Map1/Map1.tmx", w);
+		// Initialize the map
+		map = new Map("Map1/Map1.tmx", w);
 
-			// Calculate the ratio between pixels, meters and tiles
-			GameData.TILES_TO_METERS = map[i].getTilesToMetersRatio();
-			GameData.PIXELS_TO_TILES = 1 / (GameData.METERS_TO_PIXELS * GameData.TILES_TO_METERS);
+		// Calculate the ratio between pixels, meters and tiles
+		GameData.TILES_TO_METERS = map.getTilesToMetersRatio();
+		GameData.PIXELS_TO_TILES = 1 / (GameData.METERS_TO_PIXELS * GameData.TILES_TO_METERS);
 
-			// Create the collision with the land
-			map[i].createMapCollisions("CollisionLayerLeft", world[i]);
-			map[i].createMapCollisions("CollisionLayerRight", world[i]);
+		// Create the collision with the land
+		map.createMapCollisions("CollisionLayerLeft", world);
+		map.createMapCollisions("CollisionLayerRight", world);
 
-			// Create the lanes, and the obstacles in the physics game world
-			//map[i].createLanes(world[i]);
+		// Create the lanes, and the obstacles in the physics game world
+		// map[i].createLanes(world[i]);
 
-			// Create the finish line
-			//map[i].createFinishLine("finishLine.png");
+		// Create the finish line
+		// map[i].createFinishLine("finishLine.png");
 
-			// Create a new collision handler for the world
-			createContactListener(world[i]);
-		}
+		// Create a new collision handler for the world
+		createContactListener(world);
 
 		// Initialize the camera
 		camera = new OrthographicCamera();
@@ -250,14 +246,13 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			// Draw the UI and wait for the input
 			GameData.currentUI.drawUI(UIbatch, mousePosition, Gdx.graphics.getWidth(), Gdx.graphics.getDeltaTime());
 			GameData.currentUI.getInput(Gdx.graphics.getWidth(), clickPosition);
-			if (GameData.choosingBoatState && !(GameData.obstaclesGenerated)) {
-				for (int i = 0; i < 3; i++) {
-					map[i].createLanes(world[i]);
-					map[i].createFinishLine("finishLine.png");
-				}
-				GameData.obstaclesGenerated = true;
-			}
 
+		}
+
+		else if (!GameData.obstaclesGenerated) {
+			map.createLanes(world);
+			map.createFinishLine("finishLine.png");
+			GameData.obstaclesGenerated = true;
 		}
 
 		// Otherwise, if we are in the game play state
@@ -269,17 +264,17 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 				int playerBoatType = GameData.boatTypes[0];
 				player = new Player(GameData.boatsStats[playerBoatType][0], GameData.boatsStats[playerBoatType][1],
 						GameData.boatsStats[playerBoatType][2], GameData.boatsStats[playerBoatType][3], playerBoatType,
-						map[GameData.currentLeg].lanes[0]);
-				player.createBoatBody(world[GameData.currentLeg], GameData.startingPoints[0][0],
-						GameData.startingPoints[0][1], "Boat1.json");
+						map.lanes[0]);
+				player.createBoatBody(world, GameData.startingPoints[0][0], GameData.startingPoints[0][1],
+						"Boat1.json");
 				// Create the AI boats
 				for (int i = 1; i <= 3; i++) {
 					int AIBoatType = GameData.boatTypes[i];
 					opponents[i - 1] = new AI(GameData.boatsStats[AIBoatType][0], GameData.boatsStats[AIBoatType][1],
 							GameData.boatsStats[AIBoatType][2], GameData.boatsStats[AIBoatType][3], AIBoatType,
-							map[GameData.currentLeg].lanes[i]);
-					opponents[i - 1].createBoatBody(world[GameData.currentLeg], GameData.startingPoints[i][0],
-							GameData.startingPoints[i][1], "Boat1.json");
+							map.lanes[i]);
+					opponents[i - 1].createBoatBody(world, GameData.startingPoints[i][0], GameData.startingPoints[i][1],
+							"Boat1.json");
 				}
 			}
 
@@ -288,14 +283,14 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			for (Body body : toBeRemovedBodies) {
 				// Find the obstacle that has this body and mark it as null
 				// so it's sprite doesn't get rendered in future frames
-				for (Lane lane : map[GameData.currentLeg].lanes)
+				for (Lane lane : map.lanes)
 					for (Obstacle obstacle : lane.obstacles)
 						if (obstacle.obstacleBody == body) {
 							obstacle.obstacleBody = null;
 						}
 
 				// Remove the body from the world to avoid other collisions with it
-				world[GameData.currentLeg].destroyBody(body);
+				world.destroyBody(body);
 			}
 
 			// Iterate through the bodies marked to be damaged after a collision
@@ -309,7 +304,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 					// If all the health is lost
 					if (player.robustness <= 0 && GameData.results.size() < 4) {
 						// Remove the body from the world, but keep it's sprite in place
-						world[GameData.currentLeg].destroyBody(player.boatBody);
+						world.destroyBody(player.boatBody);
 
 						// Add a DNF result
 						GameData.results.add(new Float[] { 0f, Float.MAX_VALUE });
@@ -329,7 +324,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 							opponents[i].current_speed -= 30f;
 
 							if (opponents[i].robustness < 0 && GameData.results.size() < 4) {
-								world[GameData.currentLeg].destroyBody(opponents[i].boatBody);
+								world.destroyBody(opponents[i].boatBody);
 								GameData.results.add(new Float[] { Float.valueOf(i + 1), Float.MAX_VALUE });
 							}
 						}
@@ -343,7 +338,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			toUpdateHealth.clear();
 
 			// Advance the game world physics
-			world[GameData.currentLeg].step(1f / 60f, 6, 2);
+			world.step(1f / 60f, 6, 2);
 			// Update the timer
 			GameData.currentTimer += Gdx.graphics.getDeltaTime();
 
@@ -356,7 +351,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			batch.setProjectionMatrix(camera.combined);
 
 			// Render the map
-			map[GameData.currentLeg].renderMap(camera, batch);
+			map.renderMap(camera, batch);
 
 			// Render the player and the AIs
 			player.drawBoat(batch);
@@ -364,7 +359,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 				opponent.drawBoat(batch);
 
 			// Render the objects that weren't destroyed yet
-			for (Lane lane : map[GameData.currentLeg].lanes)
+			for (Lane lane : map.lanes)
 				for (Obstacle obstacle : lane.obstacles) {
 					if (obstacle.obstacleBody != null)
 						obstacle.drawObstacle(batch);
@@ -414,49 +409,40 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 			// If we're coming from the result screen, then we need to advance to the next
 			// leg
-			if (GameData.showResultsState) {
-				GameData.currentLeg += 1;
-				GameData.showResultsState = false;
-				GameData.gamePlayState = true;
-				GameData.currentUI = new GamePlayUI();
+			GameData.currentLeg += 1;
+			GameData.showResultsState = false;
+			GameData.gamePlayState = true;
+			GameData.currentUI = new GamePlayUI();
 
-			}
-			// Otherwise we're coming from the endgame screen so we need to return to the
-			// main menu
-			else {
-				camera.position.set(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 0);
-				camera.update();
-				// Reset everything for the next game
-				world = new World[3];
-				map = new Map[3];
-				for (int i = 0; i < 3; i++) {
-					// Initialize the physics game World
-					world[i] = new World(new Vector2(0f, 0f), true);
+			camera.position.set(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 0);
+			camera.update();
+			// Reset everything for the next game
+			// Initialize the physics game World
+			world = new World(new Vector2(0f, 0f), true);
 
-					// Initialize the map
-					map[i] = new Map("Map1/Map1.tmx", Gdx.graphics.getWidth());
+			// Initialize the map
+			map = new Map("Map1/Map1.tmx", Gdx.graphics.getWidth());
 
-					// Calculate the ratio between pixels, meters and tiles
-					GameData.TILES_TO_METERS = map[i].getTilesToMetersRatio();
-					GameData.PIXELS_TO_TILES = 1 / (GameData.METERS_TO_PIXELS * GameData.TILES_TO_METERS);
+			// Calculate the ratio between pixels, meters and tiles
+			GameData.TILES_TO_METERS = map.getTilesToMetersRatio();
+			GameData.PIXELS_TO_TILES = 1 / (GameData.METERS_TO_PIXELS * GameData.TILES_TO_METERS);
 
-					// Create the collision with the land
-					map[i].createMapCollisions("CollisionLayerLeft", world[i]);
-					map[i].createMapCollisions("CollisionLayerRight", world[i]);
+			// Create the collision with the land
+			map.createMapCollisions("CollisionLayerLeft", world);
+			map.createMapCollisions("CollisionLayerRight", world);
 
-					// Create the lanes, and the obstacles in the physics game world
-					map[i].createLanes(world[i]);
+			// Create the lanes, and the obstacles in the physics game world
+			map.createLanes(world);
 
-					// Create the finish line
-					map[i].createFinishLine("finishLine.png");
+			// Create the finish line
+			map.createFinishLine("finishLine.png");
 
-					// Create a new collision handler for the world
-					createContactListener(world[i]);
-				}
-				GameData.currentLeg = 0;
-				GameData.mainMenuState = true;
-				GameData.currentUI = new MenuUI();
-			}
+			// Create a new collision handler for the world
+			createContactListener(world);
+
+			// GameData.currentLeg = 0;
+			// GameData.mainMenuState = true;
+			// GameData.currentUI = new MenuUI();
 			GameData.resetGameState = false;
 
 		}
@@ -467,7 +453,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	}
 
 	public void dispose() {
-		world[GameData.currentLeg].dispose();
+		world.dispose();
 	}
 
 	@Override
