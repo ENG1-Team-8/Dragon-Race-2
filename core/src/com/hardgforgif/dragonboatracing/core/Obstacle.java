@@ -33,10 +33,11 @@ public class Obstacle {
         obstacleSprite.scale(scale);
 
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
 
         bodyDef.position.set(posX, posY);
         obstacleBody = world.createBody(bodyDef);
+        obstacleBody.setLinearVelocity(0, -0.2f);
 
         obstacleBody.setUserData(this);
 
