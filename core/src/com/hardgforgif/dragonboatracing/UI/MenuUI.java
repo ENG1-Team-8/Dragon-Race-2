@@ -7,6 +7,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.hardgforgif.dragonboatracing.GameData;
 import com.hardgforgif.dragonboatracing.core.Player;
 
+/**
+ * Class representing a main menu for the game
+ * 
+ * @since 1
+ * @version 2
+ * @author Team 10
+ * @author Matt Tomlinsons
+ */
 public class MenuUI extends UI {
 
     // Sets the dimensions for all the UI components
@@ -24,10 +32,13 @@ public class MenuUI extends UI {
 
     Texture playButtonActive;
     Texture playButtonInactive;
+
+    // MODIFIED: New textures for new buttons
     Texture playButtonActive1;
     Texture playButtonInactive1;
     Texture playButtonActive2;
     Texture playButtonInactive2;
+
     Texture exitButtonActive;
     Texture exitButtonInactive;
     Texture logo;
@@ -41,15 +52,24 @@ public class MenuUI extends UI {
 
         playButtonActive = new Texture("PlaySelected.png");
         playButtonInactive = new Texture("PlayUnselected.png");
+
+        // MODIFIED: Load the new pngs for textures
         playButtonActive1 = new Texture("PlaySelected1.png");
         playButtonInactive1 = new Texture("PlayUnselected1.png");
         playButtonActive2 = new Texture("PlaySelected2.png");
         playButtonInactive2 = new Texture("PlayUnselected2.png");
+
         exitButtonActive = new Texture("ExitSelected.png");
         exitButtonInactive = new Texture("ExitUnselected.png");
         logo = new Texture("Title.png");
     }
 
+    /**
+     * @since 1
+     * @version 2
+     * @author Team 10
+     * @author Matt Tomlinson
+     */
     @Override
     public void drawUI(Batch batch, Vector2 mousePos, float screenWidth, float delta) {
         batch.begin();
@@ -66,6 +86,7 @@ public class MenuUI extends UI {
             batch.draw(playButtonInactive1, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         }
 
+        // MODIFIED: The two if conditions directly below draw new buttons for differing difficulties
         x = screenWidth / 2 - (3 * PLAY_BUTTON_WIDTH + 10)  / 2;
         if (mousePos.x < x + PLAY_BUTTON_WIDTH && mousePos.x > x &&
         // cur pos < top_height
@@ -102,6 +123,12 @@ public class MenuUI extends UI {
 
     }
 
+    /**
+     * @since 1
+     * @version 2
+     * @author Team 10
+     * @author Matt Tomlinson
+     */
     @Override
     public void getInput(float screenWidth, Vector2 clickPos) {
         // If the play button is clicked
@@ -112,10 +139,12 @@ public class MenuUI extends UI {
             // Switch to the choosing state
             GameData.mainMenuState = false;
             GameData.choosingBoatState = true;
+            // MODIFIED: Selecting button now sets the game difficulty
             GameData.difficulty = new float[] { 0.9f, 0.9f, 0.9f };
             GameData.currentUI = new ChoosingUI();
         }
 
+        // MODIFIED: The two if conditions below check for clicks on new added buttons above
         x = screenWidth / 2 - (3 * PLAY_BUTTON_WIDTH + 10)  / 2;
         if (clickPos.x < x + PLAY_BUTTON_WIDTH && clickPos.x > x &&
         // cur pos < top_height

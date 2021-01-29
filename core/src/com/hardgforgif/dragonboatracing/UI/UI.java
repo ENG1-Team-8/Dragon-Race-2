@@ -5,6 +5,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.hardgforgif.dragonboatracing.GameData;
 import com.hardgforgif.dragonboatracing.core.Player;
 
+/**
+ * An abstract class from which to extend concrete UI classes.
+ * 
+ * @since 1
+ * @version 1
+ * @author Team 10
+ */
 public abstract class UI {
 
     /**

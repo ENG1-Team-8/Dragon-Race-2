@@ -15,14 +15,23 @@ import com.hardgforgif.dragonboatracing.core.*;
 
 import java.util.ArrayList;
 
+/**
+ * The main game class.
+ * 
+ * @since 1
+ * @version 2
+ * @author Team 10
+ * @author Matt Tomlinson
+ * @author Josh Stafford
+ */
 public class Game extends ApplicationAdapter implements InputProcessor {
 	private Player player;
 	private AI[] opponents = new AI[3];
-	private Map map;
+	private Map map; // MODIFIED: array not necessary
 	private Batch batch;
 	private Batch UIbatch;
 	private OrthographicCamera camera;
-	private World world;
+	private World world; // MODIFIED: array not necessary
 
 	private Vector2 mousePosition = new Vector2();
 	private Vector2 clickPosition = new Vector2();
@@ -43,6 +52,8 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 		// Initialise the world and the map arrays
 		// Initialize the physics game World
+		// MODIFIED: For efficiency, a single world and map is used
+		// Rather than iterating through an array of worlds
 		world = new World(new Vector2(0f, 0f), true);
 
 		// Initialize the map
@@ -249,6 +260,8 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 		}
 
+		// MODIFIED: Obstacles now generated after difficulty and boat selection
+		// To facilitate scaled number of obstacles
 		else if (!GameData.obstaclesGenerated) {
 			map.createLanes(world);
 			map.createFinishLine("finishLine.png");
@@ -400,56 +413,71 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		// Otherwise we need need to reset elements of the game to prepare for the next
 		// race
 		else if (GameData.resetGameState) {
-			player = null;
-			for (int i = 0; i < 3; i++)
-				opponents[i] = null;
-			GameData.results.clear();
-			GameData.currentTimer = 0f;
-			GameData.penalties = new float[4];
-
-			// If we're coming from the result screen, then we need to advance to the next
-			// leg
-			GameData.currentLeg += 1;
-			GameData.showResultsState = false;
-			GameData.gamePlayState = true;
-			GameData.currentUI = new GamePlayUI();
-
-			camera.position.set(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 0);
-			camera.update();
-			// Reset everything for the next game
-			// Initialize the physics game World
-			world = new World(new Vector2(0f, 0f), true);
-
-			// Initialize the map
-			map = new Map("Map1/Map1.tmx", Gdx.graphics.getWidth());
-
-			// Calculate the ratio between pixels, meters and tiles
-			GameData.TILES_TO_METERS = map.getTilesToMetersRatio();
-			GameData.PIXELS_TO_TILES = 1 / (GameData.METERS_TO_PIXELS * GameData.TILES_TO_METERS);
-
-			// Create the collision with the land
-			map.createMapCollisions("CollisionLayerLeft", world);
-			map.createMapCollisions("CollisionLayerRight", world);
-
-			// Create the lanes, and the obstacles in the physics game world
-			map.createLanes(world);
-
-			// Create the finish line
-			map.createFinishLine("finishLine.png");
-
-			// Create a new collision handler for the world
-			createContactListener(world);
-
-			// GameData.currentLeg = 0;
-			// GameData.mainMenuState = true;
-			// GameData.currentUI = new MenuUI();
-			GameData.resetGameState = false;
-
+			// MODIFIED: large portion of code turned into reset function
+			reset();
 		}
 
 		// If we haven't clicked anywhere in the last frame, reset the click position
 		if (clickPosition.x != 0f && clickPosition.y != 0f)
 			clickPosition.set(0f, 0f);
+	}
+
+	/**
+	 * A function to reset the game state
+	 * 
+	 * @since 2
+	 * @version 2
+	 * @author Matt Tomlinson
+	 */
+	public void reset() {
+		player = null;
+		for (int i = 0; i < 3; i++)
+			opponents[i] = null;
+		GameData.results.clear();
+		GameData.currentTimer = 0f;
+		GameData.penalties = new float[4];
+
+		// If we're coming from the result screen, then we need to advance to the next
+		// leg
+
+		camera.position.set(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 0);
+		camera.update();
+		// Reset everything for the next game
+		// Initialize the physics game World
+		world = new World(new Vector2(0f, 0f), true);
+
+		// Initialize the map
+		// map = new Map("Map1/Map1.tmx", Gdx.graphics.getWidth());
+
+		// Calculate the ratio between pixels, meters and tiles
+		// GameData.TILES_TO_METERS = map.getTilesToMetersRatio();
+		// GameData.PIXELS_TO_TILES = 1 / (GameData.METERS_TO_PIXELS *
+		// GameData.TILES_TO_METERS);
+
+		// Create the collision with the land
+		map.createMapCollisions("CollisionLayerLeft", world);
+		map.createMapCollisions("CollisionLayerRight", world);
+
+		// Create the lanes, and the obstacles in the physics game world
+		map.createLanes(world);
+
+		// Create the finish line
+		map.createFinishLine("finishLine.png");
+
+		// Create a new collision handler for the world
+		createContactListener(world);
+
+		if (GameData.showResultsState) {
+			GameData.currentLeg += 1;
+			GameData.showResultsState = false;
+			GameData.gamePlayState = true;
+			GameData.currentUI = new GamePlayUI();
+		} else {
+			GameData.currentLeg = 0;
+			GameData.mainMenuState = true;
+			GameData.currentUI = new MenuUI();
+		}
+		GameData.resetGameState = false;
 	}
 
 	public void dispose() {

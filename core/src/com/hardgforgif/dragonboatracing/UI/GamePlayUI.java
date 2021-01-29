@@ -61,6 +61,8 @@ public class GamePlayUI extends UI {
         // Draw the robustness and stamina bars
         sBar.draw(batch);
         rBar.draw(batch);
+
+        // MODIFIED: Displays "Boat health" instead of "Robustness" for clarity
         robustnessLabel.draw(batch, "Boat health", 10, 110);
         staminaLabel.draw(batch, "Stamina", 10, 170);
 
