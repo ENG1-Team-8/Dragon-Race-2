@@ -140,7 +140,7 @@ public class MenuUI extends UI {
             GameData.mainMenuState = false;
             GameData.choosingBoatState = true;
             // MODIFIED: Selecting button now sets the game difficulty
-            GameData.difficulty = new float[] { 0.9f, 0.9f, 0.9f };
+            GameData.difficulty = new float[] { 1f, 1f, 1f };
             GameData.currentUI = new ChoosingUI();
         }
 
@@ -152,7 +152,7 @@ public class MenuUI extends UI {
             // Switch to the choosing state
             GameData.mainMenuState = false;
             GameData.choosingBoatState = true;
-            GameData.difficulty = new float[] { 0.8f, 0.8f, 0.8f };
+            GameData.difficulty = new float[] { 0.9f, 0.9f, 0.9f };
             GameData.currentUI = new ChoosingUI();
         }
 
@@ -163,7 +163,7 @@ public class MenuUI extends UI {
             // Switch to the choosing state
             GameData.mainMenuState = false;
             GameData.choosingBoatState = true;
-            GameData.difficulty = new float[] { 1f, 1f, 1f };
+            GameData.difficulty = new float[] { 1.1f, 1.1f, 1.1f };
             GameData.currentUI = new ChoosingUI();
         }
 
