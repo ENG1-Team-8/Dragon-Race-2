@@ -10,7 +10,19 @@ import com.badlogic.gdx.math.Vector2;
 import com.hardgforgif.dragonboatracing.GameData;
 import com.hardgforgif.dragonboatracing.core.Player;
 
+/**
+ * The UI during gameplay (racing).
+ * <p>
+ * Responsible for displaying stamina/health bars, leg number, timer and
+ * controls.
+ * 
+ * @since 1
+ * @version 2
+ * @author Team 10
+ * @author Matt Tomlinson
+ */
 public class GamePlayUI extends UI {
+
     private BitmapFont positionLabel;
     private BitmapFont robustnessLabel;
     private BitmapFont staminaLabel;
@@ -20,6 +32,10 @@ public class GamePlayUI extends UI {
     private Texture robustness;
     private Sprite rBar;
     private Sprite sBar;
+    
+    //MODIFIED: new texture and sprite for on-screen controls
+    private Texture controls;
+    private Sprite controlsDisplay;
 
     public GamePlayUI() {
         positionLabel = new BitmapFont();
@@ -39,10 +55,17 @@ public class GamePlayUI extends UI {
 
         stamina = new Texture(Gdx.files.internal("Stamina_bar.png"));
         robustness = new Texture(Gdx.files.internal("Robustness_bar.png"));
+
         rBar = new Sprite(robustness);
         sBar = new Sprite(stamina);
         sBar.setPosition(10, 120);
         rBar.setPosition(10, 60);
+
+        // MODIFIED: load texture and create, scale and position sprite for controls
+        controls = new Texture(Gdx.files.internal("controls.png"));
+        controlsDisplay = new Sprite(controls);
+        controlsDisplay.scale(-0.8f);
+        controlsDisplay.setPosition(-266, -16);
 
     }
 
@@ -61,6 +84,9 @@ public class GamePlayUI extends UI {
         // Draw the robustness and stamina bars
         sBar.draw(batch);
         rBar.draw(batch);
+
+        // MODIFIED: draw the on-screen controls
+        controlsDisplay.draw(batch);
 
         // MODIFIED: Displays "Boat health" instead of "Robustness" for clarity
         robustnessLabel.draw(batch, "Boat health", 10, 110);
