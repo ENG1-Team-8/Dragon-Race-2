@@ -19,6 +19,19 @@ public class Lane {
 
     public Obstacle[] obstacles;
 
+    /**
+     * Constructs a Lane object on which boats race.
+     * 
+     * @param mapHeight The height of the map
+     * @param left The left map layer
+     * @param right The right map layer
+     * @param nrObstacles The base number of obstacles to spawn on the lane
+     * 
+     * @since 1
+     * @version 2
+     * @author Team 10
+     * @author Matt Tomlinson
+     */
     public Lane(int mapHeight, MapLayer left, MapLayer right, int nrObstacles) {
         leftBoundry = new float[mapHeight][2];
         rightBoundry = new float[mapHeight][2];
@@ -26,7 +39,8 @@ public class Lane {
         leftLayer = left;
         rightLayer = right;
 
-        obstacles = new Obstacle[nrObstacles];
+        // MODIFIED: number of obstacles is weighted by difficulty now
+        obstacles = new Obstacle[Math.round(GameData.difficulty[0] * nrObstacles)];
 
     }
 

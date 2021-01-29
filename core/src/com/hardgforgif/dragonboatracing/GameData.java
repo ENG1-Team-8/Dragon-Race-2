@@ -8,6 +8,14 @@ import com.hardgforgif.dragonboatracing.UI.UI;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Stores general game data which is static.
+ * 
+ * @since 1
+ * @version 2
+ * @author Team 10
+ * @author Matt Tomlinson
+ */
 public class GameData {
     // Create the game state variables
     public static boolean mainMenuState = true;
@@ -16,6 +24,10 @@ public class GameData {
     public static boolean showResultsState = false;
     public static boolean resetGameState = false;
     public static boolean GameOverState = false;
+
+    // MODIFIED: check required on first startup to delay obstacle generation until
+    // difficulty has been picked
+    public static boolean obstaclesGenerated = false;
 
     // Create the game UI and the game music
     public static UI currentUI = new MenuUI();
@@ -48,5 +60,6 @@ public class GameData {
     public static float currentTimer = 0f;
 
     // Difficulty constants for the AI
-    public static float[] difficulty = new float[] { 0.92f, 0.97f, 1f };
+    // MODIFIED: no longer uses set value, is instead selected in MenuUI
+    public static float[] difficulty;
 }

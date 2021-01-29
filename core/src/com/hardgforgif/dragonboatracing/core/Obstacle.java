@@ -33,10 +33,14 @@ public class Obstacle {
         obstacleSprite.scale(scale);
 
         BodyDef bodyDef = new BodyDef();
+
+        // MODIFIED: now changed to use dynamic bodies
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
         bodyDef.position.set(posX, posY);
         obstacleBody = world.createBody(bodyDef);
+
+        // MODIFIED: now gives each obstacle a set velocity downwards
         obstacleBody.setLinearVelocity(0, -0.2f);
 
         obstacleBody.setUserData(this);
