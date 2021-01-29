@@ -13,14 +13,16 @@ import com.hardgforgif.dragonboatracing.core.Player;
  * @since 1
  * @version 2
  * @author Team 10
- * @author Matt Tomlinsons
+ * @author Matt Tomlinson
  */
 public class MenuUI extends UI {
 
     // Sets the dimensions for all the UI components
-    private static final int LOGO_WIDTH = 400;
-    private static final int LOGO_HEIGHT = 200;
-    private static final int LOGO_Y = 450;
+
+    // MODIFIED: new logo dimensions
+    private static final int LOGO_WIDTH = 661;
+    private static final int LOGO_HEIGHT = 298;
+    private static final int LOGO_Y = 350;
 
     private static final int PLAY_BUTTON_WIDTH = 300;
     private static final int PLAY_BUTTON_HEIGHT = 120;
@@ -87,7 +89,7 @@ public class MenuUI extends UI {
         }
 
         // MODIFIED: The two if conditions directly below draw new buttons for differing difficulties
-        x = screenWidth / 2 - (3 * PLAY_BUTTON_WIDTH + 10)  / 2;
+        x = screenWidth / 2 - (3 * PLAY_BUTTON_WIDTH + 20)  / 2;
         if (mousePos.x < x + PLAY_BUTTON_WIDTH && mousePos.x > x &&
         // cur pos < top_height
                 mousePos.y < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && mousePos.y > PLAY_BUTTON_Y) {
@@ -96,7 +98,7 @@ public class MenuUI extends UI {
             batch.draw(playButtonInactive, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         }
 
-        x = screenWidth / 2 + (PLAY_BUTTON_WIDTH + 10) / 2;
+        x = screenWidth / 2 + (PLAY_BUTTON_WIDTH + 20) / 2;
         if (mousePos.x < x + PLAY_BUTTON_WIDTH && mousePos.x > x &&
         // cur pos < top_height
                 mousePos.y < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && mousePos.y > PLAY_BUTTON_Y) {
