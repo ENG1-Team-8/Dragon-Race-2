@@ -200,7 +200,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		if (player.hasFinished() && player.acceleration > 0 && GameData.results.size() < 4) {
 			// Add the result to the list with key 0, the player's lane
 			GameData.results.add(new Float[] { 0f, time });
-			if (time + penalties[0] < GameData.bests[0]) {
+			if (GameData.currentLeg != 0 && time + penalties[0] < GameData.bests[0]) {
 				GameData.bests[0] = time + penalties[0];
 			}
 
@@ -218,7 +218,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			if (opponents[i].hasFinished() && opponents[i].acceleration > 0 && GameData.results.size() < 4) {
 				// Add the result to the list with the his lane numer as key
 				GameData.results.add(new Float[] { Float.valueOf(i + 1), time });
-				if (time + penalties[i + 1] < GameData.bests[i + 1]) {
+				if (GameData.currentLeg != 0 && time + penalties[i + 1] < GameData.bests[i + 1]) {
 					GameData.bests[i + 1] = time + penalties[i + 1];
 				}
 
@@ -285,6 +285,13 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 		}
 
+		// Otherwise we need need to reset elements of the game to prepare for the next
+		// race
+		else if (GameData.resetGameState) {
+			// MODIFIED: large portion of code turned into reset function
+			reset();
+		}
+
 		// MODIFIED: Obstacles now generated after difficulty and boat selection
 		// To facilitate scaled number of obstacles
 		else if (!GameData.obstaclesGenerated) {
@@ -316,18 +323,18 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 				}
 
 				if (GameData.currentLeg == 3) {
-					int minIndex = 0;
+					int maxIndex = 0;
 					for (int i = 1; i < GameData.bests.length; i++) {
-						if (GameData.bests[i] <= GameData.bests[minIndex]) {
-							minIndex = i;
+						if (GameData.bests[i] >= GameData.bests[maxIndex]) {
+							maxIndex = i;
 						}
 					}
-					if(minIndex == 0){
+					if(maxIndex == 0){
 						GameData.GameOverState = true;
 						GameData.dnq = true;
 						GameData.currentUI = new GameOverUI();
 					} else {
-						opponents[minIndex - 1].robustness = 0;
+						opponents[maxIndex - 1].robustness = 0;
 					}
 				}
 			}
@@ -449,13 +456,6 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 				GameData.currentUI.getInput(Gdx.graphics.getWidth(), clickPosition);
 			}
 
-		}
-
-		// Otherwise we need need to reset elements of the game to prepare for the next
-		// race
-		else if (GameData.resetGameState) {
-			// MODIFIED: large portion of code turned into reset function
-			reset();
 		}
 
 		// If we haven't clicked anywhere in the last frame, reset the click position

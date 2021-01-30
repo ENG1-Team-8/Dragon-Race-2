@@ -121,7 +121,6 @@ public class ResultsUI extends UI {
         batch.end();
 
         playMusic();
-        System.out.println(Arrays.toString(GameData.bests));
     }
 
     @Override
@@ -138,7 +137,10 @@ public class ResultsUI extends UI {
 
             // If the game is over due to player's dnf or victory, switch to the endgame
             // screen
+            System.out.println(GameData.currentLeg);
             if (GameData.currentLeg == 3) {
+                System.out.println(GameData.currentLeg);
+                System.out.println("Here somehow");
                 GameData.showResultsState = false;
                 GameData.GameOverState = true;
                 GameData.currentUI = new GameOverUI();

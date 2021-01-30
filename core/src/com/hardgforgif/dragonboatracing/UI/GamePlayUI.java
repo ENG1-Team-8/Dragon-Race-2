@@ -42,18 +42,18 @@ public class GamePlayUI extends UI {
     public GamePlayUI() {
         positionLabel = new BitmapFont();
         positionLabel.getData().setScale(1.4f);
-        positionLabel.setColor(Color.BLACK);
+        positionLabel.setColor(Color.WHITE);
 
         robustnessLabel = new BitmapFont();
         staminaLabel = new BitmapFont();
 
         timerLabel = new BitmapFont();
         timerLabel.getData().setScale(1.4f);
-        timerLabel.setColor(Color.BLACK);
+        timerLabel.setColor(Color.WHITE);
 
         legLabel = new BitmapFont();
         legLabel.getData().setScale(1.4f);
-        legLabel.setColor(Color.BLACK);
+        legLabel.setColor(Color.WHITE);
 
         stamina = new Texture(Gdx.files.internal("Stamina_bar.png"));
         robustness = new Texture(Gdx.files.internal("Robustness_bar.png"));
@@ -66,8 +66,8 @@ public class GamePlayUI extends UI {
         // MODIFIED: load texture and create, scale and position sprite for controls
         controls = new Texture(Gdx.files.internal("controls.png"));
         controlsDisplay = new Sprite(controls);
-        controlsDisplay.scale(-0.8f);
-        controlsDisplay.setPosition(-266, -16);
+        controlsDisplay.scale(-0.75f);
+        controlsDisplay.setPosition(-202, -54);
 
     }
 
@@ -87,7 +87,7 @@ public class GamePlayUI extends UI {
         else if (GameData.currentLeg == 3)
             legText = "Final";
         else
-            legText = Integer.toString(GameData.currentLeg);
+            legText = Integer.toString(GameData.currentLeg + 1);
 
         batch.begin();
         // Draw the robustness and stamina bars
@@ -102,8 +102,8 @@ public class GamePlayUI extends UI {
         staminaLabel.draw(batch, "Stamina", 10, 170);
 
         // Draw the position label, the timer and the leg label
-        positionLabel.draw(batch, GameData.standings[0] + "/4", 1225, 700);
-        timerLabel.draw(batch, String.valueOf(Math.round(GameData.currentTimer * 10.0) / 10.0), 10, 700);
+        positionLabel.draw(batch, "Position: " + GameData.standings[0] + "/4", 1140, 700);
+        timerLabel.draw(batch, "Timer: " + String.valueOf(Math.round(GameData.currentTimer * 10.0) / 10.0), 10, 700);
 
         legLabel.draw(batch, "Leg: " + legText, 10, 650);
         batch.end();
