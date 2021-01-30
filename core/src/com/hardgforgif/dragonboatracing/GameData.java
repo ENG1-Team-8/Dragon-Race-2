@@ -56,9 +56,8 @@ public class GameData {
     public static List<Float[]> results = new ArrayList<>();
 
     // MODIFIED: stores each position's best time
-    public static float[] bests =  {Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE};
+    public static float[] bests = { Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE };
     public static boolean dnq = false;
-
 
     // Current leg and the current timer in the leg
     public static int currentLeg = 0;
