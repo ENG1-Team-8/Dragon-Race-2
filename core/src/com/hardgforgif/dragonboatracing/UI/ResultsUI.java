@@ -145,7 +145,6 @@ public class ResultsUI extends UI {
             }
             // Otherwise prepare for the next leg
             else {
-                GameData.showResultsState = false;
                 GameData.resetGameState = true;
             }
 

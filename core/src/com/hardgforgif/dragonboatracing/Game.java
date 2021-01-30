@@ -278,7 +278,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		// If the game is in one of the static state
-		if (GameData.mainMenuState || GameData.choosingBoatState || (GameData.GameOverState && !GameData.resetGameState)) {
+		if (GameData.mainMenuState || GameData.choosingBoatState || GameData.GameOverState) {
 			// Draw the UI and wait for the input
 			GameData.currentUI.drawUI(UIbatch, mousePosition, Gdx.graphics.getWidth(), Gdx.graphics.getDeltaTime());
 			GameData.currentUI.getInput(Gdx.graphics.getWidth(), clickPosition);
@@ -324,6 +324,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 					}
 					if(maxIndex == 0){
 						GameData.GameOverState = true;
+						GameData.gamePlayState = false;
 						GameData.dnq = true;
 						GameData.currentLeg = 0;
 						GameData.currentUI = new GameOverUI();
@@ -510,13 +511,15 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		// Create a new collision handler for the world
 		createContactListener(world);
 
-		if (!GameData.GameOverState) {
+		if (GameData.showResultsState) {
 			GameData.currentLeg += 1;
+			GameData.showResultsState = false;
 			GameData.gamePlayState = true;
 			GameData.currentUI = new GamePlayUI();
 		} else {
+			toBeRemovedBodies.clear();
+			toUpdateHealth.clear();
 			GameData.currentLeg = 0;
-			GameData.GameOverState = false;
 			GameData.mainMenuState = true;
 			GameData.bests = new float[] { Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE };
 			GameData.currentUI = new MenuUI();

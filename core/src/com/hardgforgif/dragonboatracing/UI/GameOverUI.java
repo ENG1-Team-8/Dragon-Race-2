@@ -83,6 +83,7 @@ public class GameOverUI extends UI {
         // When the user clicks on the screen
         if (mousePos.x != 0f && mousePos.y != 0f) {
             // Reset the game, after which the game will return to the main menu state
+            GameData.GameOverState = false;
             GameData.resetGameState = true;
 
             // Switch the music to the main menu music
