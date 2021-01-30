@@ -40,8 +40,10 @@ public class GameOverUI extends UI {
         batch.begin();
         scrollingBackground.updateAndRender(delta, batch);
         // If this was the last leg and the player won, show the victory screen
-        if (GameData.currentLeg == 2 && GameData.standings[0] == 1)
+        if (GameData.currentLeg == 3 && GameData.standings[0] == 1)
             victorySprite.draw(batch);
+        else if(GameData.dnq)
+            gameOverSprite.draw(batch);
         // Otherwise, the game is over with a loss
         else
             gameOverSprite.draw(batch);

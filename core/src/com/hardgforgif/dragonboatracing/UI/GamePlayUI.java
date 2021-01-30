@@ -37,6 +37,8 @@ public class GamePlayUI extends UI {
     private Texture controls;
     private Sprite controlsDisplay;
 
+    private String legText;
+
     public GamePlayUI() {
         positionLabel = new BitmapFont();
         positionLabel.getData().setScale(1.4f);
@@ -80,6 +82,13 @@ public class GamePlayUI extends UI {
         sBar.setSize(playerBoat.stamina, 30);
         rBar.setSize(playerBoat.robustness, 30);
 
+        if (GameData.currentLeg == 0)
+            legText = "Practice";
+        else if (GameData.currentLeg == 3)
+            legText = "Final";
+        else
+            legText = Integer.toString(GameData.currentLeg);
+
         batch.begin();
         // Draw the robustness and stamina bars
         sBar.draw(batch);
@@ -95,7 +104,8 @@ public class GamePlayUI extends UI {
         // Draw the position label, the timer and the leg label
         positionLabel.draw(batch, GameData.standings[0] + "/4", 1225, 700);
         timerLabel.draw(batch, String.valueOf(Math.round(GameData.currentTimer * 10.0) / 10.0), 10, 700);
-        legLabel.draw(batch, "Leg: " + (GameData.currentLeg + 1), 10, 650);
+
+        legLabel.draw(batch, "Leg: " + legText, 10, 650);
         batch.end();
 
         playMusic();

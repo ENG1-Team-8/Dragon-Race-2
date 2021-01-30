@@ -1,19 +1,34 @@
 package com.hardgforgif.dragonboatracing;
 
-import com.badlogic.gdx.*;
+import java.util.ArrayList;
+
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.World;
+import com.hardgforgif.dragonboatracing.UI.GameOverUI;
 import com.hardgforgif.dragonboatracing.UI.GamePlayUI;
 import com.hardgforgif.dragonboatracing.UI.MenuUI;
 import com.hardgforgif.dragonboatracing.UI.ResultsUI;
-import com.hardgforgif.dragonboatracing.core.*;
-
-import java.util.ArrayList;
+import com.hardgforgif.dragonboatracing.core.AI;
+import com.hardgforgif.dragonboatracing.core.Boat;
+import com.hardgforgif.dragonboatracing.core.Lane;
+import com.hardgforgif.dragonboatracing.core.Map;
+import com.hardgforgif.dragonboatracing.core.Obstacle;
+import com.hardgforgif.dragonboatracing.core.Player;
 
 /**
  * The main game class.
@@ -177,10 +192,17 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	 * finishes the game
 	 */
 	private void checkForResults() {
+
+		float time = GameData.currentTimer;
+		float[] penalties = GameData.penalties;
+
 		// If the player has finished and we haven't added his result already...
 		if (player.hasFinished() && player.acceleration > 0 && GameData.results.size() < 4) {
 			// Add the result to the list with key 0, the player's lane
-			GameData.results.add(new Float[] { 0f, GameData.currentTimer });
+			GameData.results.add(new Float[] { 0f, time });
+			if (time + penalties[0] < GameData.bests[0]) {
+				GameData.bests[0] = time + penalties[0];
+			}
 
 			// Transition to the results UI
 			GameData.showResultsState = true;
@@ -195,7 +217,10 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			// If the AI has finished and we haven't added his result already...
 			if (opponents[i].hasFinished() && opponents[i].acceleration > 0 && GameData.results.size() < 4) {
 				// Add the result to the list with the his lane numer as key
-				GameData.results.add(new Float[] { Float.valueOf(i + 1), GameData.currentTimer });
+				GameData.results.add(new Float[] { Float.valueOf(i + 1), time });
+				if (time + penalties[i + 1] < GameData.bests[i + 1]) {
+					GameData.bests[i + 1] = time + penalties[i + 1];
+				}
 
 				// Change the AI's acceleration so the boat stops moving
 				opponents[i].acceleration = -200f;
@@ -288,6 +313,22 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 							map.lanes[i]);
 					opponents[i - 1].createBoatBody(world, GameData.startingPoints[i][0], GameData.startingPoints[i][1],
 							"Boat1.json");
+				}
+
+				if (GameData.currentLeg == 3) {
+					int minIndex = 0;
+					for (int i = 1; i < GameData.bests.length; i++) {
+						if (GameData.bests[i] <= GameData.bests[minIndex]) {
+							minIndex = i;
+						}
+					}
+					if(minIndex == 0){
+						GameData.GameOverState = true;
+						GameData.dnq = true;
+						GameData.currentUI = new GameOverUI();
+					} else {
+						opponents[minIndex - 1].robustness = 0;
+					}
 				}
 			}
 
@@ -475,6 +516,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		} else {
 			GameData.currentLeg = 0;
 			GameData.mainMenuState = true;
+			GameData.bests = new float[] { Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE };
 			GameData.currentUI = new MenuUI();
 		}
 		GameData.resetGameState = false;

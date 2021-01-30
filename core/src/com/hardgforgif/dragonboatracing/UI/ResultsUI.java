@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.hardgforgif.dragonboatracing.GameData;
 import com.hardgforgif.dragonboatracing.core.Player;
 
+import java.util.Arrays;
 import java.util.Comparator;
 
 public class ResultsUI extends UI {
@@ -95,21 +96,32 @@ public class ResultsUI extends UI {
             // Add the penalties
             penalties += GameData.penalties[boatNr];
             result += penalties;
-            if (result != Float.MAX_VALUE)
+
+            if (result != Float.MAX_VALUE) {
                 text += result;
+            }
             else
-                text += "DNF";
+                text += "DNF/DNQ";
+
+            String bestText;
+            if (GameData.bests[boatNr] != Float.MAX_VALUE) {
+                bestText = Float.toString(GameData.bests[boatNr]);
+            }
+            else
+                bestText = "No best";
 
             // Display the text
             resultFonts[i].draw(batch, text, entrySprites[i].getX() + 50, entrySprites[i].getY() + 30);
             resultFonts[i].draw(batch, "Penalties: " + GameData.penalties[boatNr], entrySprites[i].getX() + 300,
                     entrySprites[i].getY() + 30);
+            resultFonts[i].draw(batch, "Best: " + bestText, entrySprites[i].getX() + 550, entrySprites[i].getY() + 30);
 
         }
         timerFont.draw(batch, String.valueOf(Math.round(GameData.currentTimer * 10.0) / 10.0), 10, 700);
         batch.end();
 
         playMusic();
+        System.out.println(Arrays.toString(GameData.bests));
     }
 
     @Override
@@ -123,11 +135,10 @@ public class ResultsUI extends UI {
         // necessary
         if (mousePos.x != 0f && mousePos.y != 0f && GameData.results.size() == 4) {
             GameData.gamePlayState = false;
-            float playerResult = GameData.results.get(GameData.standings[0] - 1)[1];
 
             // If the game is over due to player's dnf or victory, switch to the endgame
             // screen
-            if (GameData.currentLeg == 2 || playerResult == Float.MAX_VALUE || GameData.standings[0] == 4) {
+            if (GameData.currentLeg == 3) {
                 GameData.showResultsState = false;
                 GameData.GameOverState = true;
                 GameData.currentUI = new GameOverUI();

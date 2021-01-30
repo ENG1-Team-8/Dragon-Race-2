@@ -55,6 +55,11 @@ public class GameData {
     // Result of the boat as a Pair<lane number, result>
     public static List<Float[]> results = new ArrayList<>();
 
+    // MODIFIED: stores each position's best time
+    public static float[] bests =  {Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE};
+    public static boolean dnq = false;
+
+
     // Current leg and the current timer in the leg
     public static int currentLeg = 0;
     public static float currentTimer = 0f;
