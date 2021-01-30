@@ -59,6 +59,9 @@ public class ResultsUI extends UI {
         backgroundSprite.draw(batch);
         titleFont.draw(batch, "Results", backgroundSprite.getX() + backgroundSprite.getWidth() / 2 - 30,
                 backgroundSprite.getY() + backgroundSprite.getHeight() - 50);
+        titleFont.draw(batch, "Wait for opponents to finish then click to continue...",
+                backgroundSprite.getX() + backgroundSprite.getWidth() / 2 - 280,
+                backgroundSprite.getY() + backgroundSprite.getHeight() - 90);
 
         // Sort the currently available results in ascending order
         GameData.results.sort(new Comparator<Float[]>() {
@@ -99,15 +102,13 @@ public class ResultsUI extends UI {
 
             if (result != Float.MAX_VALUE) {
                 text += result;
-            }
-            else
+            } else
                 text += "DNF/DNQ";
 
             String bestText;
             if (GameData.bests[boatNr] != Float.MAX_VALUE) {
                 bestText = Float.toString(GameData.bests[boatNr]);
-            }
-            else
+            } else
                 bestText = "No best";
 
             // Display the text
