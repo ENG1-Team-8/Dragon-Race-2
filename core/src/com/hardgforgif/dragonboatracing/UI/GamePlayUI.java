@@ -32,16 +32,27 @@ public class GamePlayUI extends UI {
     private Texture robustness;
     private Sprite rBar;
     private Sprite sBar;
-    
-    //MODIFIED: new texture and sprite for on-screen controls
+
+    // MODIFIED: new texture and sprite for on-screen controls
     private Texture controls;
     private Sprite controlsDisplay;
 
+    // MODIFIED: variable to store the text to display the leg
     private String legText;
 
+    /**
+     * Constructs a new UI for gameplay.
+     * 
+     * @since 1
+     * @version 2
+     * @author Team 10
+     * @author Matt Tomlinson
+     */
     public GamePlayUI() {
         positionLabel = new BitmapFont();
         positionLabel.getData().setScale(1.4f);
+
+        // MODIFIED: white text colour for better readability
         positionLabel.setColor(Color.WHITE);
 
         robustnessLabel = new BitmapFont();
@@ -49,10 +60,14 @@ public class GamePlayUI extends UI {
 
         timerLabel = new BitmapFont();
         timerLabel.getData().setScale(1.4f);
+
+        // MODIFIED: white text colour for better readability
         timerLabel.setColor(Color.WHITE);
 
         legLabel = new BitmapFont();
         legLabel.getData().setScale(1.4f);
+
+        // MODIFIED: white text colour for better readability
         legLabel.setColor(Color.WHITE);
 
         stamina = new Texture(Gdx.files.internal("Stamina_bar.png"));
@@ -76,12 +91,20 @@ public class GamePlayUI extends UI {
 
     }
 
+    /**
+     * @since 1
+     * @version 2
+     * @author Team 10
+     * @author Matt Tomlinson
+     */
     @Override
     public void drawPlayerUI(Batch batch, Player playerBoat) {
         // Set the robustness and stamina bars size based on the player boat
         sBar.setSize(playerBoat.stamina, 30);
         rBar.setSize(playerBoat.robustness, 30);
 
+        // MODIFIED: Used to display more descriptive text for key legs rather than just
+        // numbers
         if (GameData.currentLeg == 0)
             legText = "Practice";
         else if (GameData.currentLeg == 3)
@@ -102,9 +125,9 @@ public class GamePlayUI extends UI {
         staminaLabel.draw(batch, "Stamina", 10, 170);
 
         // Draw the position label, the timer and the leg label
+        // MODIFIED: Labels for each UI element for more clarity
         positionLabel.draw(batch, "Position: " + GameData.standings[0] + "/4", 1140, 700);
         timerLabel.draw(batch, "Timer: " + String.valueOf(Math.round(GameData.currentTimer * 10.0) / 10.0), 10, 700);
-
         legLabel.draw(batch, "Leg: " + legText, 10, 650);
         batch.end();
 

@@ -47,6 +47,14 @@ public class MenuUI extends UI {
 
     ScrollingBackground scrollingBackground = new ScrollingBackground();
 
+    /**
+     * Constructs a new main menu user interface.
+     * 
+     * @since 1
+     * @version 2
+     * @author Team 10
+     * @author Matt Tomlinson
+     */
     public MenuUI() {
         scrollingBackground.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         scrollingBackground.setSpeedFixed(true);

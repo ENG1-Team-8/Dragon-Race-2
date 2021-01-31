@@ -8,9 +8,17 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.hardgforgif.dragonboatracing.GameData;
 import com.hardgforgif.dragonboatracing.BodyEditorLoader;
+import com.hardgforgif.dragonboatracing.GameData;
 
+/**
+ * Class representing an obstacle.
+ * 
+ * @since 1
+ * @version 2
+ * @author Team 10
+ * @author Josh Stafford
+ */
 public class Obstacle {
     public Sprite obstacleSprite;
     private Texture obstacleTexture;
@@ -21,12 +29,17 @@ public class Obstacle {
     }
 
     /**
-     * Creates a new obstacle body
+     * Creates a new obstacle body.
      * 
      * @param world    World to create the body in
      * @param posX     x location of the body, in meters
      * @param posY     y location of the body, in meters
      * @param bodyFile the name of the box2D editor json file for the body fixture
+     * 
+     * @since 1
+     * @version 2
+     * @author Team 10
+     * @author Josh Stafford
      */
     public void createObstacleBody(World world, float posX, float posY, String bodyFile, float scale) {
         obstacleSprite = new Sprite(obstacleTexture);

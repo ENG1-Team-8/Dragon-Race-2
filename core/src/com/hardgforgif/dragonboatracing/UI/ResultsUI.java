@@ -1,5 +1,7 @@
 package com.hardgforgif.dragonboatracing.UI;
 
+import java.util.Comparator;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,9 +12,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.hardgforgif.dragonboatracing.GameData;
 import com.hardgforgif.dragonboatracing.core.Player;
 
-import java.util.Arrays;
-import java.util.Comparator;
-
+/**
+ * Class representing the UI for displaying the results of each leg.
+ * 
+ * @since 1
+ * @version 2
+ * @author Team 10
+ * @author Matt Tomlinson
+ */
 public class ResultsUI extends UI {
     private Texture background;
     private Sprite backgroundSprite;
@@ -53,12 +60,20 @@ public class ResultsUI extends UI {
 
     }
 
+    /**
+     * @since 1
+     * @version 2
+     * @author Team 10
+     * @author Matt Tomlinson
+     */
     @Override
     public void drawUI(Batch batch, Vector2 mousePos, float screenWidth, float delta) {
         batch.begin();
         backgroundSprite.draw(batch);
         titleFont.draw(batch, "Results", backgroundSprite.getX() + backgroundSprite.getWidth() / 2 - 30,
                 backgroundSprite.getY() + backgroundSprite.getHeight() - 50);
+
+        // MODIFIED: Informs the user of how to progress form the results UI
         titleFont.draw(batch, "Wait for opponents to finish then click to continue...",
                 backgroundSprite.getX() + backgroundSprite.getWidth() / 2 - 280,
                 backgroundSprite.getY() + backgroundSprite.getHeight() - 90);
@@ -99,12 +114,13 @@ public class ResultsUI extends UI {
             // Add the penalties
             penalties += GameData.penalties[boatNr];
             result += penalties;
-
             if (result != Float.MAX_VALUE) {
                 text += result;
-            } else
+            } else {
                 text += "DNF/DNQ";
+            }
 
+            // MODIFIED: calculates and stores a String representation of a boat's best time
             String bestText;
             if (GameData.bests[boatNr] != Float.MAX_VALUE) {
                 bestText = Float.toString(GameData.bests[boatNr]);
@@ -115,6 +131,8 @@ public class ResultsUI extends UI {
             resultFonts[i].draw(batch, text, entrySprites[i].getX() + 50, entrySprites[i].getY() + 30);
             resultFonts[i].draw(batch, "Penalties: " + GameData.penalties[boatNr], entrySprites[i].getX() + 300,
                     entrySprites[i].getY() + 30);
+
+            // MODIFIED: displays the best time
             resultFonts[i].draw(batch, "Best: " + bestText, entrySprites[i].getX() + 550, entrySprites[i].getY() + 30);
 
         }
@@ -129,6 +147,12 @@ public class ResultsUI extends UI {
 
     }
 
+    /**
+     * @since 1
+     * @version 2
+     * @author Team 10
+     * @author Matt Tomlinson
+     */
     @Override
     public void getInput(float screenWidth, Vector2 mousePos) {
         // When the user clicks anywhere on the screen, switch the game state as
@@ -136,8 +160,7 @@ public class ResultsUI extends UI {
         if (mousePos.x != 0f && mousePos.y != 0f && GameData.results.size() == 4) {
             GameData.gamePlayState = false;
 
-            // If the game is over due to player's dnf or victory, switch to the endgame
-            // screen
+            // MODIFIED: If the game is over due to victory, switch to the endgame screen
             if (GameData.currentLeg == 3) {
                 GameData.showResultsState = false;
                 GameData.GameOverState = true;

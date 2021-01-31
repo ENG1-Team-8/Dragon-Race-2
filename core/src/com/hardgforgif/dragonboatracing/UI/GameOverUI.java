@@ -8,12 +8,19 @@ import com.badlogic.gdx.math.Vector2;
 import com.hardgforgif.dragonboatracing.GameData;
 import com.hardgforgif.dragonboatracing.core.Player;
 
+/**
+ * UI class for the end of the game.
+ * 
+ * @since 1
+ * @version 2
+ * @author Team 10
+ * @author Matt Tomlinson
+ */
 public class GameOverUI extends UI {
 
     // MODIFIED: new distinct game over textures and sprites
     private Texture gameOverFinalTexture;
     private Texture gameOverDNQTexture;
-
     private Sprite gameOverFinalSprite;
     private Sprite gameOverDNQSprite;
 
@@ -55,12 +62,13 @@ public class GameOverUI extends UI {
         batch.begin();
         scrollingBackground.updateAndRender(delta, batch);
         // If this was the last leg and the player won, show the victory screen
+        // MODIFIED: last leg is now 4th integer value (3)
         if (GameData.currentLeg == 3 && GameData.standings[0] == 1) {
             victorySprite.draw(batch);
         }
 
         // MODIFIED: if the user has not won, but the game is over, show either new DNQ
-        // or Final game over
+        // or Final game over interfaces
         else if (GameData.dnq) {
             gameOverDNQSprite.draw(batch);
         }

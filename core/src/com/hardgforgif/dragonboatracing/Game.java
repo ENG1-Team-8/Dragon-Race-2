@@ -188,11 +188,20 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	}
 
 	/**
+	 * Check if the leg results need updating.
+	 * <p>
 	 * Updates the GameData.results list by adding a new result every time a boat
-	 * finishes the game
+	 * finishes the game.
+	 * 
+	 * @since 1
+	 * @version 2
+	 * @author Team 10
+	 * @author Matt Tomlinson
+	 * 
 	 */
 	private void checkForResults() {
 
+		// MODIFIED: store the current leg time and penalties for easier access
 		float time = GameData.currentTimer;
 		float[] penalties = GameData.penalties;
 
@@ -200,6 +209,9 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		if (player.hasFinished() && player.acceleration > 0 && GameData.results.size() < 4) {
 			// Add the result to the list with key 0, the player's lane
 			GameData.results.add(new Float[] { 0f, time });
+
+			// MODIFIED: store the finishing time in 'bests' if it is the player's fastest
+			// yet
 			if (GameData.currentLeg != 0 && time + penalties[0] < GameData.bests[0]) {
 				GameData.bests[0] = time + penalties[0];
 			}
@@ -218,6 +230,9 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			if (opponents[i].hasFinished() && opponents[i].acceleration > 0 && GameData.results.size() < 4) {
 				// Add the result to the list with the his lane numer as key
 				GameData.results.add(new Float[] { Float.valueOf(i + 1), time });
+
+				// MODIFIED: store the finishing time in 'bests' if it is the opponent's fastest
+				// yet
 				if (GameData.currentLeg != 0 && time + penalties[i + 1] < GameData.bests[i + 1]) {
 					GameData.bests[i + 1] = time + penalties[i + 1];
 				}
@@ -271,6 +286,12 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		}
 	}
 
+	/**
+	 * @since 1
+	 * @version 2
+	 * @author Team 10
+	 * @author Matt Tomlinson
+	 */
 	@Override
 	public void render() {
 		// Reset the screen
@@ -315,20 +336,30 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 							"Boat1.json");
 				}
 
+				// MODIFIED: if it is the final leg, determine who did not qualify
 				if (GameData.currentLeg == 3) {
 					int maxIndex = 0;
+
+					// MODIFIED: find the boat number with the highest best time
 					for (int i = 1; i < GameData.bests.length; i++) {
 						if (GameData.bests[i] >= GameData.bests[maxIndex]) {
 							maxIndex = i;
 						}
 					}
-					if(maxIndex == 0){
+
+					// MODIFIED: if the boat with the highest time is the player
+					if (maxIndex == 0) {
+						// MODIFIED: set the game to be over with dnq = true
 						GameData.GameOverState = true;
 						GameData.gamePlayState = false;
 						GameData.dnq = true;
 						GameData.currentLeg = 0;
 						GameData.currentUI = new GameOverUI();
-					} else {
+					}
+
+					// MODIFIED: otherwise, destroy the opponent that did not qualify and set time
+					// to DNF
+					else {
 						world.destroyBody(opponents[maxIndex - 1].boatBody);
 						GameData.results.add(new Float[] { Float.valueOf(maxIndex), Float.MAX_VALUE });
 					}
@@ -467,7 +498,11 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	}
 
 	/**
-	 * A function to reset the game state
+	 * A function to reset the game state.
+	 * <p>
+	 * Will partially reset for a new leg if showResultsState is still true,
+	 * otherwise fully reset for a new game.
+	 * 
 	 * 
 	 * @since 2
 	 * @version 2
@@ -517,11 +552,17 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			GameData.gamePlayState = true;
 			GameData.currentUI = new GamePlayUI();
 		} else {
+
+			// MODIFIED: clear the body update ArrayLists to avoid null pointer exceptions
 			toBeRemovedBodies.clear();
 			toUpdateHealth.clear();
+
 			GameData.currentLeg = 0;
 			GameData.mainMenuState = true;
+
+			// MODIFIED: reset the best times array
 			GameData.bests = new float[] { Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE };
+
 			GameData.currentUI = new MenuUI();
 		}
 		GameData.resetGameState = false;

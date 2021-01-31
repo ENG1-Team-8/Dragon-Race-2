@@ -1,15 +1,15 @@
 package com.hardgforgif.dragonboatracing;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.hardgforgif.dragonboatracing.UI.MenuUI;
 import com.hardgforgif.dragonboatracing.UI.UI;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Stores general game data which is static.
+ * Stores general game data which are static.
  * 
  * @since 1
  * @version 2
@@ -55,8 +55,11 @@ public class GameData {
     // Result of the boat as a Pair<lane number, result>
     public static List<Float[]> results = new ArrayList<>();
 
-    // MODIFIED: stores each position's best time
+    // MODIFIED: stores each position's best time with index corresponding to boat number
     public static float[] bests = { Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE };
+    
+    // MODIFIED: used to determine if the game is over because the player did not
+    // qualify for the final
     public static boolean dnq = false;
 
     // Current leg and the current timer in the leg
