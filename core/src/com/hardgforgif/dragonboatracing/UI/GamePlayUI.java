@@ -81,8 +81,8 @@ public class GamePlayUI extends UI {
         // MODIFIED: load texture and create, scale and position sprite for controls
         controls = new Texture(Gdx.files.internal("controls.png"));
         controlsDisplay = new Sprite(controls);
-        controlsDisplay.scale(-0.75f);
-        controlsDisplay.setPosition(-202, -54);
+        controlsDisplay.scale(-0.74f);
+        controlsDisplay.setPosition(-276, -54);
 
     }
 

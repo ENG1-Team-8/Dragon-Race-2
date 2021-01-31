@@ -485,10 +485,11 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			}
 
 			// MODIFIED: if the player is in gameplay, not results and presses escape, save
-			// the game and exit
+			// the game and reset
 			if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && !GameData.showResultsState) {
 				SaveLoad.save(player);
-				Gdx.app.exit();
+				GameData.gamePlayState = false;
+				GameData.resetGameState = true;
 			}
 
 		}
@@ -571,6 +572,10 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			// MODIFIED: reset the best times array
 			GameData.bests = new float[] { Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE };
 
+			// MODIFIED: change back to main menu music before loading the main menu
+			GameData.music.stop();
+			GameData.music = Gdx.audio.newMusic(Gdx.files.internal("Vibing.ogg"));
+			
 			GameData.currentUI = new MenuUI();
 		}
 		GameData.resetGameState = false;

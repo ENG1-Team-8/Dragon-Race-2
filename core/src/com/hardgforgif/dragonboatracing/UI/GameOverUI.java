@@ -94,9 +94,8 @@ public class GameOverUI extends UI {
             GameData.GameOverState = false;
             GameData.resetGameState = true;
 
-            // Switch the music to the main menu music
-            GameData.music.stop();
-            GameData.music = Gdx.audio.newMusic(Gdx.files.internal("Vibing.ogg"));
+            // MODIFIED: music for main menu now set during full reset
+
         }
     }
 }
