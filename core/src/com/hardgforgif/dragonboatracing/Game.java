@@ -294,6 +294,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	 */
 	@Override
 	public void render() {
+
 		// Reset the screen
 		Gdx.gl.glClearColor(0.15f, 0.15f, 0.3f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -481,6 +482,13 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			else {
 				GameData.currentUI.drawUI(UIbatch, mousePosition, Gdx.graphics.getWidth(), Gdx.graphics.getDeltaTime());
 				GameData.currentUI.getInput(Gdx.graphics.getWidth(), clickPosition);
+			}
+
+			// MODIFIED: if the player is in gameplay, not results and presses escape, save
+			// the game and exit
+			if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && !GameData.showResultsState) {
+				SaveLoad.save(player);
+				Gdx.app.exit();
 			}
 
 		}
