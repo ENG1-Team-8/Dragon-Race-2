@@ -1,19 +1,34 @@
 package com.hardgforgif.dragonboatracing;
 
-import com.badlogic.gdx.*;
+import java.util.ArrayList;
+
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.World;
+import com.hardgforgif.dragonboatracing.UI.GameOverUI;
 import com.hardgforgif.dragonboatracing.UI.GamePlayUI;
 import com.hardgforgif.dragonboatracing.UI.MenuUI;
 import com.hardgforgif.dragonboatracing.UI.ResultsUI;
-import com.hardgforgif.dragonboatracing.core.*;
-
-import java.util.ArrayList;
+import com.hardgforgif.dragonboatracing.core.AI;
+import com.hardgforgif.dragonboatracing.core.Boat;
+import com.hardgforgif.dragonboatracing.core.Lane;
+import com.hardgforgif.dragonboatracing.core.Map;
+import com.hardgforgif.dragonboatracing.core.Obstacle;
+import com.hardgforgif.dragonboatracing.core.Player;
 
 /**
  * The main game class.
@@ -173,14 +188,33 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	}
 
 	/**
+	 * Check if the leg results need updating.
+	 * <p>
 	 * Updates the GameData.results list by adding a new result every time a boat
-	 * finishes the game
+	 * finishes the game.
+	 * 
+	 * @since 1
+	 * @version 2
+	 * @author Team 10
+	 * @author Matt Tomlinson
+	 * 
 	 */
 	private void checkForResults() {
+
+		// MODIFIED: store the current leg time and penalties for easier access
+		float time = GameData.currentTimer;
+		float[] penalties = GameData.penalties;
+
 		// If the player has finished and we haven't added his result already...
 		if (player.hasFinished() && player.acceleration > 0 && GameData.results.size() < 4) {
 			// Add the result to the list with key 0, the player's lane
-			GameData.results.add(new Float[] { 0f, GameData.currentTimer });
+			GameData.results.add(new Float[] { 0f, time });
+
+			// MODIFIED: store the finishing time in 'bests' if it is the player's fastest
+			// yet
+			if (GameData.currentLeg != 0 && time + penalties[0] < GameData.bests[0]) {
+				GameData.bests[0] = time + penalties[0];
+			}
 
 			// Transition to the results UI
 			GameData.showResultsState = true;
@@ -195,7 +229,13 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			// If the AI has finished and we haven't added his result already...
 			if (opponents[i].hasFinished() && opponents[i].acceleration > 0 && GameData.results.size() < 4) {
 				// Add the result to the list with the his lane numer as key
-				GameData.results.add(new Float[] { Float.valueOf(i + 1), GameData.currentTimer });
+				GameData.results.add(new Float[] { Float.valueOf(i + 1), time });
+
+				// MODIFIED: store the finishing time in 'bests' if it is the opponent's fastest
+				// yet
+				if (GameData.currentLeg != 0 && time + penalties[i + 1] < GameData.bests[i + 1]) {
+					GameData.bests[i + 1] = time + penalties[i + 1];
+				}
 
 				// Change the AI's acceleration so the boat stops moving
 				opponents[i].acceleration = -200f;
@@ -246,6 +286,12 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		}
 	}
 
+	/**
+	 * @since 1
+	 * @version 2
+	 * @author Team 10
+	 * @author Matt Tomlinson
+	 */
 	@Override
 	public void render() {
 		// Reset the screen
@@ -288,6 +334,35 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 							map.lanes[i]);
 					opponents[i - 1].createBoatBody(world, GameData.startingPoints[i][0], GameData.startingPoints[i][1],
 							"Boat1.json");
+				}
+
+				// MODIFIED: if it is the final leg, determine who did not qualify
+				if (GameData.currentLeg == 3) {
+					int maxIndex = 0;
+
+					// MODIFIED: find the boat number with the highest best time
+					for (int i = 1; i < GameData.bests.length; i++) {
+						if (GameData.bests[i] >= GameData.bests[maxIndex]) {
+							maxIndex = i;
+						}
+					}
+
+					// MODIFIED: if the boat with the highest time is the player
+					if (maxIndex == 0) {
+						// MODIFIED: set the game to be over with dnq = true
+						GameData.GameOverState = true;
+						GameData.gamePlayState = false;
+						GameData.dnq = true;
+						GameData.currentLeg = 0;
+						GameData.currentUI = new GameOverUI();
+					}
+
+					// MODIFIED: otherwise, destroy the opponent that did not qualify and set time
+					// to DNF
+					else {
+						world.destroyBody(opponents[maxIndex - 1].boatBody);
+						GameData.results.add(new Float[] { Float.valueOf(maxIndex), Float.MAX_VALUE });
+					}
 				}
 			}
 
@@ -423,7 +498,11 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	}
 
 	/**
-	 * A function to reset the game state
+	 * A function to reset the game state.
+	 * <p>
+	 * Will partially reset for a new leg if showResultsState is still true,
+	 * otherwise fully reset for a new game.
+	 * 
 	 * 
 	 * @since 2
 	 * @version 2
@@ -473,8 +552,17 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			GameData.gamePlayState = true;
 			GameData.currentUI = new GamePlayUI();
 		} else {
+
+			// MODIFIED: clear the body update ArrayLists to avoid null pointer exceptions
+			toBeRemovedBodies.clear();
+			toUpdateHealth.clear();
+
 			GameData.currentLeg = 0;
 			GameData.mainMenuState = true;
+
+			// MODIFIED: reset the best times array
+			GameData.bests = new float[] { Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE };
+
 			GameData.currentUI = new MenuUI();
 		}
 		GameData.resetGameState = false;

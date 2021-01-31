@@ -1,5 +1,8 @@
 package com.hardgforgif.dragonboatracing.UI;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,9 +12,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.hardgforgif.dragonboatracing.GameData;
 import com.hardgforgif.dragonboatracing.core.Player;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class ChoosingUI extends UI {
     private Texture background;

@@ -40,7 +40,7 @@ public class Lane {
         rightLayer = right;
 
         // MODIFIED: number of obstacles is weighted by difficulty now
-        obstacles = new Obstacle[Math.round(GameData.difficulty[0] * nrObstacles)];
+        obstacles = new Obstacle[Math.round((GameData.difficulty[0] * 1.5f) * nrObstacles)];
 
     }
 

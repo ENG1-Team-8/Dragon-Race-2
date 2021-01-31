@@ -47,6 +47,14 @@ public class MenuUI extends UI {
 
     ScrollingBackground scrollingBackground = new ScrollingBackground();
 
+    /**
+     * Constructs a new main menu user interface.
+     * 
+     * @since 1
+     * @version 2
+     * @author Team 10
+     * @author Matt Tomlinson
+     */
     public MenuUI() {
         scrollingBackground.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         scrollingBackground.setSpeedFixed(true);
@@ -88,8 +96,9 @@ public class MenuUI extends UI {
             batch.draw(playButtonInactive1, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         }
 
-        // MODIFIED: The two if conditions directly below draw new buttons for differing difficulties
-        x = screenWidth / 2 - (3 * PLAY_BUTTON_WIDTH + 20)  / 2;
+        // MODIFIED: The two if conditions directly below draw new buttons for differing
+        // difficulties
+        x = screenWidth / 2 - (3 * PLAY_BUTTON_WIDTH + 20) / 2;
         if (mousePos.x < x + PLAY_BUTTON_WIDTH && mousePos.x > x &&
         // cur pos < top_height
                 mousePos.y < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && mousePos.y > PLAY_BUTTON_Y) {
@@ -142,19 +151,20 @@ public class MenuUI extends UI {
             GameData.mainMenuState = false;
             GameData.choosingBoatState = true;
             // MODIFIED: Selecting button now sets the game difficulty
-            GameData.difficulty = new float[] { 1f, 1f, 1f };
+            GameData.difficulty = new float[] { 1f, 1.01f, 1.02f, 1.04f };
             GameData.currentUI = new ChoosingUI();
         }
 
-        // MODIFIED: The two if conditions below check for clicks on new added buttons above
-        x = screenWidth / 2 - (3 * PLAY_BUTTON_WIDTH + 10)  / 2;
+        // MODIFIED: The two if conditions below check for clicks on new added buttons
+        // above
+        x = screenWidth / 2 - (3 * PLAY_BUTTON_WIDTH + 10) / 2;
         if (clickPos.x < x + PLAY_BUTTON_WIDTH && clickPos.x > x &&
         // cur pos < top_height
                 clickPos.y < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && clickPos.y > PLAY_BUTTON_Y) {
             // Switch to the choosing state
             GameData.mainMenuState = false;
             GameData.choosingBoatState = true;
-            GameData.difficulty = new float[] { 0.9f, 0.9f, 0.9f };
+            GameData.difficulty = new float[] { 0.9f, 0.91f, 0.92f, 0.94f };
             GameData.currentUI = new ChoosingUI();
         }
 
@@ -165,7 +175,7 @@ public class MenuUI extends UI {
             // Switch to the choosing state
             GameData.mainMenuState = false;
             GameData.choosingBoatState = true;
-            GameData.difficulty = new float[] { 1.1f, 1.1f, 1.1f };
+            GameData.difficulty = new float[] { 1.1f, 1.11f, 1.12f, 1.14f };
             GameData.currentUI = new ChoosingUI();
         }
 
