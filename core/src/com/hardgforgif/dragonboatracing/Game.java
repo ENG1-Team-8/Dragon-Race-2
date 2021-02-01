@@ -29,6 +29,7 @@ import com.hardgforgif.dragonboatracing.core.Lane;
 import com.hardgforgif.dragonboatracing.core.Map;
 import com.hardgforgif.dragonboatracing.core.Obstacle;
 import com.hardgforgif.dragonboatracing.core.Player;
+import com.hardgforgif.dragonboatracing.core.Powerup;
 
 /**
  * The main game class.
@@ -104,6 +105,10 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	 * objects collide
 	 * 
 	 * @param world This is the physics world in which the collisions happen
+	 * @since 1
+	 * @version 2
+	 * @author Team 10
+	 * @author Josh Stafford
 	 */
 	private void createContactListener(World world) {
 		world.setContactListener(new ContactListener() {
@@ -111,7 +116,22 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			public void beginContact(Contact contact) {
 				Fixture fixtureA = contact.getFixtureA();
 				Fixture fixtureB = contact.getFixtureB();
-				if (fixtureA.getBody().getUserData() instanceof Obstacle) {
+
+				// MODIFIED: Now detects if boat collides with powerup and applies power to boat
+
+				if (fixtureA.getBody().getUserData() instanceof Powerup
+						&& fixtureB.getBody().getUserData() instanceof Boat) {
+					Powerup p = (Powerup) fixtureA.getBody().getUserData();
+					Boat b = (Boat) fixtureB.getBody().getUserData();
+					b.applyPowerup(p.getType());
+				} else if (fixtureB.getBody().getUserData() instanceof Powerup
+						&& fixtureA.getBody().getUserData() instanceof Boat) {
+					Powerup p = (Powerup) fixtureB.getBody().getUserData();
+					Boat b = (Boat) fixtureB.getBody().getUserData();
+					b.applyPowerup(p.getType());
+				}
+
+				else if (fixtureA.getBody().getUserData() instanceof Obstacle) {
 					toBeRemovedBodies.add(fixtureA.getBody());
 				} else if (fixtureB.getBody().getUserData() instanceof Obstacle) {
 					toBeRemovedBodies.add(fixtureB.getBody());

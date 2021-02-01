@@ -15,6 +15,7 @@ import com.hardgforgif.dragonboatracing.BodyEditorLoader;
 public class Boat {
     // Boat specs
     public float robustness;
+    private float maxRobustness;
     public float stamina = 120f;
     public float maneuverability;
     public float speed;
@@ -37,6 +38,7 @@ public class Boat {
 
     public Boat(float robustness, float speed, float acceleration, float maneuverability, int boatType, Lane lane) {
         this.robustness = robustness;
+        this.maxRobustness = robustness;
         this.speed = speed;
         this.acceleration = acceleration;
         this.maneuverability = maneuverability;
@@ -233,4 +235,38 @@ public class Boat {
 
         boatBody.setTransform(boatBody.getPosition(), newAngle * MathUtils.degRad);
     }
+
+    /**
+     * Applies a powerup that the boat has coolided with
+     * 
+     * @param powerupType The int value of the powerup dictating its type
+     * 
+     * @since 2
+     * @version 2
+     * @author Team 8
+     * @author Josh Stafford
+     */
+
+    public void applyPowerup(int powerupType) {
+
+        switch (powerupType) {
+
+            // Health regeneration
+            case 1:
+                regenRobustness();
+
+        }
+
+    }
+
+    private void regenRobustness() {
+
+        this.robustness += (int) (this.maxRobustness * 0.2);
+
+        if (this.robustness > this.maxRobustness) {
+            this.robustness = this.maxRobustness;
+        }
+
+    }
+
 }
