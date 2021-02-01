@@ -127,7 +127,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 				} else if (fixtureB.getBody().getUserData() instanceof Powerup
 						&& fixtureA.getBody().getUserData() instanceof Boat) {
 					Powerup p = (Powerup) fixtureB.getBody().getUserData();
-					Boat b = (Boat) fixtureB.getBody().getUserData();
+					Boat b = (Boat) fixtureA.getBody().getUserData();
 					b.applyPowerup(p.getType());
 				}
 
