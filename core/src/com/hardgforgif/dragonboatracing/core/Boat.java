@@ -17,6 +17,7 @@ public class Boat {
     public float robustness;
     private float maxRobustness;
     public float stamina = 120f;
+    private float maxStamina = stamina;
     public float maneuverability;
     public float speed;
     public float acceleration;
@@ -254,10 +255,30 @@ public class Boat {
             // Health regeneration
             case 1:
                 regenRobustness();
+                break;
+
+            // Stamina boost
+            case 2:
+                staminaBoost();
+                break;
+
+            // Speed boost
+            case 3:
+                speedBoost();
+                break;
 
         }
 
     }
+
+    /**
+     * Gives boat 20% of it's maximum robustness back
+     * 
+     * @since 2
+     * @version 2
+     * @author Team 8
+     * @author Josh Stafford
+     */
 
     private void regenRobustness() {
 
@@ -266,6 +287,22 @@ public class Boat {
         if (this.robustness > this.maxRobustness) {
             this.robustness = this.maxRobustness;
         }
+
+    }
+
+    private void staminaBoost() {
+
+        this.stamina += (int) (this.maxStamina * 0.2);
+
+        if (this.stamina > this.maxStamina) {
+            this.stamina = this.maxStamina;
+        }
+
+    }
+
+    private void speedBoost() {
+
+        current_speed += 5f;
 
     }
 
