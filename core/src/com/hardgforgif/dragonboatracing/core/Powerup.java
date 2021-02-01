@@ -13,7 +13,7 @@ public class Powerup extends Obstacle {
 
     Powerup(int type) {
 
-        super("powerup" + String.valueOf(type) + ".png");
+        super("Powerups/powerup" + String.valueOf(type) + ".png");
         this.type = type;
 
     }
