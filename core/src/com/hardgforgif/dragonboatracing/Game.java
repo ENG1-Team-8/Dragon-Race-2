@@ -314,6 +314,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	 */
 	@Override
 	public void render() {
+
 		// Reset the screen
 		Gdx.gl.glClearColor(0.15f, 0.15f, 0.3f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -503,6 +504,14 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 				GameData.currentUI.getInput(Gdx.graphics.getWidth(), clickPosition);
 			}
 
+			// MODIFIED: if the player is in gameplay, not results and presses escape, save
+			// the game and reset
+			if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && !GameData.showResultsState) {
+				SaveLoad.save(player);
+				GameData.gamePlayState = false;
+				GameData.resetGameState = true;
+			}
+
 		}
 
 		// Otherwise we need need to reset elements of the game to prepare for the next
@@ -583,6 +592,10 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			// MODIFIED: reset the best times array
 			GameData.bests = new float[] { Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE };
 
+			// MODIFIED: change back to main menu music before loading the main menu
+			GameData.music.stop();
+			GameData.music = Gdx.audio.newMusic(Gdx.files.internal("Vibing.ogg"));
+			
 			GameData.currentUI = new MenuUI();
 		}
 		GameData.resetGameState = false;

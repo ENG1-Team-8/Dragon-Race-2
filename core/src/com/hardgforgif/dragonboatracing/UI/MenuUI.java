@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.hardgforgif.dragonboatracing.GameData;
+import com.hardgforgif.dragonboatracing.SaveLoad;
 import com.hardgforgif.dragonboatracing.core.Player;
 
 /**
@@ -26,11 +27,16 @@ public class MenuUI extends UI {
 
     private static final int PLAY_BUTTON_WIDTH = 300;
     private static final int PLAY_BUTTON_HEIGHT = 120;
-    private static final int PLAY_BUTTON_Y = 230;
+    private static final int PLAY_BUTTON_Y = 290;
+
+    // MODIFIED: dimensions and y-positioning for the load button
+    private static final int LOAD_BUTTON_WIDTH = 300;
+    private static final int LOAD_BUTTON_HEIGHT = 120;
+    private static final int LOAD_BUTTON_Y = 160;
 
     private static final int EXIT_BUTTON_WIDTH = 250;
     private static final int EXIT_BUTTON_HEIGHT = 120;
-    private static final int EXIT_BUTTON_Y = 100;
+    private static final int EXIT_BUTTON_Y = 30;
 
     Texture playButtonActive;
     Texture playButtonInactive;
@@ -40,6 +46,10 @@ public class MenuUI extends UI {
     Texture playButtonInactive1;
     Texture playButtonActive2;
     Texture playButtonInactive2;
+
+    // MODIFIED: load button textures
+    Texture loadButtonActive;
+    Texture loadButtonInactive;
 
     Texture exitButtonActive;
     Texture exitButtonInactive;
@@ -68,6 +78,10 @@ public class MenuUI extends UI {
         playButtonInactive1 = new Texture("PlayUnselected1.png");
         playButtonActive2 = new Texture("PlaySelected2.png");
         playButtonInactive2 = new Texture("PlayUnselected2.png");
+
+        // MODIFIED: create the button textures from new asset pngs
+        loadButtonActive = new Texture("LoadSelected.png");
+        loadButtonInactive = new Texture("LoadUnselected.png");
 
         exitButtonActive = new Texture("ExitSelected.png");
         exitButtonInactive = new Texture("ExitUnselected.png");
@@ -114,6 +128,16 @@ public class MenuUI extends UI {
             batch.draw(playButtonActive2, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         } else {
             batch.draw(playButtonInactive2, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+        }
+
+        // MODIFIED: draw the selected/unselected load button
+        x = screenWidth / 2 - LOAD_BUTTON_WIDTH / 2;
+        if (mousePos.x < x + LOAD_BUTTON_WIDTH && mousePos.x > x &&
+        // cur pos < top_height
+                mousePos.y < LOAD_BUTTON_Y + LOAD_BUTTON_HEIGHT && mousePos.y > LOAD_BUTTON_Y) {
+            batch.draw(loadButtonActive, x, LOAD_BUTTON_Y, LOAD_BUTTON_WIDTH, LOAD_BUTTON_HEIGHT);
+        } else {
+            batch.draw(loadButtonInactive, x, LOAD_BUTTON_Y, LOAD_BUTTON_WIDTH, LOAD_BUTTON_HEIGHT);
         }
 
         // Otherwise draw the selected buttons
@@ -177,6 +201,20 @@ public class MenuUI extends UI {
             GameData.choosingBoatState = true;
             GameData.difficulty = new float[] { 1.1f, 1.11f, 1.12f, 1.14f };
             GameData.currentUI = new ChoosingUI();
+        }
+
+        // MODIFIED: check for click on load button
+        x = screenWidth / 2 - LOAD_BUTTON_WIDTH / 2;
+        if (clickPos.x < x + LOAD_BUTTON_WIDTH && clickPos.x > x &&
+        // cur pos < top_height
+                clickPos.y < LOAD_BUTTON_Y + LOAD_BUTTON_HEIGHT && clickPos.y > LOAD_BUTTON_Y) {
+            // MODIFIED: go straight to gameplay after loading
+            GameData.mainMenuState = false;
+            GameData.gamePlayState = true;
+            SaveLoad.load();
+            GameData.music.stop();
+            GameData.music = Gdx.audio.newMusic(Gdx.files.internal("Love_Drama.ogg"));
+            GameData.currentUI = new GamePlayUI();
         }
 
         // If the exit button is clicked, close the game
