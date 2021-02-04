@@ -4,6 +4,15 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.hardgforgif.dragonboatracing.GameData;
 
+/**
+ * Class representing each AI boat, extending from the Boat class.
+ * 
+ * @see Boat
+ * @since 1
+ * @version 1
+ * @author Team 10
+ * 
+ */
 public class AI extends Boat {
 
     public Vector2 laneChecker;
@@ -12,8 +21,27 @@ public class AI extends Boat {
     private boolean isTurning = false;
     private float detectedObstacleYPos;
 
+    /**
+     * Constructs an instance of an AI boat.
+     * 
+     * @param robustness      The starting health of the AI's boat
+     * @param speed           The maximum speed of the AI's boat
+     * @param acceleration    The rate to increase to maximum speed of the AI's boat
+     * @param maneuverability The turning speed of the AI's boat
+     * @param boatType        The boat type number
+     * @param lane            The lane object to associate the AI with
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
+     */
     public AI(float robustness, float speed, float acceleration, float maneuverability, int boatType, Lane lane) {
+
+        // Construct a boat with the AI's properties
         super(robustness, speed, acceleration, maneuverability, boatType, lane);
+
+        // Multiply AI boat properties by the difficulty
         this.robustness *= GameData.difficulty[GameData.currentLeg];
         this.stamina *= GameData.difficulty[GameData.currentLeg];
         this.maneuverability *= GameData.difficulty[GameData.currentLeg];
@@ -22,12 +50,18 @@ public class AI extends Boat {
     }
 
     /**
-     * Get a point at a given distance in front of the boat
+     * Get a point at a given distance in front of the boat.
      * 
      * @param distance The distance to the new point
-     * @return
+     * @return The target vector (Vector2)
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
      */
     private Vector2 getAIPredictionVector(float distance) {
+
         // Get the coordinates of the center of the boat
         float originX = boatBody.getPosition().x * GameData.METERS_TO_PIXELS;
         float originY = boatBody.getPosition().y * GameData.METERS_TO_PIXELS;
@@ -64,9 +98,14 @@ public class AI extends Boat {
 
     /**
      * Sets the target angle attribute to keep the boat in lane, based on the limits
-     * at the predicted location
+     * at the predicted location.
      * 
      * @param predictLimits the limits of the lane at the predicted location
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
      */
     private void stayInLane(float[] predictLimits) {
         float laneWidth = predictLimits[1] - predictLimits[0];
@@ -100,11 +139,17 @@ public class AI extends Boat {
     }
 
     /**
-     * Checks for obstacles in range of the AI
+     * Checks for obstacles in range of the AI.
      * 
      * @return True if there's an obstacle in range, false otherwise
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
      */
     private boolean obstaclesInRange() {
+
         for (Obstacle obstacle : this.lane.obstacles) {
             // Get the obstacles attributes
             float width = obstacle.obstacleSprite.getWidth() * obstacle.obstacleSprite.getScaleX();
@@ -127,9 +172,14 @@ public class AI extends Boat {
     }
 
     /**
-     * Sets the target angle attribute to keep the boat from hitting an obstacle
+     * Sets the target angle attribute to keep the boat from hitting an obstacle.
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
      */
     private void dodgeObstacles() {
+
         if (obstaclesInRange()) {
             float boatPosX = boatSprite.getX() + boatSprite.getWidth() / 2;
 
@@ -154,11 +204,17 @@ public class AI extends Boat {
     }
 
     /**
-     * Updates the AI to apply appropriate movement and rotation
+     * Updates the AI to apply appropriate movement and rotation.
      * 
      * @param delta Time since last frame
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
      */
     public void updateAI(float delta) {
+
         // Start by matching the location of the sprite with the location of the sprite
         boatSprite.setPosition((boatBody.getPosition().x * GameData.METERS_TO_PIXELS) - boatSprite.getWidth() / 2,
                 (boatBody.getPosition().y * GameData.METERS_TO_PIXELS) - boatSprite.getHeight() / 2);

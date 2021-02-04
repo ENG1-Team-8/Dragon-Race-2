@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="de.tomgrill.gdxtesting.examples.UnitTestExample" tests="2" skipped="0" failures="1" errors="0" timestamp="2021-02-04T10:24:43" hostname="Qwark" time="0.049">
+  <properties/>
+  <testcase name="test" classname="de.tomgrill.gdxtesting.examples.UnitTestExample" time="0.03">
+    <failure message="com.badlogic.gdx.utils.GdxRuntimeException: Couldn't load file: Boat2.png" type="com.badlogic.gdx.utils.GdxRuntimeException">com.badlogic.gdx.utils.GdxRuntimeException: Couldn't load file: Boat2.png
+	at com.badlogic.gdx.graphics.Pixmap.&lt;init&gt;(Pixmap.java:144)
+	at com.badlogic.gdx.graphics.TextureData$Factory.loadFromFile(TextureData.java:98)
+	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:122)
+	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:114)
+	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:110)
+	at com.hardgforgif.dragonboatracing.core.Boat.&lt;init&gt;(Boat.java:49)
+	at de.tomgrill.gdxtesting.examples.UnitTestExample.test(UnitTestExample.java:39)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at de.tomgrill.gdxtesting.GdxTestRunner.render(GdxTestRunner.java:59)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:129)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
+Caused by: com.badlogic.gdx.utils.GdxRuntimeException: File not found: Boat2.png (Internal)
+	at com.badlogic.gdx.files.FileHandle.read(FileHandle.java:142)
+	at com.badlogic.gdx.files.FileHandle.readBytes(FileHandle.java:228)
+	at com.badlogic.gdx.graphics.Pixmap.&lt;init&gt;(Pixmap.java:141)
+	... 21 more
+</failure>
+  </testcase>
+  <testcase name="oneEqualsOne" classname="de.tomgrill.gdxtesting.examples.UnitTestExample" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
