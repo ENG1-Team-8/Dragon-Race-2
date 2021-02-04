@@ -2,6 +2,7 @@
 
 ![Dragon Boat Racing 2021 Logo](https://github.com/ENG1-Team-8/Dragon-Race-2/raw/master/core/assets/Title.png)
 <h1 align="center">
+<img src="https://img.shields.io/github/checks-status/ENG1-Team-8/Dragon-Race-2/master?style=flat-square">
 <img src="https://img.shields.io/github/issues/ENG1-Team-8/Dragon-Race-2?color=green&style=flat-square">
 <img src="https://img.shields.io/github/issues-pr/ENG1-Team-8/Dragon-Race-2?color=yellow&style=flat-square">
 <img src="https://img.shields.io/github/stars/ENG1-Team-8/Dragon-Race-2?color=red&style=flat-square">
