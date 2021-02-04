@@ -14,22 +14,29 @@
  * limitations under the License.
  ******************************************************************************/
 
-package de.tomgrill.gdxtesting.examples;
+package de.tomgrill.gdxtesting;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+
+import com.hardgforgif.dragonboatracing.core.Boat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.badlogic.gdx.Gdx;
-
-import de.tomgrill.gdxtesting.GdxTestRunner;
 
 @RunWith(GdxTestRunner.class)
-public class AssetExistsExampleTest {
+public class UnitTests {
 
 	@Test
-	public void badlogicLogoFileExists() {
-		assertTrue("This test will only pass when the badlogic.jpg file coming with a new project setup has not been deleted.", true);
+	public void oneEqualsOne() {
+		assertEquals(1, 1);
 	}
+
+	@Test
+	public void test()
+	{
+		Boat boat = new Boat(100f, 100f, 100f, 100f, 1, null);
+		assertEquals(100f, boat.robustness, 0);
+	}
+
 }

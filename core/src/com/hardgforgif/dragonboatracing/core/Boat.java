@@ -12,7 +12,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.hardgforgif.dragonboatracing.GameData;
 import com.hardgforgif.dragonboatracing.BodyEditorLoader;
 
-
 public class Boat {
     // Boat specs
     public float robustness;
