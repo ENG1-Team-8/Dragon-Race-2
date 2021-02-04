@@ -83,6 +83,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		map.createMapCollisions("CollisionLayerLeft", world);
 		map.createMapCollisions("CollisionLayerRight", world);
 
+		// MODIFIED: Now called when the leg loads
 		// Create the lanes, and the obstacles in the physics game world
 		// map[i].createLanes(world[i]);
 
@@ -507,7 +508,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			// MODIFIED: if the player is in gameplay, not results and presses escape, save
 			// the game and reset
 			if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && !GameData.showResultsState) {
-				SaveLoad.save(player);
+				SaveLoad.save();
 				GameData.gamePlayState = false;
 				GameData.resetGameState = true;
 			}
@@ -595,12 +596,13 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			// MODIFIED: change back to main menu music before loading the main menu
 			GameData.music.stop();
 			GameData.music = Gdx.audio.newMusic(Gdx.files.internal("Vibing.ogg"));
-			
+
 			GameData.currentUI = new MenuUI();
 		}
 		GameData.resetGameState = false;
 	}
 
+	@Override
 	public void dispose() {
 		world.dispose();
 	}
