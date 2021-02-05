@@ -335,7 +335,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		// MODIFIED: Obstacles now generated after difficulty and boat selection
 		// To facilitate scaled number of obstacles
 		else if (!GameData.obstaclesGenerated) {
-			map.createLanes(world);
+			map.createLanes(world, GameData.difficulty[GameData.currentLeg]);
 			map.createFinishLine("finishLine.png");
 			GameData.obstaclesGenerated = true;
 		}
@@ -588,7 +588,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		map.createMapCollisions("CollisionLayerRight", world);
 
 		// Create the lanes, and the obstacles in the physics game world
-		map.createLanes(world);
+		map.createLanes(world, GameData.difficulty[GameData.currentLeg]);
 
 		// Create the finish line
 		map.createFinishLine("finishLine.png");
