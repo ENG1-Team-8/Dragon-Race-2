@@ -34,7 +34,7 @@ public class Powerup extends Obstacle {
      * @author Josh Stafford
      * 
      */
-    Powerup(int type) {
+    public Powerup(int type) {
 
         super("Powerups/powerup" + String.valueOf(type) + ".png");
         this.type = type;

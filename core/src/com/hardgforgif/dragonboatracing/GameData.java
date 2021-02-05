@@ -37,8 +37,8 @@ public class GameData {
 
     // Set the rations between the pixels, meters and tiles
     public final static float METERS_TO_PIXELS = 100f;
-    public static float TILES_TO_METERS;
-    public static float PIXELS_TO_TILES;
+    public static float TILES_TO_METERS = 0.128f;
+    public static float PIXELS_TO_TILES = 1 / (GameData.METERS_TO_PIXELS * GameData.TILES_TO_METERS);
 
     // Create a list of possible boat stats
     // Ordered by: robustness, speed, acceleration, maneuverability
