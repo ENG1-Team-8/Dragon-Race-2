@@ -19,12 +19,16 @@ import com.hardgforgif.dragonboatracing.GameData;
 /**
  * Class representing a boat (used by Player and AI).
  * 
+ * @see Player
+ * @see AI
+ * 
  * @since 1
  * @version 2
  * @author Team 10
  * @author Josh Stafford
  */
 public class Boat {
+
     // Boat specs
     public float robustness;
     private float maxRobustness;
@@ -49,7 +53,23 @@ public class Boat {
     public float leftLimit;
     public float rightLimit;
 
+    /**
+     * Construct a boat object.
+     * 
+     * @param robustness      The maximum boat 'health'
+     * @param speed           The boat's maximum speed
+     * @param acceleration    The boat's acceleration
+     * @param maneuverability The boat's turning speed
+     * @param boatType        The array position for boat stats
+     * @param lane            The lane the boat is racing in
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
+     */
     public Boat(float robustness, float speed, float acceleration, float maneuverability, int boatType, Lane lane) {
+
         this.robustness = robustness;
         this.maxRobustness = robustness;
         this.speed = speed;
@@ -63,6 +83,7 @@ public class Boat {
         animation = new Animation(1 / 15f, textureAtlas.getRegions());
 
         this.lane = lane;
+
     }
 
     /**
@@ -72,8 +93,13 @@ public class Boat {
      * @param posX     x location of the body, in meters
      * @param posY     y location of the body, in meters
      * @param bodyFile the name of the box2D editor json file for the body fixture
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
      */
     public void createBoatBody(World world, float posX, float posY, String bodyFile) {
+
         boatSprite = new Sprite(boatTexture);
         boatSprite.scale(-0.8f);
 
@@ -99,25 +125,38 @@ public class Boat {
         // Attach the fixture to the body
         float scale = boatSprite.getWidth() / GameData.METERS_TO_PIXELS * boatSprite.getScaleX();
         loader.attachFixture(boatBody, "Name", fixtureDef, scale);
+
     }
 
     /**
-     * Draws the boat on the batch, with animations
+     * Draws the boat on the batch, with animations.
      * 
      * @param batch The batch to draw on
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
      */
     public void drawBoat(Batch batch) {
+
         batch.begin();
         batch.draw((TextureRegion) animation.getKeyFrame(GameData.currentTimer, true), boatSprite.getX(),
                 boatSprite.getY(), boatSprite.getOriginX(), boatSprite.getOriginY(), boatSprite.getWidth(),
                 boatSprite.getHeight(), boatSprite.getScaleX(), boatSprite.getScaleY(), boatSprite.getRotation());
         batch.end();
+
     }
 
     /**
-     * Updates the boat's limits in the lane based on it's location
+     * Updates the boat's limits in the lane based on its location.
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
      */
     public void updateLimits() {
+
         int i;
         for (i = 1; i < lane.leftIterator; i++) {
             if (lane.leftBoundry[i][0] > boatSprite.getY() + (boatSprite.getHeight() / 2)) {
@@ -132,9 +171,22 @@ public class Boat {
             }
         }
         rightLimit = lane.rightBoundry[i - 1][1];
+
     }
 
+    /**
+     * Gets the left and right limits of a boat at a given y-position.
+     * 
+     * @param yPosition The y-position to check left and right limits at.
+     * @return A list of length 2, 0 index left boundary, 1 index right boundary
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
+     */
     public float[] getLimitsAt(float yPosition) {
+
         float[] lst = new float[2];
         int i;
         for (i = 1; i < lane.leftIterator; i++) {
@@ -151,23 +203,37 @@ public class Boat {
         }
         lst[1] = lane.rightBoundry[i - 1][1];
         return lst;
+
     }
 
     /**
-     * Checks if the boat finished the race
+     * Checks if the boat has finished the race.
      * 
      * @return True if the boat passed the finish line, false otherwise
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
      */
     public boolean hasFinished() {
+
         if (boatSprite.getY() + boatSprite.getHeight() / 2 > 9000f)
             return true;
         return false;
+
     }
 
     /**
-     * Moves the boat forward, based i=on it's rotation
+     * Moves the boat forward, based on its rotation.
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
      */
     public void moveBoat() {
+
         current_speed += 0.15f * (acceleration / 90) * (stamina / 100);
         if (current_speed > speed)
             current_speed = speed;
@@ -219,15 +285,22 @@ public class Boat {
         movement.set(velocity).scl(Gdx.graphics.getDeltaTime());
 
         boatBody.setLinearVelocity(movement);
+
     }
 
     /**
      * Rotate the boat until it reaches the given angle, based on it's turning speed
-     * and stamina
+     * and stamina.
      * 
      * @param angle angle to rotate to
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
      */
     public void rotateBoat(float angle) {
+
         // Calculate the difference between the target angle and the current rotation of
         // the boat
         float angleDifference = angle - boatBody.getAngle() * MathUtils.radDeg;
@@ -247,6 +320,7 @@ public class Boat {
             newAngle += turningSpeed * (this.stamina / 70);
 
         boatBody.setTransform(boatBody.getPosition(), newAngle * MathUtils.degRad);
+
     }
 
     /**

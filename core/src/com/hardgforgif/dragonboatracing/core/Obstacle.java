@@ -20,12 +20,25 @@ import com.hardgforgif.dragonboatracing.GameData;
  * @author Josh Stafford
  */
 public class Obstacle {
+
     public Sprite obstacleSprite;
     public Texture obstacleTexture;
     public Body obstacleBody;
 
+    /**
+     * Construct an obstacle object.
+     * 
+     * @param textureName The image path for the texture
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
+     */
     public Obstacle(String textureName) {
+
         obstacleTexture = new Texture(textureName);
+
     }
 
     /**
@@ -42,6 +55,7 @@ public class Obstacle {
      * @author Josh Stafford
      */
     public void createObstacleBody(World world, float posX, float posY, String bodyFile, float scale) {
+
         obstacleSprite = new Sprite(obstacleTexture);
         obstacleSprite.scale(scale);
 
@@ -71,14 +85,21 @@ public class Obstacle {
         obstacleSprite.setPosition(
                 (obstacleBody.getPosition().x * GameData.METERS_TO_PIXELS) - obstacleSprite.getWidth() / 2,
                 (obstacleBody.getPosition().y * GameData.METERS_TO_PIXELS) - obstacleSprite.getHeight() / 2);
+
     }
 
     /**
-     * Draw the obstacle
+     * Draw the obstacle.
      * 
      * @param batch Batch to draw on
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
      */
     public void drawObstacle(Batch batch) {
+
         obstacleSprite.setPosition(
                 (obstacleBody.getPosition().x * GameData.METERS_TO_PIXELS) - obstacleSprite.getWidth() / 2,
                 (obstacleBody.getPosition().y * GameData.METERS_TO_PIXELS) - obstacleSprite.getHeight() / 2);
@@ -87,5 +108,7 @@ public class Obstacle {
                 obstacleSprite.getOriginY(), obstacleSprite.getWidth(), obstacleSprite.getHeight(),
                 obstacleSprite.getScaleX(), obstacleSprite.getScaleY(), obstacleSprite.getRotation());
         batch.end();
+
     }
+
 }

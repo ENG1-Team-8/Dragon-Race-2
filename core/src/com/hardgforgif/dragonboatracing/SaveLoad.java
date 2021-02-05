@@ -34,8 +34,9 @@ public class SaveLoad {
         prefs.putString("bests", json.toJson(GameData.bests));
         prefs.putInteger("leg", GameData.currentLeg);
 
-        // MODIFIED: keep the changes
+        // MODIFIED: save the changes
         prefs.flush();
+
     }
 
     /**

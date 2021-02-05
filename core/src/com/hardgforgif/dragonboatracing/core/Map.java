@@ -13,10 +13,25 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.hardgforgif.dragonboatracing.GameData;
 
+/**
+ * Class representing the game map.
+ * 
+ * @since 1
+ * @version 2
+ * @author Team 10
+ * @author Matt Tomlinson
+ * 
+ */
 public class Map {
+
     // Map components
     private TiledMap tiledMap;
     private TiledMapRenderer tiledMapRenderer;
@@ -36,7 +51,19 @@ public class Map {
     private Texture finishLineTexture;
     private Sprite finishLineSprite;
 
+    /**
+     * Construct a game map.
+     * 
+     * @param tmxFile The tiled map file to generate the map from
+     * @param width   The width to use for the game map
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
+     */
     public Map(String tmxFile, float width) {
+
         tiledMap = new TmxMapLoader().load(tmxFile);
         screenWidth = width;
 
@@ -45,24 +72,56 @@ public class Map {
         mapHeight = prop.get("height", Integer.class);
 
         unitScale = screenWidth / mapWidth / 32f;
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, unitScale);
+
+        // MODIFIED: map renderer is created via function for testing purposes
+
     }
 
     /**
+     * Create the map renderer outside of the constructor.
+     * 
+     * @since 2
+     * @version 2
+     * @author Team 8
+     * @author Matt Tomlinson
+     * 
+     */
+    public void createMapRenderer() {
+
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, unitScale);
+
+    }
+
+    /**
+     * Calculates the ration between the tiles of the tiled map and in-game metres.
+     * 
      * @return The ratio between a tile and a meter in the game world
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
      */
     public float getTilesToMetersRatio() {
+
         return ((this.screenWidth / GameData.METERS_TO_PIXELS) / this.mapWidth);
+
     }
 
     /**
      * Creates bodies on the edges of the river, based on a pre-made layer of
-     * objects in Tiled
+     * objects in Tiled.
      * 
      * @param collisionLayerName Name of the Tiled layer with the rectangle objects
      * @param world              World to spawn the bodies in
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
      */
     public void createMapCollisions(String collisionLayerName, World world) {
+
         // Get the objects from the object layer in the tilemap
         MapLayer collisionLayer = tiledMap.getLayers().get(collisionLayerName);
         MapObjects objects = collisionLayer.getObjects();
@@ -95,13 +154,20 @@ public class Map {
             Fixture fixture = objectBody.createFixture(fixtureDef);
 
             shape.dispose();
+
         }
     }
 
     /**
-     * Renders the map on the screen
+     * Renders the map on the screen.
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
      */
     public void renderMap(OrthographicCamera camera, Batch batch) {
+
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
         batch.begin();
@@ -109,14 +175,22 @@ public class Map {
                 finishLineSprite.getOriginY(), finishLineSprite.getWidth(), finishLineSprite.getHeight(),
                 finishLineSprite.getScaleX(), finishLineSprite.getScaleY(), finishLineSprite.getRotation());
         batch.end();
+
     }
 
     /**
-     * Instantiates the lane array and spawns obstacles on each of the lanes
+     * Instantiates the lane array and spawns obstacles on each of the lanes.
      * 
      * @param world World to spawn the obstacles in
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * @author Matt Tomlinson
+     * 
      */
     public void createLanes(World world) {
+
         MapLayer leftLayer = tiledMap.getLayers().get("CollisionLayerLeft");
         MapLayer rightLayer = tiledMap.getLayers().get("Lane1");
 
@@ -124,9 +198,8 @@ public class Map {
         lanes[0].constructBoundries(unitScale);
         lanes[0].spawnObstacles(world, mapHeight / GameData.PIXELS_TO_TILES);
 
-        //MODIFIED: spawn the powerups for the given lane
+        // MODIFIED: spawn the powerups for the given lane
         lanes[0].spawnPowerups(world, mapHeight / GameData.PIXELS_TO_TILES);
-
 
         leftLayer = tiledMap.getLayers().get("Lane1");
         rightLayer = tiledMap.getLayers().get("Lane2");
@@ -135,7 +208,7 @@ public class Map {
         lanes[1].constructBoundries(unitScale);
         lanes[1].spawnObstacles(world, mapHeight / GameData.PIXELS_TO_TILES);
 
-        //MODIFIED: spawn the powerups for the given lane
+        // MODIFIED: spawn the powerups for the given lane
         lanes[1].spawnPowerups(world, mapHeight / GameData.PIXELS_TO_TILES);
 
         leftLayer = tiledMap.getLayers().get("Lane2");
@@ -145,7 +218,7 @@ public class Map {
         lanes[2].constructBoundries(unitScale);
         lanes[2].spawnObstacles(world, mapHeight / GameData.PIXELS_TO_TILES);
 
-        //MODIFIED: spawn the powerups for the given lane
+        // MODIFIED: spawn the powerups for the given lane
         lanes[2].spawnPowerups(world, mapHeight / GameData.PIXELS_TO_TILES);
 
         leftLayer = tiledMap.getLayers().get("Lane3");
@@ -155,17 +228,23 @@ public class Map {
         lanes[3].constructBoundries(unitScale);
         lanes[3].spawnObstacles(world, mapHeight / GameData.PIXELS_TO_TILES);
 
-        //MODIFIED: spawn the powerups for the given lane
+        // MODIFIED: spawn the powerups for the given lane
         lanes[3].spawnPowerups(world, mapHeight / GameData.PIXELS_TO_TILES);
 
     }
 
     /**
-     * Creates the finish line at a fixed position
+     * Creates the finish line at a fixed position.
      * 
      * @param textureFile The texture oof the finish line
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
      */
     public void createFinishLine(String textureFile) {
+
         // Create the texture and the sprite of the finish line
         finishLineTexture = new Texture(textureFile);
         finishLineSprite = new Sprite(finishLineTexture);
@@ -178,6 +257,7 @@ public class Map {
         // Set it's new found position and width
         finishLineSprite.setPosition(startpoint, 9000f);
         finishLineSprite.setSize(width, 100);
+
     }
 
 }

@@ -1,13 +1,13 @@
 package com.hardgforgif.dragonboatracing.core;
 
+import java.util.Random;
+
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.hardgforgif.dragonboatracing.GameData;
-
-import java.util.Random;
 
 /**
  * Class representing a lane to race in.
@@ -19,6 +19,7 @@ import java.util.Random;
  * 
  */
 public class Lane {
+
     public float[][] leftBoundry;
     public int leftIterator = 0;
     public float[][] rightBoundry;
@@ -45,6 +46,7 @@ public class Lane {
      * @author Matt Tomlinson
      */
     public Lane(int mapHeight, MapLayer left, MapLayer right, int nrObstacles) {
+
         leftBoundry = new float[mapHeight][2];
         rightBoundry = new float[mapHeight][2];
 
@@ -60,11 +62,17 @@ public class Lane {
     }
 
     /**
-     * Construct bodies that match the lane separators
+     * Construct bodies that match the lane separators.
      * 
      * @param unitScale The size of a tile in pixels
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
      */
     public void constructBoundries(float unitScale) {
+
         MapObjects objects = leftLayer.getObjects();
 
         for (RectangleMapObject rectangleObject : objects.getByType(RectangleMapObject.class)) {
@@ -84,9 +92,22 @@ public class Lane {
             rightBoundry[rightIterator][0] = height;
             rightBoundry[rightIterator++][1] = limit;
         }
+
     }
 
+    /**
+     * Gets the left and right limits of a lane at a given y-position.
+     * 
+     * @param yPosition The y-position to check left and right limits at.
+     * @return A list of length 2, 0 index left boundary, 1 index right boundary
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
+     */
     public float[] getLimitsAt(float yPosition) {
+
         float[] lst = new float[2];
         int i;
         for (i = 1; i < leftIterator; i++) {
@@ -103,15 +124,22 @@ public class Lane {
         }
         lst[1] = rightBoundry[i - 1][1];
         return lst;
+
     }
 
     /**
-     * Spawn obstacles on the lane
+     * Spawn obstacles randomly on the lane.
      * 
      * @param world     World to spawn obstacles in
      * @param mapHeight Height of the map to draw on
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     * 
      */
     public void spawnObstacles(World world, float mapHeight) {
+
         int nrObstacles = obstacles.length;
         float segmentLength = mapHeight / nrObstacles;
         for (int i = 0; i < nrObstacles; i++) {
@@ -131,12 +159,13 @@ public class Lane {
             obstacles[i].createObstacleBody(world, xPos / GameData.METERS_TO_PIXELS, yPos / GameData.METERS_TO_PIXELS,
                     "Obstacles/Obstacle" + (randomIndex + 1) + ".json", scale);
         }
+
     }
 
     /**
      * Spawns powerups in the given world for this lane.
      * 
-     * @param world The world to spawn the powerups in
+     * @param world     The world to spawn the powerups in
      * @param mapHeight The map height
      * 
      * @since 2
@@ -145,6 +174,7 @@ public class Lane {
      * @author Matt Tomlinson
      */
     public void spawnPowerups(World world, float mapHeight) {
+
         int nrPowerups = powerups.length;
         float segmentLength = mapHeight / nrPowerups;
         for (int i = 0; i < nrPowerups; i++) {
@@ -162,6 +192,7 @@ public class Lane {
             powerups[i].createObstacleBody(world, xPos / GameData.METERS_TO_PIXELS, yPos / GameData.METERS_TO_PIXELS,
                     35f / GameData.METERS_TO_PIXELS, 20f / GameData.METERS_TO_PIXELS);
         }
+
     }
 
 }

@@ -75,6 +75,9 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		// Initialize the map
 		map = new Map("Map1/Map1.tmx", w);
 
+		// MODIFIED: create map renderer
+		map.createMapRenderer();
+
 		// Calculate the ratio between pixels, meters and tiles
 		GameData.TILES_TO_METERS = map.getTilesToMetersRatio();
 		GameData.PIXELS_TO_TILES = 1 / (GameData.METERS_TO_PIXELS * GameData.TILES_TO_METERS);
@@ -290,23 +293,23 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	/**
 	 * This method marks all the boats that haven't finished the race as dnfs
 	 */
-	private void dnfRemainingBoats() {
-		// If the player hasn't finished
-		if (!player.hasFinished() && player.robustness > 0 && GameData.results.size() < 4) {
-			// Add a dnf result
-			GameData.results.add(new Float[] { 0f, Float.MAX_VALUE });
+	// private void dnfRemainingBoats() {
+	// 	// If the player hasn't finished
+	// 	if (!player.hasFinished() && player.robustness > 0 && GameData.results.size() < 4) {
+	// 		// Add a dnf result
+	// 		GameData.results.add(new Float[] { 0f, Float.MAX_VALUE });
 
-			// Transition to the showResult screen
-			GameData.showResultsState = true;
-			GameData.currentUI = new ResultsUI();
-		}
+	// 		// Transition to the showResult screen
+	// 		GameData.showResultsState = true;
+	// 		GameData.currentUI = new ResultsUI();
+	// 	}
 
-		// Iterate through the AI and add a dnf result for any who haven't finished
-		for (int i = 0; i < 3; i++) {
-			if (!opponents[i].hasFinished() && opponents[i].robustness > 0 && GameData.results.size() < 4)
-				GameData.results.add(new Float[] { Float.valueOf(i + 1), Float.MAX_VALUE });
-		}
-	}
+	// 	// Iterate through the AI and add a dnf result for any who haven't finished
+	// 	for (int i = 0; i < 3; i++) {
+	// 		if (!opponents[i].hasFinished() && opponents[i].robustness > 0 && GameData.results.size() < 4)
+	// 			GameData.results.add(new Float[] { Float.valueOf(i + 1), Float.MAX_VALUE });
+	// 	}
+	// }
 
 	/**
 	 * @since 1
@@ -498,19 +501,19 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			// Update the standings of each boat
 			updateStandings();
 
-			// If it's been 15 seconds since the winner completed the race, dnf all boats
-			// who haven't finished yet
-			// Then transition to the result state
-			if (GameData.results.size() > 0 && GameData.results.size() < 4
-					&& GameData.currentTimer > GameData.results.get(0)[1] + 15f) {
-				dnfRemainingBoats();
-				GameData.showResultsState = true;
-				GameData.currentUI = new ResultsUI();
-			}
-			// Otherwise keep checking for new results
-			else {
-				checkForResults();
-			}
+			// // If it's been 15 seconds since the winner completed the race, dnf all boats
+			// // who haven't finished yet
+			// // Then transition to the result state
+			// if (GameData.results.size() > 0 && GameData.results.size() < 4
+			// 		&& GameData.currentTimer > GameData.results.get(0)[1] + 15f) {
+			// 	//dnfRemainingBoats();
+			// 	GameData.showResultsState = true;
+			// 	GameData.currentUI = new ResultsUI();
+			// }
+			// // Otherwise keep checking for new results
+			// else {
+			// 	checkForResults();
+			// }
 
 			// Choose which UI to display based on the current state
 			if (!GameData.showResultsState)

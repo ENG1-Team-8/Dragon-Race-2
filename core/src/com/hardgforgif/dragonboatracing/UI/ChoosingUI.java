@@ -13,6 +13,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.hardgforgif.dragonboatracing.GameData;
 import com.hardgforgif.dragonboatracing.core.Player;
 
+/**
+ * The UI class for the player to choose a boat to race with, extends from UI.
+ * 
+ * @see UI
+ * 
+ * @since 1
+ * 
+ */
 public class ChoosingUI extends UI {
     private Texture background;
     private Sprite background_sprite;

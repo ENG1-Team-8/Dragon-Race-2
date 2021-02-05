@@ -11,11 +11,12 @@ import com.hardgforgif.dragonboatracing.core.Player;
  * @since 1
  * @version 1
  * @author Team 10
+ * 
  */
 public abstract class UI {
 
     /**
-     * This method draws UI elements that are not related to the player boat
+     * This method draws UI elements that are not related to the player boat.
      * 
      * @param batch       The batch to draw to
      * @param mousePos    The location of the mouse, necessary for buttons
@@ -25,11 +26,12 @@ public abstract class UI {
      * @since 1
      * @version 1
      * @author Team 10
+     * 
      */
     public abstract void drawUI(Batch batch, Vector2 mousePos, float screenWidth, float delta);
 
     /**
-     * Draws UI elements related to the player boat
+     * Draws UI elements related to the player boat.
      * 
      * @param batch      The batch to draw to
      * @param playerBoat The player boat
@@ -41,7 +43,7 @@ public abstract class UI {
     public abstract void drawPlayerUI(Batch batch, Player playerBoat);
 
     /**
-     * Handles input given by the user
+     * Handles input given by the user.
      * 
      * @param screenWidth The width of the screen
      * @param mousePos    the location of the mouse when it is clicked
@@ -60,9 +62,11 @@ public abstract class UI {
      * @author Team 10
      */
     public void playMusic() {
+
         if (!GameData.music.isPlaying()) {
             GameData.music.play();
         }
+
     }
 
 }

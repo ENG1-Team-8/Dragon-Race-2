@@ -47,6 +47,7 @@ public class AI extends Boat {
         this.maneuverability *= GameData.difficulty[GameData.currentLeg];
         this.speed *= GameData.difficulty[GameData.currentLeg];
         this.acceleration *= GameData.difficulty[GameData.currentLeg];
+
     }
 
     /**
@@ -94,6 +95,7 @@ public class AI extends Boat {
             target.set(boatHeadPos.x + x, boatHeadPos.y + y);
 
         return target;
+
     }
 
     /**
@@ -108,6 +110,7 @@ public class AI extends Boat {
      * 
      */
     private void stayInLane(float[] predictLimits) {
+
         float laneWidth = predictLimits[1] - predictLimits[0];
         float middleOfLane = predictLimits[0] + laneWidth / 2;
 
@@ -136,6 +139,7 @@ public class AI extends Boat {
         // Apply the rotation
         rotateBoat(targetAngle);
         boatSprite.setRotation((float) Math.toDegrees(boatBody.getAngle()));
+
     }
 
     /**
@@ -169,6 +173,7 @@ public class AI extends Boat {
             }
         }
         return false;
+
     }
 
     /**
@@ -201,6 +206,7 @@ public class AI extends Boat {
             rotateBoat(targetAngle);
             boatSprite.setRotation((float) Math.toDegrees(boatBody.getAngle()));
         }
+
     }
 
     /**
@@ -256,4 +262,5 @@ public class AI extends Boat {
             stamina -= 1.5 * delta;
 
     }
+
 }

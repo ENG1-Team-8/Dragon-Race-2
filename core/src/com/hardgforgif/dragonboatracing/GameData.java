@@ -15,8 +15,10 @@ import com.hardgforgif.dragonboatracing.UI.UI;
  * @version 2
  * @author Team 10
  * @author Matt Tomlinson
+ * 
  */
 public class GameData {
+
     // Create the game state variables
     public static boolean mainMenuState = true;
     public static boolean choosingBoatState = false;
@@ -55,9 +57,10 @@ public class GameData {
     // Result of the boat as a Pair<lane number, result>
     public static List<Float[]> results = new ArrayList<>();
 
-    // MODIFIED: stores each position's best time with index corresponding to boat number
+    // MODIFIED: stores each position's best time with index corresponding to boat
+    // number
     public static float[] bests = { Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE };
-    
+
     // MODIFIED: used to determine if the game is over because the player did not
     // qualify for the final
     public static boolean dnq = false;
@@ -69,4 +72,5 @@ public class GameData {
     // Difficulty constants for the AI
     // MODIFIED: no longer uses set value, is instead selected in MenuUI
     public static float[] difficulty;
+
 }

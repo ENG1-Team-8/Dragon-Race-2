@@ -7,11 +7,33 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.hardgforgif.dragonboatracing.GameData;
 
+/**
+ * Class representing a powerup, extending from Obstacle.
+ * 
+ * @see Obstacle
+ * 
+ * @since 2
+ * @version 2
+ * @author Team 8
+ * @author Josh Stafford
+ * 
+ */
 public class Powerup extends Obstacle {
 
     private int type;
     public static int typesNo = 3;
 
+    /**
+     * Construct a powerup with given type.
+     * 
+     * @param type The powerup type, 1 Health, 2 Stamina, 3 Speed
+     * 
+     * @since 2
+     * @version 2
+     * @author Team 8
+     * @author Josh Stafford
+     * 
+     */
     Powerup(int type) {
 
         super("Powerups/powerup" + String.valueOf(type) + ".png");
@@ -91,6 +113,7 @@ public class Powerup extends Obstacle {
         shape.dispose();
 
         return body;
+
     }
 
     /**
