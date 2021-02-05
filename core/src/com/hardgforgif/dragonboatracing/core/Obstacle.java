@@ -21,7 +21,7 @@ import com.hardgforgif.dragonboatracing.GameData;
  */
 public class Obstacle {
     public Sprite obstacleSprite;
-    private Texture obstacleTexture;
+    public Texture obstacleTexture;
     public Body obstacleBody;
 
     public Obstacle(String textureName) {

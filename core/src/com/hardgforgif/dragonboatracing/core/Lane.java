@@ -9,6 +9,15 @@ import com.hardgforgif.dragonboatracing.GameData;
 
 import java.util.Random;
 
+/**
+ * Class representing a lane to race in.
+ * 
+ * @since 1
+ * @version 2
+ * @author Team 10
+ * @author Matt Tomlinson
+ * 
+ */
 public class Lane {
     public float[][] leftBoundry;
     public int leftIterator = 0;
@@ -19,12 +28,15 @@ public class Lane {
 
     public Obstacle[] obstacles;
 
+    // MODIFIED: array for powerups
+    public Powerup[] powerups;
+
     /**
      * Constructs a Lane object on which boats race.
      * 
-     * @param mapHeight The height of the map
-     * @param left The left map layer
-     * @param right The right map layer
+     * @param mapHeight   The height of the map
+     * @param left        The left map layer
+     * @param right       The right map layer
      * @param nrObstacles The base number of obstacles to spawn on the lane
      * 
      * @since 1
@@ -41,6 +53,9 @@ public class Lane {
 
         // MODIFIED: number of obstacles is weighted by difficulty now
         obstacles = new Obstacle[Math.round((GameData.difficulty[0] * 1.5f) * nrObstacles)];
+
+        // MODIFIED: set number of powerups on each lane
+        powerups = new Powerup[20];
 
     }
 
@@ -115,6 +130,37 @@ public class Lane {
 
             obstacles[i].createObstacleBody(world, xPos / GameData.METERS_TO_PIXELS, yPos / GameData.METERS_TO_PIXELS,
                     "Obstacles/Obstacle" + (randomIndex + 1) + ".json", scale);
+        }
+    }
+
+    /**
+     * Spawns powerups in the given world for this lane.
+     * 
+     * @param world The world to spawn the powerups in
+     * @param mapHeight The map height
+     * 
+     * @since 2
+     * @version 2
+     * @author Team 8
+     * @author Matt Tomlinson
+     */
+    public void spawnPowerups(World world, float mapHeight) {
+        int nrPowerups = powerups.length;
+        float segmentLength = mapHeight / nrPowerups;
+        for (int i = 0; i < nrPowerups; i++) {
+            int randomIndex = new Random().nextInt(3);
+
+            powerups[i] = new Powerup(randomIndex + 1);
+            float segmentStart = i * segmentLength;
+            float yPos = (float) (600f + (segmentStart + Math.random() * segmentLength));
+
+            float[] limits = this.getLimitsAt(yPos);
+            float leftLimit = limits[0] + 50;
+            float rightLimit = limits[1];
+            float xPos = (float) (leftLimit + Math.random() * (rightLimit - leftLimit));
+
+            powerups[i].createObstacleBody(world, xPos / GameData.METERS_TO_PIXELS, yPos / GameData.METERS_TO_PIXELS,
+                    35f / GameData.METERS_TO_PIXELS, 20f / GameData.METERS_TO_PIXELS);
         }
     }
 

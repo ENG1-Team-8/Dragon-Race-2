@@ -119,29 +119,30 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 				Fixture fixtureB = contact.getFixtureB();
 
 				// MODIFIED: Now detects if boat collides with powerup and applies power to boat
-
 				if (fixtureA.getBody().getUserData() instanceof Powerup
 						&& fixtureB.getBody().getUserData() instanceof Boat) {
 					Powerup p = (Powerup) fixtureA.getBody().getUserData();
 					Boat b = (Boat) fixtureB.getBody().getUserData();
+					toBeRemovedBodies.add(fixtureA.getBody());
 					b.applyPowerup(p.getType());
 				} else if (fixtureB.getBody().getUserData() instanceof Powerup
 						&& fixtureA.getBody().getUserData() instanceof Boat) {
 					Powerup p = (Powerup) fixtureB.getBody().getUserData();
 					Boat b = (Boat) fixtureA.getBody().getUserData();
-					b.applyPowerup(p.getType());
-				}
-
-				else if (fixtureA.getBody().getUserData() instanceof Obstacle) {
-					toBeRemovedBodies.add(fixtureA.getBody());
-				} else if (fixtureB.getBody().getUserData() instanceof Obstacle) {
 					toBeRemovedBodies.add(fixtureB.getBody());
-				}
+					b.applyPowerup(p.getType());
+				} else {
+					if (fixtureA.getBody().getUserData() instanceof Obstacle) {
+						toBeRemovedBodies.add(fixtureA.getBody());
+					} else if (fixtureB.getBody().getUserData() instanceof Obstacle) {
+						toBeRemovedBodies.add(fixtureB.getBody());
+					}
 
-				if (fixtureA.getBody().getUserData() instanceof Boat) {
-					toUpdateHealth.add(fixtureA.getBody());
-				} else if (fixtureB.getBody().getUserData() instanceof Boat) {
-					toUpdateHealth.add(fixtureB.getBody());
+					if (fixtureA.getBody().getUserData() instanceof Boat) {
+						toUpdateHealth.add(fixtureA.getBody());
+					} else if (fixtureB.getBody().getUserData() instanceof Boat) {
+						toUpdateHealth.add(fixtureB.getBody());
+					}
 				}
 			}
 
@@ -178,7 +179,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	private void updateStandings() {
 		// If the player hasn't finished the race...
 		if (!player.hasFinished()) {
-			// Reset his position
+			// Reset their position
 			GameData.standings[0] = 1;
 
 			// For every AI that is ahead, increment by 1
@@ -194,7 +195,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		for (int i = 0; i < 3; i++)
 			// If the AI hasn't finished the race...
 			if (!opponents[i].hasFinished()) {
-				// Reset his position
+				// Reset their position
 				GameData.standings[i + 1] = 1;
 
 				// If the player is ahead, increment the standing by 1
@@ -226,7 +227,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		float time = GameData.currentTimer;
 		float[] penalties = GameData.penalties;
 
-		// If the player has finished and we haven't added his result already...
+		// If the player has finished and we haven't added their result already...
 		if (player.hasFinished() && player.acceleration > 0 && GameData.results.size() < 4) {
 			// Add the result to the list with key 0, the player's lane
 			GameData.results.add(new Float[] { 0f, time });
@@ -247,9 +248,9 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 		// Iterate through the AI to see if any of them finished the race
 		for (int i = 0; i < 3; i++) {
-			// If the AI has finished and we haven't added his result already...
+			// If the AI has finished and we haven't added their result already...
 			if (opponents[i].hasFinished() && opponents[i].acceleration > 0 && GameData.results.size() < 4) {
-				// Add the result to the list with the his lane numer as key
+				// Add the result to the list with the their lane numer as key
 				GameData.results.add(new Float[] { Float.valueOf(i + 1), time });
 
 				// MODIFIED: store the finishing time in 'bests' if it is the opponent's fastest
@@ -269,7 +270,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	 * necessary
 	 */
 	private void updatePenalties() {
-		// Update the penalties for the player, if he is outside his lane
+		// Update the penalties for the player, if they is outside their lane
 		float boatCenter = player.boatSprite.getX() + player.boatSprite.getWidth() / 2;
 		if (!player.hasFinished() && player.robustness > 0
 				&& (boatCenter < player.leftLimit || boatCenter > player.rightLimit)) {
@@ -393,11 +394,18 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			for (Body body : toBeRemovedBodies) {
 				// Find the obstacle that has this body and mark it as null
 				// so it's sprite doesn't get rendered in future frames
-				for (Lane lane : map.lanes)
+				for (Lane lane : map.lanes) {
 					for (Obstacle obstacle : lane.obstacles)
 						if (obstacle.obstacleBody == body) {
 							obstacle.obstacleBody = null;
 						}
+
+					// MODIFIED: for each powerup to be removed, set the body to null
+					for (Powerup powerup : lane.powerups)
+						if (powerup.obstacleBody == body) {
+							powerup.obstacleBody = null;
+						}
+				}
 
 				// Remove the body from the world to avoid other collisions with it
 				world.destroyBody(body);
@@ -469,11 +477,18 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 				opponent.drawBoat(batch);
 
 			// Render the objects that weren't destroyed yet
-			for (Lane lane : map.lanes)
+			for (Lane lane : map.lanes) {
 				for (Obstacle obstacle : lane.obstacles) {
 					if (obstacle.obstacleBody != null)
 						obstacle.drawObstacle(batch);
 				}
+
+				// MODIFIED: for each powerup with a body, draw them
+				for (Powerup powerup : lane.powerups) {
+					if (powerup.obstacleBody != null)
+						powerup.drawObstacle(batch);
+				}
+			}
 
 			// Update the camera at the player's position
 			updateCamera(player);
@@ -536,6 +551,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	 * 
 	 * @since 2
 	 * @version 2
+	 * @author Team 8
 	 * @author Matt Tomlinson
 	 */
 	public void reset() {

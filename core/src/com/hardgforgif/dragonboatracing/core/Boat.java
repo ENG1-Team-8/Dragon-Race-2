@@ -2,16 +2,28 @@ package com.hardgforgif.dragonboatracing.core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.hardgforgif.dragonboatracing.GameData;
 import com.hardgforgif.dragonboatracing.BodyEditorLoader;
+import com.hardgforgif.dragonboatracing.GameData;
 
+/**
+ * Class representing a boat (used by Player and AI).
+ * 
+ * @since 1
+ * @version 2
+ * @author Team 10
+ * @author Josh Stafford
+ */
 public class Boat {
     // Boat specs
     public float robustness;
@@ -54,7 +66,7 @@ public class Boat {
     }
 
     /**
-     * Creates a boat body
+     * Creates a boat body.
      * 
      * @param world    World to create the body in
      * @param posX     x location of the body, in meters
@@ -170,7 +182,7 @@ public class Boat {
 
         // First we need to calculate the position of the player's head (the front of
         // the boat)
-        // So we can move him based on this and not the center of the boat
+        // So we can move them based on this and not the center of the boat
         Vector2 boatHeadPos = new Vector2();
         float radius = boatSprite.getHeight() / 2;
         boatHeadPos.set(originX + radius * MathUtils.cosDeg(boatSprite.getRotation() + 90),
@@ -238,7 +250,7 @@ public class Boat {
     }
 
     /**
-     * Applies a powerup that the boat has coolided with
+     * Applies a powerup that the boat has coolided with.
      * 
      * @param powerupType The int value of the powerup dictating its type
      * 
@@ -247,7 +259,6 @@ public class Boat {
      * @author Team 8
      * @author Josh Stafford
      */
-
     public void applyPowerup(int powerupType) {
 
         switch (powerupType) {
@@ -272,14 +283,13 @@ public class Boat {
     }
 
     /**
-     * Gives boat 20% of it's maximum robustness back
+     * Gives boat 20% of it's maximum robustness back.
      * 
      * @since 2
      * @version 2
      * @author Team 8
      * @author Josh Stafford
      */
-
     private void regenRobustness() {
 
         this.robustness += (int) (this.maxRobustness * 0.2);
@@ -290,6 +300,14 @@ public class Boat {
 
     }
 
+    /**
+     * Gives boat 20% of it's maximum stamina back.
+     * 
+     * @since 2
+     * @version 2
+     * @author Team 8
+     * @author Josh Stafford
+     */
     private void staminaBoost() {
 
         this.stamina += (int) (this.maxStamina * 0.2);
@@ -300,9 +318,17 @@ public class Boat {
 
     }
 
+    /**
+     * Gives boat 2f max speed increase.
+     * 
+     * @since 2
+     * @version 2
+     * @author Team 8
+     * @author Josh Stafford
+     */
     private void speedBoost() {
 
-        current_speed += 5f;
+        speed += 5f;
 
     }
 

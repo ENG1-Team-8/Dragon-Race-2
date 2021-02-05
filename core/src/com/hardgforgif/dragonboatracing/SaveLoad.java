@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Json;
  * 
  * @since 2
  * @version 2
+ * @author Team 8
  * @author Matt Tomlinson
  */
 public class SaveLoad {
@@ -22,7 +23,8 @@ public class SaveLoad {
      * 
      * @since 2
      * @version 2
-     * @author Matt Tomlinsons
+     * @author Team 8
+     * @author Matt Tomlinson
      */
     public static void save() {
 
@@ -41,6 +43,7 @@ public class SaveLoad {
      * 
      * @since 2
      * @version 2
+     * @author Team 8
      * @author Matt Tomlinson
      */
     public static void load() {

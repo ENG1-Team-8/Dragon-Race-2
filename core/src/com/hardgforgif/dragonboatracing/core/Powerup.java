@@ -1,10 +1,11 @@
 package com.hardgforgif.dragonboatracing.core;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.hardgforgif.dragonboatracing.GameData;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 public class Powerup extends Obstacle {
 
@@ -18,49 +19,91 @@ public class Powerup extends Obstacle {
 
     }
 
-    public void createObstacleBody(World world, int posX, int posY, int width, int height) {
+    /**
+     * Create a body for the obstacle (powerup).
+     * 
+     * @param world  The world to create the body in
+     * @param posX   The x position to create the body at
+     * @param posY   The y position to create the body at
+     * @param width  The width of the body
+     * @param height The height of the body
+     * 
+     * @since 2
+     * @version 2
+     * @author Team 8
+     * @author Josh Stafford
+     */
+    public void createObstacleBody(World world, float posX, float posY, float width, float height) {
 
-        this.obstacleBody = createBox(posX, posY, width, height, false, world);
+        // MODIFIED: set the sprite, body, velocity and user data
+        obstacleSprite = new Sprite(obstacleTexture);
+        this.obstacleBody = createBox(posX, posY, width, height, world);
         this.obstacleBody.setLinearVelocity(0, -0.2f);
-
         obstacleBody.setUserData(this);
+
+        // MODIFIED: set the initial position of the sprite
+        obstacleSprite.setPosition(
+                (obstacleBody.getPosition().x * GameData.METERS_TO_PIXELS) - obstacleSprite.getWidth() / 2,
+                (obstacleBody.getPosition().y * GameData.METERS_TO_PIXELS) - obstacleSprite.getHeight() / 2);
 
     }
 
-    private Body createBox(int x, int y, int width, int height, boolean isStatic, World world) {
+    /**
+     * Create a box fixture for collisions.
+     * 
+     * @param x      The x position
+     * @param y      The y position
+     * @param width  The width of the box
+     * @param height The height of the box
+     * @param world  The world to create the box in
+     * @return A Body with a box fixture
+     * 
+     * @since 2
+     * @version 2
+     * @author Team 8
+     * @author Josh Stafford
+     */
+    private Body createBox(float x, float y, float width, float height, World world) {
 
-        // Creates a body and body definition (properties for a body)
+        // MODIFIED: Creates a body and body definition (properties for a body)
         Body body;
         BodyDef def = new BodyDef();
 
-        // Allows the programmer to define whether a body is static or not
-        if (isStatic) {
-            def.type = BodyDef.BodyType.StaticBody;
-        } else {
-            def.type = BodyDef.BodyType.DynamicBody;
-        }
+        def.type = BodyDef.BodyType.DynamicBody;
 
-        // Sets the position of the body according to the scale of the game
-        def.position.set(x / GameData.TILES_TO_METERS, y / GameData.TILES_TO_METERS);
+        // MODIFIED: Sets the position of the body according to the scale of the game
+        def.position.set(x, y);
 
-        // Fixes the rotation of the object
+        // MODIFIED: Fixes the rotation of the object
         def.fixedRotation = true;
 
-        // Adds the body to the game world
+        // MODIFIED: Adds the body to the game world
         body = world.createBody(def);
 
         // Sets the shape of the body to be a box polygon
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / 2f / GameData.TILES_TO_METERS, height / 2f / GameData.TILES_TO_METERS);
+        shape.setAsBox(width / 2f, height / 2f);
 
-        // Fixes the box to the body
+        // MODIFIED: Fixes the box to the body
         body.createFixture(shape, 1.0f);
 
-        // Disposes of the used shape
+        // MODIFIED: Disposes of the used shape
         shape.dispose();
+
         return body;
     }
 
+    /**
+     * Get the type number for the powerup
+     * 
+     * @return The powerup type
+     * 
+     * @since 2
+     * @version 2
+     * @author Team 8
+     * @author Josh Stafford
+     * 
+     */
     public int getType() {
 
         return this.type;
