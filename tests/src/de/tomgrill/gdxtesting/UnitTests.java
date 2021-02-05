@@ -42,8 +42,12 @@ public class UnitTests {
 	}
 
 	@Test
-	public void mapTest(){
+	public void mapTest() {
 		Map map = new Map("Map1/Map1.tmx", 100);
+	}
+
+	@Test
+	public void worldTest() {
 		World world = new World(new Vector2(0f, 0f), true);
 	}
 
