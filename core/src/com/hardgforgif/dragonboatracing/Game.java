@@ -609,6 +609,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 			GameData.currentLeg = 0;
 			GameData.mainMenuState = true;
+			GameData.dnq = false;
 
 			// MODIFIED: reset the best times array
 			GameData.bests = new float[] { Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE };
