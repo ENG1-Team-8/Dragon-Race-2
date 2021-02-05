@@ -18,8 +18,10 @@ package de.tomgrill.gdxtesting;
 
 import static org.junit.Assert.assertEquals;
 
-import com.hardgforgif.dragonboatracing.core.Map;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.hardgforgif.dragonboatracing.core.Boat;
+import com.hardgforgif.dragonboatracing.core.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,6 +44,7 @@ public class UnitTests {
 	@Test
 	public void mapTest(){
 		Map map = new Map("Map1/Map1.tmx", 100);
+		World world = new World(new Vector2(0f, 0f), true);
 	}
 
 }

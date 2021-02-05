@@ -501,19 +501,20 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			// Update the standings of each boat
 			updateStandings();
 
-			// // If it's been 15 seconds since the winner completed the race, dnf all boats
-			// // who haven't finished yet
-			// // Then transition to the result state
+			//MODIFIED: player can now finish even if all other boats have finished
+
+			// If it's been 15 seconds since the winner completed the race, dnf all boats
+			// who haven't finished yet
+			// Then transition to the result state
 			// if (GameData.results.size() > 0 && GameData.results.size() < 4
 			// 		&& GameData.currentTimer > GameData.results.get(0)[1] + 15f) {
 			// 	//dnfRemainingBoats();
 			// 	GameData.showResultsState = true;
 			// 	GameData.currentUI = new ResultsUI();
 			// }
-			// // Otherwise keep checking for new results
-			// else {
-			// 	checkForResults();
-			// }
+			// Otherwise keep checking for new results
+
+			checkForResults();
 
 			// Choose which UI to display based on the current state
 			if (!GameData.showResultsState)
