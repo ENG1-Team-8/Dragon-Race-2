@@ -46,7 +46,8 @@ public class Obstacle {
      * @param world    World to create the body in
      * @param posX     x location of the body, in meters
      * @param posY     y location of the body, in meters
-     * @param bodyFile the name of the box2D editor json file for the body fixture
+     * @param bodyFile The name of the box2D editor json file for the body fixture
+     * @param scale    The body sprite scale
      * 
      * @since 1
      * @version 2

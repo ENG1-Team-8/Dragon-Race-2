@@ -112,7 +112,7 @@ public class ScrollingBackground {
     /**
      * Set the scrolling speed in pixels/sec.
      * 
-     * @param targetSpeed
+     * @param targetSpeed The scrolling speed
      * 
      * @since 1
      * @version 1

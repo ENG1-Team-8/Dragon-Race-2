@@ -157,6 +157,9 @@ public class Map {
     /**
      * Renders the map on the screen.
      * 
+     * @param camera The game camera
+     * @param batch  The batch to render on
+     * 
      * @since 1
      * @version 1
      * @author Team 10
@@ -176,7 +179,7 @@ public class Map {
     /**
      * Instantiates the lane array and spawns obstacles on each of the lanes.
      * 
-     * @param world World to spawn the obstacles in
+     * @param world      World to spawn the obstacles in
      * @param difficulty The difficulty of the lane
      * 
      * @since 1
@@ -191,7 +194,7 @@ public class Map {
 
         // MODIFIED: Lane now takes difficulty parameter
         lanes[0] = new Lane(mapHeight, leftLayer, rightLayer, difficulty);
-        
+
         lanes[0].constructBoundries(unitScale);
         lanes[0].spawnObstacles(world, mapHeight / GameData.PIXELS_TO_TILES);
 
