@@ -35,6 +35,9 @@ public class GamePlayUI extends UI {
     private Sprite rBar;
     private Sprite sBar;
 
+    // MODIFIED: used to display speed
+    private BitmapFont speedLabel;
+
     // MODIFIED: new texture and sprite for on-screen controls
     private Texture controls;
     private Sprite controlsDisplay;
@@ -72,6 +75,9 @@ public class GamePlayUI extends UI {
 
         // MODIFIED: white text colour for better readability
         legLabel.setColor(Color.WHITE);
+
+        // MODIFIED: set the font for displaying speed
+        speedLabel = new BitmapFont();
 
         stamina = new Texture(Gdx.files.internal("Stamina_bar.png"));
         robustness = new Texture(Gdx.files.internal("Robustness_bar.png"));
@@ -129,7 +135,8 @@ public class GamePlayUI extends UI {
         // MODIFIED: draw the on-screen controls
         controlsDisplay.draw(batch);
 
-        // MODIFIED: Displays "Boat health" instead of "Robustness" for clarity
+        // MODIFIED: Displays "Boat health" instead of "Robustness" for clarity and displays player speed
+        speedLabel.draw(batch, "Speed: " + Math.round(playerBoat.current_speed), 10, 200);
         robustnessLabel.draw(batch, "Boat health", 10, 110);
         staminaLabel.draw(batch, "Stamina", 10, 170);
 
