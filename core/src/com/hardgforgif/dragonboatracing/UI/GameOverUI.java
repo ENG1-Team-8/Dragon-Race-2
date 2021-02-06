@@ -9,7 +9,9 @@ import com.hardgforgif.dragonboatracing.GameData;
 import com.hardgforgif.dragonboatracing.core.Player;
 
 /**
- * UI class for the end of the game.
+ * UI class for the end of the game, extends UI.
+ * 
+ * @see UI
  * 
  * @since 1
  * @version 2
@@ -29,7 +31,16 @@ public class GameOverUI extends UI {
 
     private ScrollingBackground scrollingBackground = new ScrollingBackground();
 
+    /**
+     * Construct the GameOverUI.
+     * 
+     * @since 1
+     * @version 2
+     * @author Team 10
+     * @author Matt Tomlinson
+     */
     public GameOverUI() {
+
         scrollingBackground.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         scrollingBackground.setSpeedFixed(true);
         scrollingBackground.setSpeed(ScrollingBackground.DEFAULT_SPEED);
@@ -57,8 +68,15 @@ public class GameOverUI extends UI {
 
     }
 
+    /**
+     * @since 1
+     * @version 2
+     * @author Team 10
+     * @author Matt Tomlinson
+     */
     @Override
     public void drawUI(Batch batch, Vector2 mousePos, float screenWidth, float delta) {
+
         batch.begin();
         scrollingBackground.updateAndRender(delta, batch);
         // If this was the last leg and the player won, show the victory screen
@@ -75,19 +93,31 @@ public class GameOverUI extends UI {
         // Otherwise, the game is over with a loss
         else {
             gameOverFinalSprite.draw(batch);
-            // TO DO: "You came second/third"
         }
         batch.end();
         playMusic();
+
     }
 
+    /**
+     * @since 1
+     * @version 1
+     * @author Team 10
+     */
     @Override
     public void drawPlayerUI(Batch batch, Player playerBoat) {
 
     }
 
+    /**
+     * @since 1
+     * @version 2
+     * @author Team 10
+     * @author Matt Tomlinson
+     */
     @Override
     public void getInput(float screenWidth, Vector2 mousePos) {
+
         // When the user clicks on the screen
         if (mousePos.x != 0f && mousePos.y != 0f) {
             // Reset the game, after which the game will return to the main menu state
@@ -97,5 +127,7 @@ public class GameOverUI extends UI {
             // MODIFIED: music for main menu now set during full reset
 
         }
+
     }
+
 }

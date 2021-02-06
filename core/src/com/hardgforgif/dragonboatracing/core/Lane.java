@@ -16,7 +16,6 @@ import com.hardgforgif.dragonboatracing.GameData;
  * @version 2
  * @author Team 10
  * @author Matt Tomlinson
- * 
  */
 public class Lane {
 
@@ -69,7 +68,6 @@ public class Lane {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public void constructBoundries(float unitScale) {
 
@@ -104,7 +102,6 @@ public class Lane {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public float[] getLimitsAt(float yPosition) {
 
@@ -136,7 +133,6 @@ public class Lane {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public void spawnObstacles(World world, float mapHeight) {
 

@@ -10,7 +10,6 @@ import com.hardgforgif.dragonboatracing.GameData;
  * @since 1
  * @version 1
  * @author Team 10
- * 
  */
 public class Player extends Boat {
 
@@ -27,7 +26,6 @@ public class Player extends Boat {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public Player(float robustness, float speed, float acceleration, float maneuverability, int boatType, Lane lane) {
 
@@ -45,7 +43,6 @@ public class Player extends Boat {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public void updatePlayer(boolean[] pressedKeys, float delta) {
 

@@ -11,7 +11,6 @@ import com.hardgforgif.dragonboatracing.GameData;
  * @since 1
  * @version 1
  * @author Team 10
- * 
  */
 public class AI extends Boat {
 
@@ -34,7 +33,6 @@ public class AI extends Boat {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public AI(float robustness, float speed, float acceleration, float maneuverability, int boatType, Lane lane) {
 
@@ -59,7 +57,6 @@ public class AI extends Boat {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     private Vector2 getAIPredictionVector(float distance) {
 
@@ -107,7 +104,6 @@ public class AI extends Boat {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     private void stayInLane(float[] predictLimits) {
 
@@ -150,7 +146,6 @@ public class AI extends Boat {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     private boolean obstaclesInRange() {
 
@@ -217,7 +212,6 @@ public class AI extends Boat {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public void updateAI(float delta) {
 

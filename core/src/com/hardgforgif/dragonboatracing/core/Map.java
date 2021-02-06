@@ -28,7 +28,6 @@ import com.hardgforgif.dragonboatracing.GameData;
  * @version 2
  * @author Team 10
  * @author Matt Tomlinson
- * 
  */
 public class Map {
 
@@ -60,7 +59,6 @@ public class Map {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public Map(String tmxFile, float width) {
 
@@ -84,7 +82,6 @@ public class Map {
      * @version 2
      * @author Team 8
      * @author Matt Tomlinson
-     * 
      */
     public void createMapRenderer() {
 
@@ -118,7 +115,6 @@ public class Map {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public void createMapCollisions(String collisionLayerName, World world) {
 
@@ -164,7 +160,6 @@ public class Map {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public void renderMap(OrthographicCamera camera, Batch batch) {
 
@@ -188,7 +183,6 @@ public class Map {
      * @version 1
      * @author Team 10
      * @author Matt Tomlinson
-     * 
      */
     public void createLanes(World world, float difficulty) {
 
@@ -244,7 +238,6 @@ public class Map {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public void createFinishLine(String textureFile) {
 

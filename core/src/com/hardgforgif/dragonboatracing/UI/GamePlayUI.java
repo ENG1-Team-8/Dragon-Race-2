@@ -11,10 +11,12 @@ import com.hardgforgif.dragonboatracing.GameData;
 import com.hardgforgif.dragonboatracing.core.Player;
 
 /**
- * The UI during gameplay (racing).
+ * The UI during gameplay (racing), extends UI.
  * <p>
  * Responsible for displaying stamina/health bars, leg number, timer and
  * controls.
+ * 
+ * @see UI
  * 
  * @since 1
  * @version 2
@@ -49,6 +51,7 @@ public class GamePlayUI extends UI {
      * @author Matt Tomlinson
      */
     public GamePlayUI() {
+
         positionLabel = new BitmapFont();
         positionLabel.getData().setScale(1.4f);
 
@@ -86,6 +89,11 @@ public class GamePlayUI extends UI {
 
     }
 
+    /**
+     * @since 1
+     * @version 1
+     * @author Team 10
+     */
     @Override
     public void drawUI(Batch batch, Vector2 mousePos, float screenWidth, float delta) {
 
@@ -99,6 +107,7 @@ public class GamePlayUI extends UI {
      */
     @Override
     public void drawPlayerUI(Batch batch, Player playerBoat) {
+
         // Set the robustness and stamina bars size based on the player boat
         sBar.setSize(playerBoat.stamina, 30);
         rBar.setSize(playerBoat.robustness, 30);
@@ -132,10 +141,17 @@ public class GamePlayUI extends UI {
         batch.end();
 
         playMusic();
+
     }
 
+    /**
+     * @since 1
+     * @version 1
+     * @author Team 10
+     */
     @Override
     public void getInput(float screenWidth, Vector2 mousePos) {
 
     }
+
 }

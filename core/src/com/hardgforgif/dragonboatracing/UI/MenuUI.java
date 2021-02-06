@@ -9,7 +9,9 @@ import com.hardgforgif.dragonboatracing.SaveLoad;
 import com.hardgforgif.dragonboatracing.core.Player;
 
 /**
- * Class representing a main menu for the game
+ * Class representing a main menu for the game, extends UI.
+ * 
+ * @see UI
  * 
  * @since 1
  * @version 2
@@ -66,6 +68,7 @@ public class MenuUI extends UI {
      * @author Matt Tomlinson
      */
     public MenuUI() {
+
         scrollingBackground.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         scrollingBackground.setSpeedFixed(true);
         scrollingBackground.setSpeed(ScrollingBackground.DEFAULT_SPEED);
@@ -86,6 +89,7 @@ public class MenuUI extends UI {
         exitButtonActive = new Texture("ExitSelected.png");
         exitButtonInactive = new Texture("ExitUnselected.png");
         logo = new Texture("Title.png");
+
     }
 
     /**
@@ -96,6 +100,7 @@ public class MenuUI extends UI {
      */
     @Override
     public void drawUI(Batch batch, Vector2 mousePos, float screenWidth, float delta) {
+
         batch.begin();
         scrollingBackground.updateAndRender(delta, batch);
         batch.draw(logo, screenWidth / 2 - LOGO_WIDTH / 2, LOGO_Y, LOGO_WIDTH, LOGO_HEIGHT);
@@ -151,8 +156,14 @@ public class MenuUI extends UI {
         batch.end();
 
         playMusic();
+
     }
 
+    /**
+     * @since 1
+     * @version 1
+     * @author Team 10
+     */
     @Override
     public void drawPlayerUI(Batch batch, Player playerBoat) {
 
@@ -166,6 +177,7 @@ public class MenuUI extends UI {
      */
     @Override
     public void getInput(float screenWidth, Vector2 clickPos) {
+
         // If the play button is clicked
         float x = screenWidth / 2 - PLAY_BUTTON_WIDTH / 2;
         if (clickPos.x < x + PLAY_BUTTON_WIDTH && clickPos.x > x &&
@@ -225,4 +237,5 @@ public class MenuUI extends UI {
         }
 
     }
+
 }

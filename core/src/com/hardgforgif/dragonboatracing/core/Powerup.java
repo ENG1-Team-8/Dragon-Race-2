@@ -16,7 +16,6 @@ import com.hardgforgif.dragonboatracing.GameData;
  * @version 2
  * @author Team 8
  * @author Josh Stafford
- * 
  */
 public class Powerup extends Obstacle {
 
@@ -125,7 +124,6 @@ public class Powerup extends Obstacle {
      * @version 2
      * @author Team 8
      * @author Josh Stafford
-     * 
      */
     public int getType() {
 

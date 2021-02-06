@@ -33,7 +33,6 @@ public class Obstacle {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public Obstacle(String textureName) {
 
@@ -96,7 +95,6 @@ public class Obstacle {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public void drawObstacle(Batch batch) {
 

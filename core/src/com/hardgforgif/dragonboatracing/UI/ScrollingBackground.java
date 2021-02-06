@@ -4,6 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
+/**
+ * Displays a scrolling background, used for menu backgrounds.
+ * 
+ * @see MenuUI
+ * @see ChoosingUI
+ * 
+ * @since 1
+ * @version 1
+ * @author Team 10
+ */
 public class ScrollingBackground {
 
     public static final int DEFAULT_SPEED = 80;
@@ -18,7 +28,15 @@ public class ScrollingBackground {
     float imageScale;
     float scaledHeight;
 
+    /**
+     * Constructs a scrolling background.
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     */
     public ScrollingBackground() {
+
         image = new Texture("square.png");
 
         y1 = 0;
@@ -27,15 +45,21 @@ public class ScrollingBackground {
         targetSpeed = DEFAULT_SPEED;
         imageScale = 0;
         speedFixed = true;
+
     }
 
     /**
-     * Updates and renders the Scrolling background object on a batch
+     * Updates and renders the Scrolling background object on a batch.
      * 
      * @param deltaTime The time passes since the last frame
      * @param batch     The batch to render to
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
      */
     public void updateAndRender(float deltaTime, Batch batch) {
+
         // speed adjustment to reach goal
         if (speed < targetSpeed) {
             speed += TARGET_ACQUIRED_ACCELERATION * deltaTime;
@@ -66,28 +90,44 @@ public class ScrollingBackground {
         // render
         batch.draw(image, 0, y1, Gdx.graphics.getWidth(), scaledHeight);
         batch.draw(image, 0, y2, Gdx.graphics.getWidth(), scaledHeight);
+
     }
 
     /**
-     * Resize the object to a given size
+     * Resize the object to a given size.
      * 
      * @param width  Width of the object
      * @param height Height of the object
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
      */
     public void resize(int width, int height) {
+
         imageScale = width / image.getWidth();
+
     }
 
     /**
-     * Set the scrolling speed in pixels/sec
+     * Set the scrolling speed in pixels/sec.
      * 
      * @param targetSpeed
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
      */
     public void setSpeed(int targetSpeed) {
+
         this.targetSpeed = targetSpeed;
+
     }
 
     public void setSpeedFixed(boolean speedFixed) {
+
         this.speedFixed = speedFixed;
+
     }
+
 }

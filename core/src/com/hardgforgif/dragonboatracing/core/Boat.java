@@ -66,7 +66,6 @@ public class Boat {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public Boat(float robustness, float speed, float acceleration, float maneuverability, int boatType, Lane lane) {
 
@@ -153,7 +152,6 @@ public class Boat {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public void updateLimits() {
 
@@ -183,7 +181,6 @@ public class Boat {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public float[] getLimitsAt(float yPosition) {
 
@@ -214,7 +211,6 @@ public class Boat {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public boolean hasFinished() {
 
@@ -230,7 +226,6 @@ public class Boat {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public void moveBoat() {
 
@@ -297,7 +292,6 @@ public class Boat {
      * @since 1
      * @version 1
      * @author Team 10
-     * 
      */
     public void rotateBoat(float angle) {
 

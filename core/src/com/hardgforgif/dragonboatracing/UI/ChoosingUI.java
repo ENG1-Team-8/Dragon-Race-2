@@ -19,9 +19,11 @@ import com.hardgforgif.dragonboatracing.core.Player;
  * @see UI
  * 
  * @since 1
- * 
+ * @version 1
+ * @author Team 10
  */
 public class ChoosingUI extends UI {
+
     private Texture background;
     private Sprite background_sprite;
 
@@ -36,7 +38,15 @@ public class ChoosingUI extends UI {
 
     ScrollingBackground scrollingBackground = new ScrollingBackground();
 
+    /**
+     * Construct the UI for choosing a boat.
+     * 
+     * @since 1
+     * @version 1
+     * @author Team 10
+     */
     public ChoosingUI() {
+
         scrollingBackground.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         scrollingBackground.setSpeedFixed(true);
         scrollingBackground.setSpeed(ScrollingBackground.DEFAULT_SPEED);
@@ -72,10 +82,17 @@ public class ChoosingUI extends UI {
             boatSprites[i - 1].scale(-0.6f);
             boatSprites[i - 1].setPosition(150 + 300f * (i - 1), -200f);
         }
+
     }
 
+    /**
+     * @since 1
+     * @version 1
+     * @author Team 10
+     */
     @Override
     public void drawUI(Batch batch, Vector2 mousePos, float screenWidth, float delta) {
+
         // Check if the mouse is hovering over a boat, and update the bars displayed
         for (int i = 0; i < 4; i++) {
             // Get the position of the boat
@@ -121,10 +138,17 @@ public class ChoosingUI extends UI {
         batch.end();
 
         playMusic();
+
     }
 
+    /**
+     * @since 1
+     * @version 1
+     * @author Team 10
+     */
     @Override
     public void getInput(float screenWidth, Vector2 mousePos) {
+
         // Check which of the boat was pressed
         for (int i = 0; i < 4; i++) {
             float boatX = boatSprites[i].getX() + boatSprites[i].getWidth() / 2
@@ -167,7 +191,14 @@ public class ChoosingUI extends UI {
 
     }
 
+    /**
+     * @since 1
+     * @version 1
+     * @author Team 10
+     */
     @Override
     public void drawPlayerUI(Batch batch, Player playerBoat) {
+
     }
+
 }

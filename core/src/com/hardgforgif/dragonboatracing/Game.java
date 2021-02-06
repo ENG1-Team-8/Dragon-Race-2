@@ -41,6 +41,7 @@ import com.hardgforgif.dragonboatracing.core.Powerup;
  * @author Josh Stafford
  */
 public class Game extends ApplicationAdapter implements InputProcessor {
+
 	private Player player;
 	private AI[] opponents = new AI[3];
 	private Map map; // MODIFIED: array not necessary
@@ -56,8 +57,15 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	private ArrayList<Body> toBeRemovedBodies = new ArrayList<>();
 	private ArrayList<Body> toUpdateHealth = new ArrayList<>();
 
+	/**
+	 * @since 1
+	 * @version 2
+	 * @author Team 10
+	 * @author Team 8
+	 */
 	@Override
 	public void create() {
+
 		// Initialize the sprite batches
 		batch = new SpriteBatch();
 		UIbatch = new SpriteBatch();
@@ -102,11 +110,12 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 		// Set the app's input processor
 		Gdx.input.setInputProcessor(this);
+
 	}
 
 	/**
 	 * This method creates new ContactListener who's methods are executed when
-	 * objects collide
+	 * objects collide.
 	 * 
 	 * @param world This is the physics world in which the collisions happen
 	 * @since 1
@@ -115,6 +124,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	 * @author Josh Stafford
 	 */
 	private void createContactListener(World world) {
+
 		world.setContactListener(new ContactListener() {
 			@Override
 			public void beginContact(Contact contact) {
@@ -164,22 +174,34 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 			}
 		});
+
 	}
 
 	/**
-	 * Sets the camera y position at the y position of a player's sprite
+	 * Sets the camera y position at the y position of a player's sprite.
 	 * 
 	 * @param player The target player
+	 * 
+	 * @since 1
+	 * @version 1
+	 * @author Team 10
 	 */
 	private void updateCamera(Player player) {
+
 		camera.position.set(camera.position.x, player.boatSprite.getY() + 600, 0);
 		camera.update();
+
 	}
 
 	/**
-	 * Updates the GameData.standings array by comparing boats positions
+	 * Updates the GameData.standings array by comparing boats positions.
+	 * 
+	 * @since 1
+	 * @version 1
+	 * @author Team 10
 	 */
 	private void updateStandings() {
+
 		// If the player hasn't finished the race...
 		if (!player.hasFinished()) {
 			// Reset their position
@@ -210,6 +232,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 					if (opponents[j].boatSprite.getY() > opponents[i].boatSprite.getY())
 						GameData.standings[i + 1]++;
 			}
+
 	}
 
 	/**
@@ -222,7 +245,6 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	 * @version 2
 	 * @author Team 10
 	 * @author Matt Tomlinson
-	 * 
 	 */
 	private void checkForResults() {
 
@@ -266,13 +288,19 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 				opponents[i].acceleration = -200f;
 			}
 		}
+
 	}
 
 	/**
 	 * This method checks the position of all the boats to add penalties if
-	 * necessary
+	 * necessary.
+	 * 
+	 * @since 1
+	 * @version 1
+	 * @author Team 10
 	 */
 	private void updatePenalties() {
+
 		// Update the penalties for the player, if they is outside their lane
 		float boatCenter = player.boatSprite.getX() + player.boatSprite.getWidth() / 2;
 		if (!player.hasFinished() && player.robustness > 0
@@ -288,27 +316,31 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 				GameData.penalties[i + 1] += Gdx.graphics.getDeltaTime();
 			}
 		}
+
 	}
 
+	// MODIFIED: method redundant
 	/**
 	 * This method marks all the boats that haven't finished the race as dnfs
 	 */
 	// private void dnfRemainingBoats() {
-	// 	// If the player hasn't finished
-	// 	if (!player.hasFinished() && player.robustness > 0 && GameData.results.size() < 4) {
-	// 		// Add a dnf result
-	// 		GameData.results.add(new Float[] { 0f, Float.MAX_VALUE });
+	// // If the player hasn't finished
+	// if (!player.hasFinished() && player.robustness > 0 && GameData.results.size()
+	// < 4) {
+	// // Add a dnf result
+	// GameData.results.add(new Float[] { 0f, Float.MAX_VALUE });
 
-	// 		// Transition to the showResult screen
-	// 		GameData.showResultsState = true;
-	// 		GameData.currentUI = new ResultsUI();
-	// 	}
+	// // Transition to the showResult screen
+	// GameData.showResultsState = true;
+	// GameData.currentUI = new ResultsUI();
+	// }
 
-	// 	// Iterate through the AI and add a dnf result for any who haven't finished
-	// 	for (int i = 0; i < 3; i++) {
-	// 		if (!opponents[i].hasFinished() && opponents[i].robustness > 0 && GameData.results.size() < 4)
-	// 			GameData.results.add(new Float[] { Float.valueOf(i + 1), Float.MAX_VALUE });
-	// 	}
+	// // Iterate through the AI and add a dnf result for any who haven't finished
+	// for (int i = 0; i < 3; i++) {
+	// if (!opponents[i].hasFinished() && opponents[i].robustness > 0 &&
+	// GameData.results.size() < 4)
+	// GameData.results.add(new Float[] { Float.valueOf(i + 1), Float.MAX_VALUE });
+	// }
 	// }
 
 	/**
@@ -501,16 +533,16 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			// Update the standings of each boat
 			updateStandings();
 
-			//MODIFIED: player can now finish even if all other boats have finished
+			// MODIFIED: player can now finish even if all other boats have finished
 
 			// If it's been 15 seconds since the winner completed the race, dnf all boats
 			// who haven't finished yet
 			// Then transition to the result state
 			// if (GameData.results.size() > 0 && GameData.results.size() < 4
-			// 		&& GameData.currentTimer > GameData.results.get(0)[1] + 15f) {
-			// 	//dnfRemainingBoats();
-			// 	GameData.showResultsState = true;
-			// 	GameData.currentUI = new ResultsUI();
+			// && GameData.currentTimer > GameData.results.get(0)[1] + 15f) {
+			// //dnfRemainingBoats();
+			// GameData.showResultsState = true;
+			// GameData.currentUI = new ResultsUI();
 			// }
 			// Otherwise keep checking for new results
 
@@ -544,6 +576,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		// If we haven't clicked anywhere in the last frame, reset the click position
 		if (clickPosition.x != 0f && clickPosition.y != 0f)
 			clickPosition.set(0f, 0f);
+
 	}
 
 	/**
@@ -571,13 +604,16 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 		camera.position.set(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 0);
 		camera.update();
+
 		// Reset everything for the next game
 		// Initialize the physics game World
 		world = new World(new Vector2(0f, 0f), true);
 
+		// MODIFIED: new map not needed
 		// Initialize the map
 		// map = new Map("Map1/Map1.tmx", Gdx.graphics.getWidth());
 
+		// MODIFIED: no longer needs recalculating
 		// Calculate the ratio between pixels, meters and tiles
 		// GameData.TILES_TO_METERS = map.getTilesToMetersRatio();
 		// GameData.PIXELS_TO_TILES = 1 / (GameData.METERS_TO_PIXELS *
@@ -596,6 +632,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		// Create a new collision handler for the world
 		createContactListener(world);
 
+		// MODIFIED: if player is coming from the results screen...
 		if (GameData.showResultsState) {
 			GameData.currentLeg += 1;
 			GameData.showResultsState = false;
@@ -621,15 +658,30 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			GameData.currentUI = new MenuUI();
 		}
 		GameData.resetGameState = false;
+
 	}
 
+	/**
+	 * @since 1
+	 * @version 2
+	 * @author Team 10
+	 */
 	@Override
 	public void dispose() {
+
+		// MODIFIED: dispose of singular world, not array
 		world.dispose();
+
 	}
 
+	/**
+	 * @since 1
+	 * @version 1
+	 * @author Team 10
+	 */
 	@Override
 	public boolean keyDown(int keycode) {
+
 		if (keycode == Input.Keys.W)
 			pressedKeys[0] = true;
 		if (keycode == Input.Keys.A)
@@ -639,10 +691,17 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		if (keycode == Input.Keys.D)
 			pressedKeys[3] = true;
 		return true;
+
 	}
 
+	/**
+	 * @since 1
+	 * @version 1
+	 * @author Team 10
+	 */
 	@Override
 	public boolean keyUp(int keycode) {
+
 		if (keycode == Input.Keys.W)
 			pressedKeys[0] = false;
 		if (keycode == Input.Keys.A)
@@ -652,39 +711,83 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		if (keycode == Input.Keys.D)
 			pressedKeys[3] = false;
 		return true;
+
 	}
 
+	/**
+	 * @since 1
+	 * @version 1
+	 * @author Team 10
+	 */
 	@Override
 	public boolean keyTyped(char character) {
+
 		return false;
+
 	}
 
+	/**
+	 * @since 1
+	 * @version 1
+	 * @author Team 10
+	 */
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
 		Vector3 position = camera.unproject(new Vector3(screenX, screenY, 0));
 		clickPosition.set(position.x, position.y);
 		return true;
+
 	}
 
+	/**
+	 * @since 1
+	 * @version 1
+	 * @author Team 10
+	 */
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+
 		return false;
+
 	}
 
+	/**
+	 * @since 1
+	 * @version 1
+	 * @author Team 10
+	 */
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
+
 		return false;
+
 	}
 
+	/**
+	 * @since 1
+	 * @version 1
+	 * @author Team 10
+	 */
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
+
 		Vector3 position = camera.unproject(new Vector3(screenX, screenY, 0));
 		mousePosition.set(position.x, position.y);
 		return true;
+
 	}
 
+	/**
+	 * @since 1
+	 * @version 1
+	 * @author Team 10
+	 */
 	@Override
 	public boolean scrolled(int amount) {
+
 		return false;
+
 	}
+
 }

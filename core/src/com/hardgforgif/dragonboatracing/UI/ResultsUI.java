@@ -13,7 +13,9 @@ import com.hardgforgif.dragonboatracing.GameData;
 import com.hardgforgif.dragonboatracing.core.Player;
 
 /**
- * Class representing the UI for displaying the results of each leg.
+ * Class representing the UI for displaying the results of each leg, extends UI.
+ * 
+ * @see UI
  * 
  * @since 1
  * @version 2
@@ -21,6 +23,7 @@ import com.hardgforgif.dragonboatracing.core.Player;
  * @author Matt Tomlinson
  */
 public class ResultsUI extends UI {
+
     private Texture background;
     private Sprite backgroundSprite;
     private Texture entryTexture;
@@ -68,6 +71,7 @@ public class ResultsUI extends UI {
      */
     @Override
     public void drawUI(Batch batch, Vector2 mousePos, float screenWidth, float delta) {
+
         batch.begin();
         backgroundSprite.draw(batch);
         titleFont.draw(batch, "Results", backgroundSprite.getX() + backgroundSprite.getWidth() / 2 - 30,
@@ -140,8 +144,14 @@ public class ResultsUI extends UI {
         batch.end();
 
         playMusic();
+
     }
 
+    /**
+     * @since 1
+     * @version 1
+     * @author Team 10
+     */
     @Override
     public void drawPlayerUI(Batch batch, Player playerBoat) {
 
@@ -155,6 +165,7 @@ public class ResultsUI extends UI {
      */
     @Override
     public void getInput(float screenWidth, Vector2 mousePos) {
+
         // When the user clicks anywhere on the screen, switch the game state as
         // necessary
         if (mousePos.x != 0f && mousePos.y != 0f && GameData.results.size() == 4) {
@@ -170,7 +181,8 @@ public class ResultsUI extends UI {
             else {
                 GameData.resetGameState = true;
             }
-
         }
+
     }
+
 }
