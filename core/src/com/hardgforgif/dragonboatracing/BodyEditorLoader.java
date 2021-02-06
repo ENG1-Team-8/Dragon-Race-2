@@ -58,8 +58,8 @@ public class BodyEditorLoader {
 
 	/**
 	 * Creates and applies the fixtures defined in the editor. The name parameter is
-	 * used to retrieve the right fixture from the loaded file. <br/>
-	 * <br/>
+	 * used to retrieve the right fixture from the loaded file.
+	 * <p>
 	 *
 	 * The body reference point (the red cross in the tool) is by default located at
 	 * the bottom left corner of the image. This reference point will be put right
@@ -67,8 +67,8 @@ public class BodyEditorLoader {
 	 * point carefully to let you place your body in your world easily with its
 	 * BodyDef.position point. Note that to draw an image at the position of your
 	 * body, you will need to know this reference point (see
-	 * {@link #getOrigin(java.lang.String, float)}. <br/>
-	 * <br/>
+	 * {@link #getOrigin(java.lang.String, float)}.
+	 * <p>
 	 *
 	 * Also, saved shapes are normalized. As shown in the tool, the width of the
 	 * image is considered to be always 1 meter. Thus, you need to provide a scale
