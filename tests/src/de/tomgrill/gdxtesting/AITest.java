@@ -50,7 +50,7 @@ public class AITest {
     {
         //place an obstacle in front and to the right of the AI
         testAI.boatBody.setTransform(3.4f,2,0);
-        testObstacle.obstacleSprite.setPosition(310,500);
+        testObstacle.obstacleSprite.setPosition(320,500);
         testAI.updateAI(0.01f);
         assertTrue(testAI.targetAngle>0);
     }
