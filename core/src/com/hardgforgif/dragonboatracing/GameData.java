@@ -5,8 +5,11 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Texture;
 import com.hardgforgif.dragonboatracing.UI.MenuUI;
 import com.hardgforgif.dragonboatracing.UI.UI;
+import com.hardgforgif.dragonboatracing.core.AI;
+import com.hardgforgif.dragonboatracing.core.Player;
 
 /**
  * Stores general game data which are static.
@@ -26,6 +29,7 @@ public class GameData {
     public static boolean showResultsState = false;
     public static boolean resetGameState = false;
     public static boolean GameOverState = false;
+    public static boolean loadedState = false;
 
     // MODIFIED: check required on first startup to delay obstacle generation until
     // difficulty has been picked
@@ -72,5 +76,14 @@ public class GameData {
     // Difficulty constants for the AI
     // MODIFIED: no longer uses set value, is instead selected in MenuUI
     public static float[] difficulty;
+
+    //Serialized data for saving and loading
+    public static float[][] currentPositions= new float[][] { { 2.3f, 4f }, { 4f, 4f }, { 7f, 4f }, { 10f, 4f } };
+    public static float currentStamina[] = new float[] {0,0,0,0};
+    public static float currenHPs[] = new float[]{0,0,0,0};
+    public static float currentSpeeds[] = new float[] {0,0,0,0};
+    public static float currentObstaclesX[];
+    public static float currentObstaclesY[];
+    public static Texture currentObstaclesType[];
 
 }

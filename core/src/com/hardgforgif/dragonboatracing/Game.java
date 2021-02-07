@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Frustum;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -384,6 +385,13 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 						map.lanes[0]);
 				player.createBoatBody(world, GameData.startingPoints[0][0], GameData.startingPoints[0][1],
 						"Boat1.json");
+				//Check for any saved data that needs to be loaded
+				if (GameData.loadedState)
+				{
+					player.robustness=GameData.currenHPs[0];
+					player.stamina=GameData.currentStamina[0];
+					player.current_speed=GameData.currentSpeeds[0];
+				}
 				// Create the AI boats
 				for (int i = 1; i <= 3; i++) {
 					int AIBoatType = GameData.boatTypes[i];
@@ -392,6 +400,13 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 							map.lanes[i]);
 					opponents[i - 1].createBoatBody(world, GameData.startingPoints[i][0], GameData.startingPoints[i][1],
 							"Boat1.json");
+					if (GameData.loadedState)
+					{
+						opponents[i-1].robustness=GameData.currenHPs[i];
+						opponents[i-1].stamina=GameData.currentStamina[i];
+						opponents[i-1].current_speed=GameData.currentSpeeds[i];
+						GameData.loadedState = false;
+					}
 				}
 
 				// MODIFIED: if it is the final leg, determine who did not qualify
@@ -559,6 +574,34 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			// MODIFIED: if the player is in gameplay, not results and presses escape, save
 			// the game and reset
 			if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && !GameData.showResultsState) {
+				GameData.currentPositions[0][0]=player.boatBody.getPosition().x;
+				GameData.currentPositions[0][1]=player.boatBody.getPosition().y;
+				GameData.currentStamina[0] = player.stamina;
+				GameData.currentSpeeds[0] = player.current_speed;
+				GameData.currenHPs[0] = player.robustness;
+
+				for (int i =0; i<3; i++)
+				{
+					GameData.currentPositions[i+1][0]=opponents[i].boatBody.getPosition().x;
+					GameData.currentPositions[i+1][1]=opponents[i].boatBody.getPosition().y;
+					GameData.currentStamina[i+1] = opponents[i].stamina;
+					GameData.currentSpeeds[i+1] = opponents[i].current_speed;
+					GameData.currenHPs[i+1] = opponents[i].robustness;
+				}
+
+				/*for (int i =0; i<3; i++)
+				{
+					for (int j=0; j< map.lanes[i].obstacles.length; j++)
+					{
+						Obstacle obstacle = map.lanes[i].obstacles[j];
+						if ((obstacle.obstacleSprite.getY()-player.boatBody.getPosition().y)<=1200
+								&& (obstacle.obstacleSprite.getY()-player.boatBody.getPosition().y)>0)
+						{
+
+						}
+					}
+				}*/
+
 				SaveLoad.save();
 				GameData.gamePlayState = false;
 				GameData.resetGameState = true;
