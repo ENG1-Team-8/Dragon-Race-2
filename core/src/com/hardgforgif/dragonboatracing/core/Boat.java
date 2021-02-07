@@ -157,18 +157,18 @@ public class Boat {
 
         int i;
         for (i = 1; i < lane.leftIterator; i++) {
-            if (lane.leftBoundry[i][0] > boatSprite.getY() + (boatSprite.getHeight() / 2)) {
+            if (lane.leftBoundary[i][0] > boatSprite.getY() + (boatSprite.getHeight() / 2)) {
                 break;
             }
         }
-        leftLimit = lane.leftBoundry[i - 1][1];
+        leftLimit = lane.leftBoundary[i - 1][1];
 
         for (i = 1; i < lane.rightIterator; i++) {
-            if (lane.rightBoundry[i][0] > boatSprite.getY() + (boatSprite.getHeight() / 2)) {
+            if (lane.rightBoundary[i][0] > boatSprite.getY() + (boatSprite.getHeight() / 2)) {
                 break;
             }
         }
-        rightLimit = lane.rightBoundry[i - 1][1];
+        rightLimit = lane.rightBoundary[i - 1][1];
 
     }
 
@@ -187,18 +187,18 @@ public class Boat {
         float[] lst = new float[2];
         int i;
         for (i = 1; i < lane.leftIterator; i++) {
-            if (lane.leftBoundry[i][0] > yPosition) {
+            if (lane.leftBoundary[i][0] > yPosition) {
                 break;
             }
         }
-        lst[0] = lane.leftBoundry[i - 1][1];
+        lst[0] = lane.leftBoundary[i - 1][1];
 
         for (i = 1; i < lane.rightIterator; i++) {
-            if (lane.rightBoundry[i][0] > yPosition) {
+            if (lane.rightBoundary[i][0] > yPosition) {
                 break;
             }
         }
-        lst[1] = lane.rightBoundry[i - 1][1];
+        lst[1] = lane.rightBoundary[i - 1][1];
         return lst;
 
     }
@@ -227,7 +227,7 @@ public class Boat {
      * @version 1
      * @author Team 10
      */
-    public void moveBoat() {
+    public void moveBoat(float delta) {
 
         current_speed += 0.15f * (acceleration / 90) * (stamina / 100);
         if (current_speed > speed)
@@ -277,7 +277,7 @@ public class Boat {
 
         direction.set(target).sub(boatHeadPos).nor();
         velocity.set(direction).scl(current_speed);
-        movement.set(velocity).scl(Gdx.graphics.getDeltaTime());
+        movement.set(velocity).scl(delta);
 
         boatBody.setLinearVelocity(movement);
 
@@ -293,7 +293,7 @@ public class Boat {
      * @version 1
      * @author Team 10
      */
-    public void rotateBoat(float angle) {
+    public float rotateBoat(float angle) {
 
         // Calculate the difference between the target angle and the current rotation of
         // the boat
@@ -301,7 +301,7 @@ public class Boat {
 
         if (Math.abs(angleDifference) < turningSpeed) {
             boatBody.setTransform(boatBody.getPosition(), angle * MathUtils.degRad);
-            return;
+            return 0;
         }
 
         // Create the new angle we want the player to be rotated to every frame, based
@@ -315,10 +315,11 @@ public class Boat {
 
         boatBody.setTransform(boatBody.getPosition(), newAngle * MathUtils.degRad);
 
+        return newAngle;
     }
 
     /**
-     * Applies a powerup that the boat has coolided with.
+     * Applies a powerup that the boat has collided with.
      * 
      * @param powerupType The int value of the powerup dictating its type
      * 

@@ -48,6 +48,22 @@ public class AI extends Boat {
 
     }
 
+    //Separate constructor for testing purposes
+
+    public AI(float robustness, float speed, float acceleration, float maneuverability, int boatType, Lane lane, float difficulty) {
+
+        // Construct a boat with the AI's properties
+        super(robustness, speed, acceleration, maneuverability, boatType, lane);
+
+        // Multiply AI boat properties by the difficulty
+        this.robustness *= difficulty;
+        this.stamina *= difficulty;
+        this.maneuverability *= difficulty;
+        this.speed *= difficulty;
+        this.acceleration *= difficulty;
+
+    }
+
     /**
      * Get a point at a given distance in front of the boat.
      * 
@@ -147,7 +163,7 @@ public class AI extends Boat {
      * @version 1
      * @author Team 10
      */
-    private boolean obstaclesInRange() {
+    public boolean obstaclesInRange() {
 
         for (Obstacle obstacle : this.lane.obstacles) {
             // Get the obstacles attributes
@@ -197,7 +213,7 @@ public class AI extends Boat {
             // Mark that the AI is currently dodging an obstacle
             isDodging = true;
 
-            // Apply the roation
+            // Apply the rotation
             rotateBoat(targetAngle);
             boatSprite.setRotation((float) Math.toDegrees(boatBody.getAngle()));
         }
@@ -247,7 +263,7 @@ public class AI extends Boat {
         }
 
         // Apply the movement
-        moveBoat();
+        moveBoat(delta);
 
         // Update the limits
         updateLimits();
