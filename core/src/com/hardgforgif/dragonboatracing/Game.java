@@ -405,8 +405,13 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 						opponents[i-1].robustness=GameData.currenHPs[i];
 						opponents[i-1].stamina=GameData.currentStamina[i];
 						opponents[i-1].current_speed=GameData.currentSpeeds[i];
-						GameData.loadedState = false;
 					}
+				}
+
+				if (GameData.loadedState)
+				{
+					GameData.loadedState = false;
+					GameData.startingPoints = new float[][] { { 2.3f, 4f }, { 4f, 4f }, { 7f, 4f }, { 10f, 4f } };
 				}
 
 				// MODIFIED: if it is the final leg, determine who did not qualify
