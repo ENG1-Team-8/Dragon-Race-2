@@ -174,7 +174,7 @@ public class Lane {
         int nrPowerups = powerups.length;
         float segmentLength = mapHeight / nrPowerups;
         for (int i = 0; i < nrPowerups; i++) {
-            int randomIndex = new Random().nextInt(3);
+            int randomIndex = new Random().nextInt(5);
 
             powerups[i] = new Powerup(randomIndex + 1);
             float segmentStart = i * segmentLength;
