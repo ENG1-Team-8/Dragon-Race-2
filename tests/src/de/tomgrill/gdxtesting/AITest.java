@@ -52,7 +52,8 @@ public class AITest {
         testAI.boatBody.setTransform(3.4f,2,0);
         testObstacle.obstacleSprite.setPosition(320,500);
         testAI.updateAI(0.01f);
-        assertTrue(testAI.targetAngle>0);
+        float obstacleSpriteX = testObstacle.obstacleSprite.getX();
+        assertTrue(testAI.objectChecker.x>obstacleSpriteX);
     }
 
     @Test
@@ -62,7 +63,8 @@ public class AITest {
         testAI.boatBody.setTransform(3.3f,2,-10);
         testObstacle.obstacleSprite.setPosition(370,500);
         testAI.updateAI(0.01f);
-        assertTrue(testAI.targetAngle<0);
+        float obstacleSpriteX = testObstacle.obstacleSprite.getX();
+        assertTrue(testAI.objectChecker.x<obstacleSpriteX);
     }
 
     //test the ability of the AI to stay in lane by checking its target angle for movement

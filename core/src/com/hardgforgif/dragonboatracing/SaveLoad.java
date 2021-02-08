@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Json;
 public class SaveLoad {
 
     // MODIFIED: get the save preference and create new json object
-    static Preferences prefs = Gdx.app.getPreferences("save");
+    public static Preferences prefs = Gdx.app.getPreferences("save");
     static Json json = new Json();
 
     /**
