@@ -24,9 +24,9 @@ public class AITest {
     public void initializeVariables()
     {
         testMap.createLanes(testWorld,1);
-        testAI = new AI(100f, 100f, 100f, 100f, 1, testMap.lanes[1],1f);
+        testAI = new AI(100f, 100f, 100f, 100f, 1, testMap.lanes[0],1f);
         testAI.createBoatBody(testWorld,2,0,"boat1.json");
-        testObstacle = testMap.lanes[1].obstacles[0];
+        testObstacle = testMap.lanes[0].obstacles[0];
     }
 
     //test the capability of the AI to spot an obstacle in front of it
@@ -67,33 +67,39 @@ public class AITest {
         assertTrue(testAI.objectChecker.x<obstacleSpriteX);
     }
 
-    //test the ability of the AI to stay in lane by checking its target angle for movement
-
+    //test the ability of the AI to stay in lane by checking its target for movement against the limit of its lane
     @Test
     public void testGoingOutOfLaneLeft()
     {
         //move the ai close to the left boundary of the lane
         testAI.boatBody.setTransform(2.3f,1,0);
         testAI.updateAI(0.1f);
-        assertTrue(testAI.targetAngle<0);
+        float laneLimitX = testAI.lane.leftBoundary[1][1];
+        assertTrue(testAI.laneChecker.x>laneLimitX);
     }
+
 
     @Test
     public void testGoingOutOfLaneRight()
     {
         //move the ai close to the right boundary of the lane
-        testAI.boatBody.setTransform(4.4f,1,0);
+        testAI.boatBody.setTransform(3.7f,1,0);
         testAI.updateAI(0.1f);
-        assertTrue(testAI.targetAngle>0);
+        float laneLimitX = testAI.lane.rightBoundary[1][1];
+        assertTrue(testAI.laneChecker.x < laneLimitX);
     }
+
 
     @Test
     public void testStayingInLane()
     {
         //move the ai close to the center of the lane
-        testAI.boatBody.setTransform(3.4f,1,0);
+        testAI.boatBody.setTransform(3f,1,0);
         testAI.updateAI(0.1f);
-        assertEquals(0, testAI.targetAngle, 0.0);
+        float laneLimitXLeft = testAI.lane.leftBoundary[1][1];
+        float laneLimitXRight = testAI.lane.rightBoundary[1][1];
+        assertTrue(testAI.laneChecker.x > laneLimitXLeft);
+        assertTrue(testAI.laneChecker.x < laneLimitXRight);
     }
 
 }

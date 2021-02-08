@@ -69,7 +69,7 @@ public class Lane {
      * @version 1
      * @author Team 10
      */
-    public void constructBoundries(float unitScale) {
+    public void constructBoundaries(float unitScale) {
 
         MapObjects objects = leftLayer.getObjects();
 

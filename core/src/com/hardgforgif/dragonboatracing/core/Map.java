@@ -195,7 +195,7 @@ public class Map {
         // MODIFIED: Lane now takes difficulty parameter
         lanes[0] = new Lane(mapHeight, leftLayer, rightLayer, difficulty);
 
-        lanes[0].constructBoundries(unitScale);
+        lanes[0].constructBoundaries(unitScale);
         lanes[0].spawnObstacles(world, mapHeight / GameData.PIXELS_TO_TILES);
 
         // MODIFIED: spawn the powerups for the given lane
@@ -205,7 +205,7 @@ public class Map {
         rightLayer = tiledMap.getLayers().get("Lane2");
 
         lanes[1] = new Lane(mapHeight, leftLayer, rightLayer, difficulty);
-        lanes[1].constructBoundries(unitScale);
+        lanes[1].constructBoundaries(unitScale);
         lanes[1].spawnObstacles(world, mapHeight / GameData.PIXELS_TO_TILES);
 
         // MODIFIED: spawn the powerups for the given lane
@@ -215,7 +215,7 @@ public class Map {
         rightLayer = tiledMap.getLayers().get("Lane3");
 
         lanes[2] = new Lane(mapHeight, leftLayer, rightLayer, difficulty);
-        lanes[2].constructBoundries(unitScale);
+        lanes[2].constructBoundaries(unitScale);
         lanes[2].spawnObstacles(world, mapHeight / GameData.PIXELS_TO_TILES);
 
         // MODIFIED: spawn the powerups for the given lane
@@ -225,7 +225,7 @@ public class Map {
         rightLayer = tiledMap.getLayers().get("CollisionLayerRight");
 
         lanes[3] = new Lane(mapHeight, leftLayer, rightLayer, difficulty);
-        lanes[3].constructBoundries(unitScale);
+        lanes[3].constructBoundaries(unitScale);
         lanes[3].spawnObstacles(world, mapHeight / GameData.PIXELS_TO_TILES);
 
         // MODIFIED: spawn the powerups for the given lane
