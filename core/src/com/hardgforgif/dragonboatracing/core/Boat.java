@@ -346,6 +346,16 @@ public class Boat {
                 speedBoost();
                 break;
 
+            // Speed boost
+            case 4:
+            accelerationBoost();
+            break;
+
+            // Speed boost
+            case 5:
+            maneuverabilityBoost();
+            break;
+
         }
 
     }
@@ -387,7 +397,7 @@ public class Boat {
     }
 
     /**
-     * Gives boat 2f max speed increase.
+     * Gives boat 5f max speed increase.
      * 
      * @since 2
      * @version 2
@@ -399,5 +409,34 @@ public class Boat {
         speed += 5f;
 
     }
+
+    /**
+     * Gives boat 5f acceleration increase.
+     * 
+     * @since 2
+     * @version 2
+     * @author Team 8
+     * @author Josh Stafford
+     */
+    private void accelerationBoost() {
+
+        acceleration += 5f;
+
+    }
+
+    /**
+     * Gives boat 5f maneuverability increase.
+     * 
+     * @since 2
+     * @version 2
+     * @author Team 8
+     * @author Josh Stafford
+     */
+    private void maneuverabilityBoost() {
+
+        maneuverability += 5f;
+
+    }
+    
 
 }

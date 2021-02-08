@@ -20,7 +20,7 @@ import com.hardgforgif.dragonboatracing.GameData;
 public class Powerup extends Obstacle {
 
     private int type;
-    public static int typesNo = 3;
+    public static int typesNo = 5;
 
     /**
      * Construct a powerup with given type.
